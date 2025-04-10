@@ -13,9 +13,21 @@
     <br>
     <h6>Coming soon! Stay tuned :)</h6>
     <br>
-    <button onclick="window.location.href='usecase2.html';">UseCase2</button>
-    <button onclick="window.location.href='usecase3.html';">usecase3</button>
-    <center>
+    <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
+    <br>
+    <button onclick="window.location.href='usecase2.html';" id="useCase2Button">UseCase2</button>
+    <button onclick="window.location.href='usecase3.html';" id="useCase3Button">usecase3</button>
+    <br>
+    <br>
+    <br>
+    <form id="form_for_input" action="#">
+      <label for="array_number">Enter Number: </label>
+      <input type="number" id="array_number" name="array_number" min="-1000" max="1000">
+      <button type="button" id="addButton">Add</button>
+      <button type="button" id="deleteButton">Delete</button>
+    </form>
+  </center>
+    <script src="usecase1.js"></script>
 </body>
 
 </html>
