@@ -2,13 +2,16 @@
 
 ## Good practice to follow in <head> of html
 
-`<head>`
-	`<meta charset="UTF-8">`
-	`<meta name="viewport" content="width=device-width, initial-scale=1.0">`
-	`<title>VDCA</title>`
-	`<link rel="stylesheet" href="main.css">`
-	`<link rel="icon" href="favicon.ico">`
-`</head>`
+`<head>`<br>
+	`<meta charset="UTF-8">`<br>
+	`<meta name="viewport" content="width=device-width, initial-scale=1.0">`<br>
+	`<title>VDCA</title>`<br>
+	`<link rel="stylesheet" href="main.css">`<br>
+	`<link rel="icon" href="favicon.ico">`<br>
+`</head>`<br>
+
+I had not added the meta lines before and got to know it is a good practice to declare it beforehand.
+the second meta line is to make it dynamic (sort of). 
 
 ## Unexpected Token "{"
 When binarytree file was loaded, the console was priting Unexpected token "{" and was pointing to binarytree.css. 
