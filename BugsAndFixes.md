@@ -2,13 +2,13 @@
 
 ## Good practice to follow in <head> of html
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>VDCA</title>
-	<link rel="stylesheet" href="main.css">
-	<link rel="icon" href="favicon.ico">
-</head>
+`<head>`
+	`<meta charset="UTF-8">`
+	`<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+	`<title>VDCA</title>`
+	`<link rel="stylesheet" href="main.css">`
+	`<link rel="icon" href="favicon.ico">`
+`</head>`
 
 ## Unexpected Token "{"
 When binarytree file was loaded, the console was priting Unexpected token "{" and was pointing to binarytree.css. 
