@@ -1,5 +1,7 @@
 //alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
+
 const arrayList = [];
+
 function inputNumbers(){
     const item = document.getElementById('array_number').value.trim();
     if(item){
@@ -25,5 +27,18 @@ function deleteNumbers(){
     document.getElementById('array_number').value='';
 }
 
+function divide(){
+    console.log("dividing the nunmbers");
+    //const pivot = Math.floor(Math.random())
+    //decided to go with the median
+
+    var pivot = arrayList.length % 2 == 1 ? arrayList.length
+
+    // for(var i=0 ; i<arrayList.length ; ++i){
+    //     console.log(arrayList[i]);
+    // }
+}
+
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
+document.getElementById('divideButton').addEventListener('click', divide);
