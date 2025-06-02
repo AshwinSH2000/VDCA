@@ -32,11 +32,25 @@ function divide(){
     //const pivot = Math.floor(Math.random())
     //decided to go with the median
 
-    var pivot = arrayList.length % 2 == 1 ? arrayList.length
+    var first = arrayList[0];
+    var last = arrayList[arrayList.length-1];
+    var mid = arrayList.length%2==0 ? arrayList[ arrayList.length / 2] : arrayList[ (arrayList.length-1) / 2];
 
-    // for(var i=0 ; i<arrayList.length ; ++i){
-    //     console.log(arrayList[i]);
-    // }
+    console.log("first" + first);
+    console.log("mid" + mid);
+    console.log("last" + last);
+    var pivot = 0;
+
+    if ((first >= mid && first<=last) || (first >= last && first <= mid))
+        pivot=first;
+    else if ((mid>=first && mid<=last) || (mid>=last && mid<=first))
+        pivot=mid;
+    else
+        pivot=last;
+    
+    console.log("Pivot="+pivot);
+
+    //for putting elements to the left and right of pivot you need to do the actual quicksort partition step
 }
 
 document.getElementById('addButton').addEventListener('click', inputNumbers);
