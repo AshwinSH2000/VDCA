@@ -61,7 +61,13 @@ function divide(){
 
 function partition(arr, low, high, pivot_loc){
     let i=low-1;
-    let pivot_elem = arr[pivot_loc]
+    let pivot_elem = arr[pivot_loc];
+    console.log("-------");
+    console.log("Array is "+arr);
+    console.log("low is "+low);
+    console.log("high is "+high);
+    console.log("pivot_loc is "+pivot_loc);
+    console.log("-------");
 
     //moving the pivot element to the end to that it is easier to swap it in the end
     [arr[pivot_loc], arr[high]] = [arr[high], arr[pivot_loc]];
