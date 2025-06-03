@@ -1,5 +1,6 @@
 VDCA Implementation Notes
 
+1. Median pivot for quicksort
 To find the pivot, i decided to go with the median of elements.
 But that means sorting the array and then finding the middle.
 This defeats the purposr because my usecase was to sort it. 
