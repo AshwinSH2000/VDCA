@@ -1,14 +1,24 @@
 //alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
 
 const arrayList = [];
-let pivots = []
+let pivots = [];
 let level = 0;
 
 function inputNumbers(){
     const item = document.getElementById('array_number').value.trim();
+    console.log(typeof item);
+    
     if(item){
-        arrayList.push(item);
-        console.log("Added:", item, "Array:", arrayList);
+        // if(typeof Number(item)!=='number'){
+        //     alert("Please enter a valid number!");
+        // }
+        // else{
+            arrayList.push(Number(item));
+            console.log("Added:", item, "Array:", arrayList);
+       // }
+    }
+    else{
+        alert("Enter a number!");
     }
     document.getElementById('array_number').value = '';
 }
@@ -35,10 +45,10 @@ function divide(){
     {
         //this is the first "divide" operation. 
         let pivot=findPivot(arrayList, 0, arrayList.length-1);
+        console.log("IN DIVIDE... PIVOT IS "+pivot);
         pivots.push(pivot);
         partition(arrayList, 0, arrayList.length-1, arrayList.indexOf(pivot));
         level++;
-        // console.log("abcd"+pivots[0]);
     }
     else if(level==1){
         //this time 
@@ -55,8 +65,11 @@ function divide(){
         console.log("going for the third divide");
         level++;
     }
-    
 }
+
+// function divide2(){
+//     for(leti=0 ; i<=)
+// }
 
 
 function partition(arr, low, high, pivot_loc){
@@ -73,7 +86,7 @@ function partition(arr, low, high, pivot_loc){
     [arr[pivot_loc], arr[high]] = [arr[high], arr[pivot_loc]];
     for(let j=low ; j<high ; ++j){
         if(arr[j]<pivot_elem){
-            i++;
+            ++i;
             [arr[j], arr[i]] = [arr[i], arr[j]];
         }
     }
@@ -84,20 +97,34 @@ function partition(arr, low, high, pivot_loc){
 function findPivot(arr, low, high){
     let first = arr[low];
     let last = arr[high];
-    let mid = (high-low)%2==0 ? arr[ ((high-low)/2)+low ] : arr[ ((high-low+1)/2)+low ];
-
-    console.log("first" + first);
-    console.log("mid" + mid);
-    console.log("last" + last);
+    let mid = arr[Math.ceil((high-low)/2)];
+    // ((((high-low)%2)==0) ? (arr[ ((high-low)/2)+low ]) : (arr[ ((high-low+1)/2)+low ]));
+    
+    console.log("first elem=" + first); 
+    console.log("mid elem=" + mid); 
+    console.log("last elem=" + last); 
+    console.log(typeof first, typeof mid, typeof last);
     let pivot = 0;
+    if ( ((first > mid) && (first<last)) || 
+    ((first > last) && (first < mid)))
+    {
+        console.log("(first > mid)"+(first > mid) + " first="+first + " mid="+mid);
+        console.log("(first < last)"+(first<last));
+        console.log("(first > last)"+(first > last));
+        console.log("(first < mid)"+(first < mid)+ " first="+first + " mid="+mid);
 
-    if ((first >= mid && first<=last) || (first >= last && first <= mid))
         pivot=first;
+        console.log("first if case");
+    }           
     else if ((mid>=first && mid<=last) || (mid>=last && mid<=first))
+    {
         pivot=mid;
-    else
+        console.log("second if case");
+    }   
+    else{
         pivot=last;
-
+        console.log("last/third if case");
+    }
     console.log("Pivot="+pivot);
     return pivot;
 }
