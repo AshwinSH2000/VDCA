@@ -54,6 +54,7 @@ function deleteNumbers(){
 
 function divide(){
 
+
     if(level==0)
     {
         //this is the first "divide" operation. 
@@ -85,14 +86,26 @@ function divide(){
     }
 }
 function divide2(){
-    let i=0;
+
+    console.log("----------------------------------------------");
+
+    //let i=0;
+    if (level===arrayList.length-1){
+        console.log("reached max levels...terminating");
+        return;
+    }
+    if((pivots.length-1===arrayList.length)||(pivots.length>arrayList.length)){
+        console.log("array is sorted...terminating");
+        return;
+    }
+
     let noOfPivots = Math.pow(2,level);     //idk the use of this...let me check later
     let levelPivots=[];
     let counter=0;
 
-    while (i<noOfPivots){
+    while (counter<noOfPivots){
         if(level==0){
-            pivots.push(-1);         //this is the position of pivots. 
+            pivots.push(Number(-1));         //this is the position of pivots. 
             pivots.push(arrayList.length);    //this is also the position of pivots. 
 
             //findPivot retuens the actual pivot for that part of the array
@@ -110,10 +123,10 @@ function divide2(){
             console.log("pivot is "+tempPivot);
             console.log("array after 1 partition is "+arrayList);
             console.log("the pivots list is (only positions): "+ pivots);
-            console.log("---");
+            
         }
         else{
-            console.log("THE VALUE OF COUNTER IS "+counter+" AND i IS "+i);
+            console.log("THE VALUE OF COUNTER IS "+counter);
             let tempPivot = findPivot(arrayList, pivots[counter]+1, pivots[counter+1]-1);
 
             //call partition
@@ -125,23 +138,32 @@ function divide2(){
                 console.log("Since "+arrayList.indexOf(tempPivot)+" is not present, inserting it.");
                 pivots.push(arrayList.indexOf(tempPivot));
             }
-            counter++;
+            //counter++;
             //i++;
-            console.log("Currently at level "+level+" iteration "+i);
+            console.log("Currently at level "+level+" iteration "+counter);
             console.log("pivot is "+tempPivot);
             console.log("array after 1 partition is "+arrayList);
             console.log("the pivots list is (only positions): "+ pivots);
             console.log("---");
         }
-        i++;
+       //i++;
+       counter++;
         
     }
+    console.log("The array is ");
     level++;
-    pivots.sort();
+    pivots.sort(((a, b) => a - b));
     console.log("Sorted pivot is "+pivots);
+
+
+
+    console.log("----------------------------------------------");
 }
 
 function partition(arr, low, high, pivot_loc){
+
+    if(low>high)
+        return;
     let i=low-1;
     let pivot_elem = arr[pivot_loc];
 
@@ -163,6 +185,35 @@ Returns the pivot element (not its position)
 low and high are the actual starting and ending point of the subarray
 */
 function findPivot(arr, low, high){
+
+    console.log("I CAME HERE BROOOOO");
+    // if(low>high && high===-1){
+    //     //this is a special case
+    //     console.log("low>high && high===-1...so retuening lwo: "+arr[low]);
+    //     console.log("the value of low is "+low);
+    //     console.log("the value of high is "+high);
+    //     return arr[low];
+    // }
+    // else 
+    
+    
+    if(low>high && low===arrayList.length){
+        //most probably this will never be reached but verify the same
+        console.log("low>high && high===arrayList.length...so returning high:" );
+        console.log("arr high is "+arr[high]+" and arr low is "+arr[low]);
+        console.log("the value of low is "+low);
+        console.log("the value of high is "+high);
+        //thats because low can be 10 and high can be 9
+        return arr[high];
+    }
+    else if(low>high){
+        console.log("low>high ...so returning high: "+arr[low]);
+        console.log("arr high is "+arr[high]+" and arr low is "+arr[low]);
+        console.log("the value of low is "+low);
+        console.log("the value of high is "+high);
+        //thats because low can be 0 and high can be -1
+        return arr[low];
+    }
     
     console.log("the value of low is "+low);
     console.log("the value of high is "+high);
