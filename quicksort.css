@@ -35,6 +35,28 @@ h4{
   border: 0px solid #c2861e;
 }
 
+#bar-container3 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  height: 200px;
+  /* border: 1px solid #ccc; */
+  border: 0px solid #c2861e;
+}
+
+#bar-container4 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  height: 200px;
+  /* border: 1px solid #ccc; */
+  border: 0px solid #c2861e;
+}
+
 .bar {
   width: 30px;
   background-color: steelblue;
