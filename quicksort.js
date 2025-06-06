@@ -94,13 +94,12 @@ function divide2(){
         console.log("reached max levels...terminating");
         return;
     }
-    if((pivots.length-1===arrayList.length)||(pivots.length>arrayList.length)){
+    if(pivots.length>arrayList.length){
         console.log("array is sorted...terminating");
         return;
     }
 
-    let noOfPivots = Math.pow(2,level);     //idk the use of this...let me check later
-    let levelPivots=[];
+    let noOfPivots = Math.pow(2,level);     
     let counter=0;
 
     while (counter<noOfPivots){
@@ -152,6 +151,7 @@ function divide2(){
     }
     console.log("The array is ");
     level++;
+    visualise();
     pivots.sort(((a, b) => a - b));
     console.log("Sorted pivot is "+pivots);
 
