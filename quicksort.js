@@ -54,6 +54,17 @@ function deleteNumbers(){
 
 function divide(){
 
+    let map = new Map();
+map.set(3, "ash");
+map.set(2, "win");
+
+for (let [key, value] of map.entries()) {
+  console.log(`Key: ${key}, Type: ${typeof key}`);
+}
+    console.log(map);
+    map.
+    console.log(map);
+    return;
 
     if(level==0)
     {
@@ -102,62 +113,66 @@ function divide2(){
     let noOfPivots = Math.pow(2,level);     
     let counter=0;
 
-    while (counter<Math.min(noOfPivots, arrayList.length+1)){
+    while (counter<Math.min(noOfPivots, arrayList.length+1)){       //is +1 necessary?
         if(level==0){
-            pivots.push(Number(-1));         //this is the position of pivots. 
-            pivots.push(arrayList.length);    //this is also the position of pivots. 
+            
+            pivots.push({ position: Number(-1), pivot: Number(-1)} );         //this is the position of 
+            pivots.push( {position: arrayList.length, pivot: -1});    //this is also the position of pivots. 
+            console.log("I AM HERE!!!");
+            console.log(pivots);
 
+            //test code
+            // console.log(pivots.some(p => p.position===-1 && p.pivot===-1));
+            // console.log(pivots.some(p => p.position===-1 && p.pivot===-2));
+            // console.log(pivots.some(p => p.position===-2 && p.pivot===-1));
+            // return;
+            
             //findPivot retuens the actual pivot for that part of the array
-            let tempPivot = findPivot(arrayList, pivots[counter]+1, pivots[counter+1]-1);
+            let tempPivot = findPivot(arrayList, pivots[counter].position+1, pivots[counter+1].position-1);
 
             //call partition
-            partition(arrayList, pivots[counter]+1, pivots[counter+1]-1, arrayList.indexOf(tempPivot));
+            partition(arrayList, pivots[counter].position+1, pivots[counter+1].position-1, arrayList.indexOf(tempPivot));
 
             //store the position of the pivot for next rounds
-            pivots.push(arrayList.indexOf(tempPivot));
+            pivots.push({ position: arrayList.indexOf(tempPivot) , pivot: tempPivot});
             //pivots.sort();  commenting since have that statement at the end. 
-            //i++;
             
             console.log("Currently at level 0");
             console.log("pivot is "+tempPivot);
             console.log("array after 1 partition is "+arrayList);
-            console.log("the pivots list is (only positions): "+ pivots);
+            console.log("the pivots list is (only positions): ", pivots);
             
         }
         else{
             console.log("THE VALUE OF COUNTER IS "+counter);
-            let tempPivot = findPivot(arrayList, pivots[counter]+1, pivots[counter+1]-1);
+            let tempPivot = findPivot(arrayList, pivots[counter].position+1, pivots[counter+1].position-1);
 
             //call partition
-            partition(arrayList, pivots[counter]+1, pivots[counter+1]-1, arrayList.indexOf(tempPivot));
+            partition(arrayList, pivots[counter].position+1, pivots[counter+1].position-1, arrayList.indexOf(tempPivot));
 
             //push the pivot position only if is is not present in the array
-            if(!pivots.includes(arrayList.indexOf(tempPivot)))
+            //if(!pivots.includes(arrayList.indexOf(tempPivot)))   this is the old code
+            if(!pivots.some(p=> p.position===arrayList.indexOf(tempPivot) && p.pivot===tempPivot))
             {
                 console.log("Since "+arrayList.indexOf(tempPivot)+" is not present, inserting it.");
-                pivots.push(arrayList.indexOf(tempPivot));
+                pivots.push({position: arrayList.indexOf(tempPivot), pivot: tempPivot});
             }
-            //counter++;
-            //i++;
+            
             console.log("Currently at level "+level+" iteration "+counter);
             console.log("pivot is "+tempPivot);
             console.log("array after 1 partition is "+arrayList);
-            console.log("the pivots list is (only positions): "+ pivots);
+            console.log("the pivots list is (only positions): ", pivots);
             console.log("---");
         }
-       //i++;
        counter++;
         
     }
     console.log("The array is ", arrayList);
-    pivots.sort(((a, b) => a - b));
-    console.log("Sorted pivot is "+pivots);
+    pivots.sort(((a, b) => a.position - b.position));
+    console.log("Sorted pivot is ", pivots);
     
     visualise();
     level++;
-    
-
-
 
     console.log("----------------------------------------------");
 }
@@ -172,7 +187,7 @@ function partition(arr, low, high, pivot_loc){
     //moving the pivot element to the end to that it is easier to swap it in the end
     [arr[pivot_loc], arr[high]] = [arr[high], arr[pivot_loc]];
     for(let j=low ; j<high ; ++j){
-        if(arr[j]<pivot_elem){
+        if(arr[j]<=pivot_elem){
             ++i;
             [arr[j], arr[i]] = [arr[i], arr[j]];
         }
@@ -206,7 +221,7 @@ function findPivot(arr, low, high){
         console.log("the value of low is "+low);
         console.log("the value of high is "+high);
         //thats because low can be 10 and high can be 9
-        return arr[high];
+        return [high, arr[high]];
     }
     else if(low>high){
         console.log("low>high ...so returning high: "+arr[low]);
@@ -214,7 +229,7 @@ function findPivot(arr, low, high){
         console.log("the value of low is "+low);
         console.log("the value of high is "+high);
         //thats because low can be 0 and high can be -1
-        return arr[low];
+        return [low, arr[low]];
     }
     
     console.log("the value of low is "+low);
@@ -228,21 +243,25 @@ function findPivot(arr, low, high){
     console.log("mid elem=" + mid); 
     console.log("last elem=" + last); 
     // console.log(typeof first, typeof mid, typeof last);
-    let pivot = 0;
+    let pivot = -1;
+    let pos = -1;
     if ( ((first > mid) && (first<last)) || 
     ((first > last) && (first < mid)))
     {
         pivot=first;
+        pos=low;
     }           
     else if ((mid>=first && mid<=last) || (mid>=last && mid<=first))
     {
         pivot=mid;
+        pos=Math.ceil((high-low)/2)+low;
     }   
     else{
         pivot=last;
+        pos=high;
     }
     console.log("Pivot="+pivot);
-    return pivot;
+    return [pos,pivot];
 }
 
 
