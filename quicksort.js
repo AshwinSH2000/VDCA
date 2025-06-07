@@ -102,7 +102,7 @@ function divide2(){
     let noOfPivots = Math.pow(2,level);     
     let counter=0;
 
-    while (counter<noOfPivots){
+    while (counter<Math.min(noOfPivots, arrayList.length+1)){
         if(level==0){
             pivots.push(Number(-1));         //this is the position of pivots. 
             pivots.push(arrayList.length);    //this is also the position of pivots. 
@@ -149,11 +149,12 @@ function divide2(){
        counter++;
         
     }
-    console.log("The array is ");
-    level++;
-    visualise();
+    console.log("The array is ", arrayList);
     pivots.sort(((a, b) => a - b));
     console.log("Sorted pivot is "+pivots);
+    level++;
+    visualise();
+    
 
 
 
@@ -258,6 +259,8 @@ function visualise(){
             document.getElementById('bar-container3').appendChild(bar);
         else if(level==2)
             document.getElementById('bar-container4').appendChild(bar);
+        else if(level==3)
+            document.getElementById('bar-container5').appendChild(bar);
 
     }      
 }
