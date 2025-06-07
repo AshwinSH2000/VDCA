@@ -152,8 +152,9 @@ function divide2(){
     console.log("The array is ", arrayList);
     pivots.sort(((a, b) => a - b));
     console.log("Sorted pivot is "+pivots);
-    level++;
+    
     visualise();
+    level++;
     
 
 

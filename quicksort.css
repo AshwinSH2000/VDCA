@@ -21,7 +21,7 @@ h4{
   margin-top: 10px;
   height: 200px;
   /* border: 1px solid #ccc; */
-  border: 0px solid #21a86b;
+  border: 1px solid #21a86b;
 }
 
 #bar-container2 {
@@ -32,7 +32,7 @@ h4{
   margin-top: 10px;
   height: 200px;
   /* border: 1px solid #ccc; */
-  border: 0px solid #c2861e;
+  border: 1px solid #c2861e;
 }
 
 #bar-container3 {
@@ -43,7 +43,7 @@ h4{
   margin-top: 10px;
   height: 200px;
   /* border: 1px solid #ccc; */
-  border: 0px solid #c2861e;
+  border: 1px solid #c21e1e;
 }
 
 #bar-container4 {
@@ -54,7 +54,7 @@ h4{
   margin-top: 10px;
   height: 200px;
   /* border: 1px solid #ccc; */
-  border: 0px solid #c2861e;
+  border: 1px solid #c2861e;
 }
 
 #bar-container5 {
@@ -65,7 +65,7 @@ h4{
   margin-top: 10px;
   height: 200px;
   /* border: 1px solid #ccc; */
-  border: 0px solid #c2861e;
+  border: 1px solid #1e60c2;
 }
 
 .bar {
