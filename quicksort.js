@@ -117,7 +117,7 @@ function divide2(){
 
         if(level==0){
             
-            pivots.push({ position: Number(-1), pivot: Number(-1)} );         //this is the position of 
+            pivots.push({ position: Number(-1), pivot: -1 } );         //this is the position of 
             pivots.push( {position: arrayList.length, pivot: -1});    //this is also the position of pivots. 
             console.log("I AM HERE!!!");
             console.log(pivots);
@@ -146,7 +146,10 @@ function divide2(){
         }
         else{
             if(pivots[counter].position===arrayList.length && pivots[counter].pivot===-1)
-            {
+            {       
+                    //this if case it to check if... in this level, is the counter accessing pivots 
+                    //beyond what it needs to access?
+                    //there can be pivots beyond this pivot but its for next level only. 
                     console.log("wait what happened?");
                     break;
             }
