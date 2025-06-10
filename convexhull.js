@@ -74,10 +74,13 @@ function divideCoordinates(){
         else
         {
             console.log("Need to find a CH using algo");
+            let median = findMedianPartition(coordinates, 0, coordinates.length-1);
+            console.log("The median for division is", median);
         }
         level++;
     }
 }
+
 
 function checkCollinear(coord, low, high){
     if(coord.length<=1){
@@ -125,8 +128,19 @@ function checkCollinear(coord, low, high){
     */
 
 }
-function findMedianPartition(){
-
+function findMedianPartition(coord, low, high){
+    let setOfXCoord = [];
+    let i=low;
+    while (i<=high){
+        if(!setOfXCoord.includes(coord[i][0]))
+            setOfXCoord.push(coord[i][0]);
+        i++;
+    }
+    setOfXCoord.sort((a,b)=> a-b);
+    console.log("The sorted non repetitive x coordinates are", setOfXCoord);
+    let size = Math.floor(setOfXCoord.length/2);
+    let median = (setOfXCoord[size-1]+setOfXCoord[size])/2;
+    return median;
 }
 document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
