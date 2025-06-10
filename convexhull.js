@@ -67,7 +67,14 @@ function divideCoordinates(){
         partitions.push(-1);
         partitions.push(11);
         console.log(partitions);
-        checkCollinear(coordinates, 0, coordinates.length-1);
+        let CH = checkCollinear(coordinates, 0, coordinates.length-1)
+        if(CH){
+            console.log("Uhe CH is a line joining", CH);
+        }
+        else
+        {
+            console.log("Need to find a CH using algo");
+        }
         level++;
     }
 }
@@ -76,12 +83,14 @@ function checkCollinear(coord, low, high){
     if(coord.length<=1){
         //its just a point. hence trivially collinear
         console.log("Just a point in the set");
-        return true;
+        //returning coord because it has just one point and that is the CH
+        return coord;
     }
     if(coord.length==2){
         //they are collinear because there are only two points!
         console.log("The two points are collinear");
-        return true;
+        //returning the coord because it has two points and that is the CH
+        return coord;
     }
     
     let refCoord1 = coord[low];         //x1 and y1
@@ -100,7 +109,12 @@ function checkCollinear(coord, low, high){
         i++;
     }
     console.log("Loop finished which means the points are collinear");
-    return true;
+    coord.sort((a,b) => a[0]-b[0]);
+    let collinearCH = []
+    collinearCH.push(coord[low]);
+    collinearCH.push(coord[high]);
+    console.log("Sorted coords are", coord, "and CH is", collinearCH);
+    return collinearCH;
     /*
     The slope calculation fails when the denominator is zero
     To avoid that we do cross product calculation. How does it work?
