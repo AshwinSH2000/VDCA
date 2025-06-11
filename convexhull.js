@@ -1,5 +1,6 @@
 let coordinates = [];
 let partitions = [];
+let partitions2 = [];
 let level=0;
 function inputCoordinates() {
     // @type {HTMLInputElement}
@@ -18,10 +19,8 @@ function inputCoordinates() {
         return;
     }
     if(coord){ 
-        
         console.log("Coord is this inside if case:", coord);
-        if(coord[0]<=10 && coord[1]<=10)
-        {
+        if(coord[0]<=10 && coord[1]<=10){
             coordinates.push(coord);   
             console.log("The input coord is", coordinates);
         }
@@ -67,33 +66,106 @@ function divideCoordinates(){
         partitions.push(-1);
         partitions.push(11);
         console.log(partitions);
+        coordinates.sort((a,b)=>a[0]-b[0]);
         let CH = checkCollinear(coordinates, 0, coordinates.length-1)
-        if(CH){
-            console.log("Uhe CH is a line joining", CH);
+        if(CH==null){
+            console.log("Empty coordinates array. Hence no CH");
+        }
+        else if(CH){
+            console.log("The CH is a line joining", CH);
         }
         else
         {
             console.log("Need to find a CH using algo");
             let median = findMedianPartition(coordinates, 0, coordinates.length-1);
             console.log("The median for division is", median);
+            partitions.push(median);
+            partitions.sort((a,b)=>a-b);
+            console.log("New partitions is", partitions);
         }
+        level++;
+    }
+    else{
+        //any other level
+        /*
+        What to do?
+        1. check for collinearity of the points in each of the partition. 
+        2. Else check for the median and add it to the partition
+        */
+        
+        //sanity check ... are partitions and coordinates in order?
+        console.log("Partitions", partitions);
+        console.log("Coordinates", coordinates);
+        let counter = 0;
+        
+        while(counter < partitions.length-1){
+            //this runs partitions.length-1 times
+            //check what are the coordinates between partitions[counter] and partitions[counter+1]
+            let i=0;
+            let lowerLimit = partitions[counter];
+            let upperLimit = partitions[counter+1];
+            let low=-1;
+            let high=-1;
+            while(i<coordinates.length){
+                if(coordinates[i][0]>=lowerLimit && coordinates[i][0]<=upperLimit){
+                    //this point is in range.
+                    if(low===-1){
+                        low=high=i;
+                    }
+                    else{
+                        high=i;
+                    }
+                }
+                i++;
+            }
+            console.log("partition",counter,"is",low,high);
+
+            //checking for collinearity
+            let CH = checkCollinear(coordinates, low, high);
+            if(CH){
+                // do i need to include the entire portion of code as written in level 0?
+                console.log("The CH is a line joining", CH);
+            }
+            else{
+                console.log("Need to find a CH using algo");
+                let median = findMedianPartition(coordinates, low, high);
+                console.log("The median for division is", median);
+                partitions2.push(median);
+                partitions2.sort((a,b)=>a-b);
+                console.log("New partitions is", partitions); 
+            }
+            counter++
+            console.log("----------------End of iteration",counter,"in level",level);
+        }
+        console.log("----------------End of level",level,"----------------");
         level++;
     }
 }
 
 
 function checkCollinear(coord, low, high){
-    if(coord.length<=1){
+    //if(coord.length===0){
+    if(low>high){
+        //will this ever get executed? check it
+        console.log("Empty coordinates array. ");
+        return null;
+    }
+    //if(coord.length===1){
+    if(high-low===0){
         //its just a point. hence trivially collinear
         console.log("Just a point in the set");
         //returning coord because it has just one point and that is the CH
-        return coord;
+        return coord[high];
     }
-    if(coord.length==2){
+    //if(coord.length===2){
+    if(high-low===1){
         //they are collinear because there are only two points!
         console.log("The two points are collinear");
         //returning the coord because it has two points and that is the CH
-        return coord;
+        let collinearCH = [];
+        collinearCH.push(coord[low]);
+        collinearCH.push(coord[high]);
+        return collinearCH;
     }
     
     let refCoord1 = coord[low];         //x1 and y1
