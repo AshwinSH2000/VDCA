@@ -1,6 +1,6 @@
 let coordinates = [];
 let partitions = [];
-// let partitions2 = [];
+let convexHulls = [];
 let partitionAdded = true;
 let level=0;
 function inputCoordinates() {
@@ -65,10 +65,13 @@ function divideCoordinates(){
     
     if(partitionAdded===false){
         console.log("All partitions are now terminal convex hulls. No further division needed. ");
+        console.log("The final terminal CHs are", convexHulls);
         return;
     }
     partitionAdded=false;
     if(level==0){
+        document.getElementById('addButton2').disabled=true;
+        document.getElementById('deleteButton2').disabled=true;
         partitions.push(-1);
         partitions.push(11);
         console.log(partitions);
@@ -79,6 +82,7 @@ function divideCoordinates(){
         }
         else if(CH){
             console.log("The CH is a line joining", CH);
+            convexHulls.push(CH);
         }
         else
         {
@@ -133,9 +137,11 @@ function divideCoordinates(){
                 // do i need to include the entire portion of code as written in level 0?
                 if(CH.length===1){
                     console.log("The CH is the point", CH);
+                    convexHulls.push(CH);
                 }
                 else{
                     console.log("The CH is a line joining", CH);
+                    convexHulls.push(CH);
                 }
             }
             else{
@@ -223,6 +229,21 @@ function findMedianPartition(coord, low, high){
     let median = (setOfXCoord[size-1]+setOfXCoord[size])/2;
     return median;
 }
+function conquerCoordinates(){
+
+}
+function resetConvexHull(){
+    document.getElementById('addButton2').disabled=false;
+    document.getElementById('deleteButton2').disabled=false;
+    coordinates = [];
+    partitions = [];
+    partitionAdded = true;
+    level=0;
+    console.log("reset all things");
+    console.clear();
+    console.log("Reset the interface. Starting fresh!");
+}
 document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
+document.getElementById('resetButton2').addEventListener('click', resetConvexHull);

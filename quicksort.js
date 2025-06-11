@@ -1,6 +1,6 @@
 //alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
 
-const arrayList = [];
+let arrayList = [];
 let pivots = [];
 let level = 0;
 
@@ -55,8 +55,8 @@ function deleteNumbers(){
 function divide(){
 
     let map = new Map();
-map.set(3, "ash");
-map.set(2, "win");
+    map.set(3, "ash");
+    map.set(2, "win");
 
 for (let [key, value] of map.entries()) {
   console.log(`Key: ${key}, Type: ${typeof key}`);
@@ -116,6 +116,9 @@ function divide2(){
     while (counter<Math.min(noOfPivots, arrayList.length+1)){       //is +1 necessary?
 
         if(level==0){
+
+            document.getElementById('addButton').disabled= true;
+            document.getElementById('deleteButton').disabled=true;
             
             pivots.push({ position: Number(-1), pivot: -1 } );         //this is the position of 
             pivots.push( {position: arrayList.length, pivot: -1});    //this is also the position of pivots. 
@@ -298,7 +301,21 @@ function visualise(){
     }      
 }
 
+function resetQuickSort(){
+    //this has many debugging statements. clear them
+    console.log("reached reset");
+    document.getElementById('addButton').disabled=false;
+    document.getElementById('deleteButton').disabled=false;
+    console.log("enabled all the buttons");
+    level=0;
+    pivots=[];
+    arrayList=[];
+    console.log("reset all the variables");
+    console.clear();
+    console.log("Reset the interface. Starting fresh!");
+}
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
 document.getElementById('divideButton').addEventListener('click', divide);
 document.getElementById('conquerButton').addEventListener('click', divide2);
+document.getElementById('resetButton').addEventListener('click', resetQuickSort);
