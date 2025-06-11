@@ -1,6 +1,7 @@
 let coordinates = [];
 let partitions = [];
-let partitions2 = [];
+// let partitions2 = [];
+let partitionAdded = true;
 let level=0;
 function inputCoordinates() {
     // @type {HTMLInputElement}
@@ -62,6 +63,11 @@ function deleteCoordinates() {
 
 function divideCoordinates(){
     
+    if(partitionAdded===false){
+        console.log("All partitions are now terminal convex hulls. No further division needed. ");
+        return;
+    }
+    partitionAdded=false;
     if(level==0){
         partitions.push(-1);
         partitions.push(11);
@@ -80,6 +86,7 @@ function divideCoordinates(){
             let median = findMedianPartition(coordinates, 0, coordinates.length-1);
             console.log("The median for division is", median);
             partitions.push(median);
+            partitionAdded=true;
             partitions.sort((a,b)=>a-b);
             console.log("New partitions is", partitions);
         }
@@ -97,8 +104,8 @@ function divideCoordinates(){
         console.log("Partitions", partitions);
         console.log("Coordinates", coordinates);
         let counter = 0;
-        
-        while(counter < partitions.length-1){
+        let partitionsLength = partitions.length;
+        while(counter < partitionsLength-1){
             //this runs partitions.length-1 times
             //check what are the coordinates between partitions[counter] and partitions[counter+1]
             let i=0;
@@ -124,20 +131,26 @@ function divideCoordinates(){
             let CH = checkCollinear(coordinates, low, high);
             if(CH){
                 // do i need to include the entire portion of code as written in level 0?
-                console.log("The CH is a line joining", CH);
+                if(CH.length===1){
+                    console.log("The CH is the point", CH);
+                }
+                else{
+                    console.log("The CH is a line joining", CH);
+                }
             }
             else{
                 console.log("Need to find a CH using algo");
                 let median = findMedianPartition(coordinates, low, high);
                 console.log("The median for division is", median);
-                partitions2.push(median);
-                partitions2.sort((a,b)=>a-b);
+                partitions.push(median);
+                partitionAdded=true;
                 console.log("New partitions is", partitions); 
             }
             counter++
             console.log("----------------End of iteration",counter,"in level",level);
         }
         console.log("----------------End of level",level,"----------------");
+        partitions.sort((a,b)=>a-b);
         level++;
     }
 }
@@ -155,17 +168,14 @@ function checkCollinear(coord, low, high){
         //its just a point. hence trivially collinear
         console.log("Just a point in the set");
         //returning coord because it has just one point and that is the CH
-        return coord[high];
+        return [coord[high]];
     }
     //if(coord.length===2){
     if(high-low===1){
         //they are collinear because there are only two points!
         console.log("The two points are collinear");
         //returning the coord because it has two points and that is the CH
-        let collinearCH = [];
-        collinearCH.push(coord[low]);
-        collinearCH.push(coord[high]);
-        return collinearCH;
+        return [coord[low],coord[high]] ;
     }
     
     let refCoord1 = coord[low];         //x1 and y1
@@ -185,11 +195,10 @@ function checkCollinear(coord, low, high){
     }
     console.log("Loop finished which means the points are collinear");
     coord.sort((a,b) => a[0]-b[0]);
-    let collinearCH = []
-    collinearCH.push(coord[low]);
-    collinearCH.push(coord[high]);
-    console.log("Sorted coords are", coord, "and CH is", collinearCH);
-    return collinearCH;
+    console.log("Sorted coords are", coord, "and CH is", [coord[low],coord[high]] );
+    // return collinearCH;
+    return [coord[low],coord[high]] ;
+
     /*
     The slope calculation fails when the denominator is zero
     To avoid that we do cross product calculation. How does it work?
