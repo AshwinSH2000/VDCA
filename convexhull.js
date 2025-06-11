@@ -134,13 +134,14 @@ function divideCoordinates(){
             //checking for collinearity
             let CH = checkCollinear(coordinates, low, high);
             if(CH){
-                // do i need to include the entire portion of code as written in level 0?
                 if(CH.length===1){
                     console.log("The CH is the point", CH);
-                    convexHulls.push(CH);
                 }
                 else{
                     console.log("The CH is a line joining", CH);
+                }
+                //this if case is common to both the cases. hence added at the bottom
+                if(!convexHulls.some(p=>(p[0][0]===CH[0][0]&&p[0][1]===CH[0][1]))){
                     convexHulls.push(CH);
                 }
             }
@@ -230,7 +231,9 @@ function findMedianPartition(coord, low, high){
     return median;
 }
 function conquerCoordinates(){
-
+    //access convexHulls array and partitions array
+    console.log("The CHs are:",convexHulls);
+    console.log("The partitions are:",partitions);
 }
 function resetConvexHull(){
     document.getElementById('addButton2').disabled=false;
@@ -247,3 +250,4 @@ document.getElementById('addButton2').addEventListener('click', inputCoordinates
 document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
 document.getElementById('resetButton2').addEventListener('click', resetConvexHull);
+document.getElementById('conquerButton2').addEventListener('click', conquerCoordinates);
