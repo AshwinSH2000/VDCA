@@ -254,22 +254,22 @@ function conquerCoordinates(){
     // test code...can be removed
     // // let left = [[0,1],[1,0],[1,6],[2,1]];
     // // let right = [[5,3], [6,10], [6,2], [7,1]];
-    let left=[];
-    let right = [];
-    left.push({
-        points: [[0,1],[1,0],[1,2],[2,1]],
-        level: 0,
-        index: 1
-    });
-    right.push({
-        points: [[5,1], [6,0], [6,2], [7,1]],
-        level: 0,
-        index: 1
-    })
-    console.log("KHLKEHLSERH GALHAILUERFH",left[0].points);
-    console.log("RIGHT GALHAILUERFH",right[0].points);
-    mergeConvexHulls(left[0].points, right[0].points);
-    return;
+    // let left=[];
+    // let right = [];
+    // left.push({
+    //     points: [[0,1],[1,0],[1,2],[2,1]],
+    //     level: 0,
+    //     index: 1
+    // });
+    // right.push({
+    //     points: [[5,1], [6,0], [6,2], [7,1]],
+    //     level: 0,
+    //     index: 1
+    // })
+    // console.log("KHLKEHLSERH GALHAILUERFH",left[0].points);
+    // console.log("RIGHT GALHAILUERFH",right[0].points);
+    // mergeConvexHulls(left[0].points, right[0].points);
+    // return;
 
     //begin actual conquer phase
 
@@ -288,7 +288,7 @@ function conquerCoordinates(){
     levelHulls.sort((a,b)=>a.index-b.index);
 
     let merged = [];    //this is an array to store merged hulls (so that we do not increase the length of levelHulls during its traversal)
-
+    let i=0;
     while(i<levelHulls.length){
         if (i + 1 < levelHulls.length) {
             let left = levelHulls[i];
