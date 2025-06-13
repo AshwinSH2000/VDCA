@@ -435,10 +435,10 @@ function mergeConvexHulls(leftHulls, rightHulls){
 
             //it means one of the two is zero.
             //mathematically it can also mean both are zero but thats not possible in this case
-            if(inRangeUpper||inRangeLower)
+            // if(inRangeUpper||inRangeLower)
                 mergedHull.push(leftHulls[i]);
-            else
-                console.log("THIS WILL PROBABLY NEVER GET EXECUTED...1");
+            // else
+                // console.log("THIS WILL PROBABLY NEVER GET EXECUTED...1");
         }
         else{
             if(!inRangeUpper && !inRangeLower){
@@ -460,10 +460,12 @@ function mergeConvexHulls(leftHulls, rightHulls){
             console.log("Product is zero for point", rightHulls[i]);
             //it means one of the two is zero.
             //mathematically it can also mean both are zero but thats not possible in this case
-            if(inRangeUpper||inRangeLower)
+
+
+            // if(inRangeUpper||inRangeLower)
                 mergedHull.push(rightHulls[i]);
-            else
-                console.log("THIS WILL PROBABLY NEVER GET EXECUTED...2")
+            // else
+                // console.log("THIS WILL PROBABLY NEVER GET EXECUTED...2")
         }
         else{
             
@@ -486,7 +488,7 @@ function checkInRange(P,Q,R){
 
     console.log("P[0]",P[0],"and Q[0]",Q[0],"and R[0]",R[0]);
     console.log("P[1]",P[1],"and Q[1]",Q[1],"and R[1]",R[1]);
-    if(( Math.min(P[0],Q[0])<=R[0] && R[0]<=Math.max(P[0],Q[0]) ) )
+    if(( Math.min(P[0],Q[0])<R[0] && R[0]<Math.max(P[0],Q[0]) ) )
         //&&
     //   ( Math.min(P[1],Q[1])<=R[1] && R[1]<=Math.max(P[1],Q[1]) ))
     {   
