@@ -324,9 +324,21 @@ function conquerCoordinates(){
  
     // If only one hull left at level 0, done!
     if (hulls.length === 1 && hulls[0].level === 0) {
-        alert("✅ Final convex hull computed!");
-        console.log("FINAL CH:", hulls[0].points);
+        //alert("✅ Final convex hull computed!");
+        console.log("The merging is complete...FINAL CH:", hulls[0].points);
+        document.getElementById('finalans').textContent='The final convex hull is:';
+        //need to fix this one
+        let string_ans = []
+        for(let i=0 ; i<hulls[0].points.length ; i++)
+        {
+            string_ans.push("["+hulls[0].points[i]+"]");
+        }
+        console.log("String ans is...",string_ans);
+        // document.getElementById('finalans').value=Array(hulls[0].points);
+        document.getElementById('finalans2').textContent=string_ans;
+
     }
+    
 }
 
 function mergeConvexHulls(leftHulls, rightHulls){
