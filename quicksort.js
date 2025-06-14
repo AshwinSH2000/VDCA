@@ -316,6 +316,6 @@ function resetQuickSort(){
 }
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
-document.getElementById('divideButton').addEventListener('click', divide);
+document.getElementById('divideButton').addEventListener('click', divide2);
 document.getElementById('conquerButton').addEventListener('click', divide2);
 document.getElementById('resetButton').addEventListener('click', resetQuickSort);

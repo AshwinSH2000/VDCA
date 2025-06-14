@@ -216,10 +216,16 @@ function checkCollinear(coord, low, high){
         i++;
     }
     console.log("Loop finished which means the points are collinear");
-    coord.sort((a,b) => a[0]-b[0]);
-    console.log("Sorted coords are", coord, "and CH is", [coord[low],coord[high]] );
+    coord.sort((a,b) => a[0]-b[0] || a[1] - b[1]);
+    let returnCH=[];
+    i=low;
+    while(i<=high){
+        returnCH.push(coord[i]);
+        i++;
+    } 
+    console.log("Sorted coords are", coord, "and CH is", returnCH);
     // return collinearCH;
-    return [coord[low],coord[high]] ;
+    return returnCH ;
 
     /*
     The slope calculation fails when the denominator is zero
@@ -363,7 +369,13 @@ function mergeConvexHulls(leftHulls, rightHulls){
     //fixed the rightmost... now iterating through the righthull
     let i=0;
     let crossProd=0;
-    while(i<rightHulls.length){
+    let changed=true;
+
+    while(changed){
+
+    changed=false;
+
+    for(i=0;i<rightHulls.length;i++){
         //cross(A,B,C)=(x2−x1)(y3−y1)−(y2−y1)(x3−x1)
         crossProd = (rightHullPointUpper[0]-leftHullPointUpper[0])*(rightHulls[i][1]-leftHullPointUpper[1]) - 
                     (rightHullPointUpper[1]-leftHullPointUpper[1])*(rightHulls[i][0]-leftHullPointUpper[0]);
@@ -371,24 +383,23 @@ function mergeConvexHulls(leftHulls, rightHulls){
             //it means point rightHulls[i] is the point where we anchor our tangent end point in righthull
             leftHullPointUpper = rightHulls[i];
             console.log("Updating leftmost (in rightHulls)");
+            changed=true;
         }
-        i++;
     }
 
     //after coming out of loop, leftmost will be anchored
-    i=0;
-    crossProd=0;
-    while(i<leftHulls.length){
+    for(i=0;i<leftHulls.length;i++){
         crossProd = (rightHullPointUpper[0]-leftHullPointUpper[0])*(leftHulls[i][1]-leftHullPointUpper[1]) - 
                     (rightHullPointUpper[1]-leftHullPointUpper[1])*(leftHulls[i][0]-leftHullPointUpper[0]);
         if(crossProd<0){
             //it means point leftHulls[i] is the point where we anchor out tangent end point in lefthull
             rightHullPointUpper = leftHulls[i];
             console.log("Updating rightmost (in leftHulls)");
+            changed=true;
         }
-        i++;
     }
 
+    }
     console.log("The top tangent is a line passing through ", leftHullPointUpper, "and", rightHullPointUpper);
 
 
@@ -398,35 +409,38 @@ function mergeConvexHulls(leftHulls, rightHulls){
     let leftHullPointLower = rightHulls[0]; //(x1, y1)
 
     //fixed the rightmost... now iterating through the righthull
-    i=0;
-    crossProd=0;
-    while(i<rightHulls.length){
+    changed=true;
+    while(changed){
+        changed=false;
+    
+    for(i=0;i<rightHulls.length;i++){
         //cross(A,B,C)=(x2−x1)(y3−y1)−(y2−y1)(x3−x1)
+        console.log("Looking at point", rightHulls[i]);
         crossProd = (rightHullPointLower[0]-leftHullPointLower[0])*(rightHulls[i][1]-leftHullPointLower[1]) - 
                     (rightHullPointLower[1]-leftHullPointLower[1])*(rightHulls[i][0]-leftHullPointLower[0]);
         if(crossProd>0){
             //it means point rightHulls[i] is the point where we anchor our tangent end point in righthull
             leftHullPointLower = rightHulls[i];
             console.log("Updating leftmost (in rightHulls)");
+            changed=true;
         }
-        i++;
     }
     //after coming out of loop, leftmost will be anchored
 
 
-    i=0;
-    crossProd=0;
-    while(i<leftHulls.length){
+    for(i=0;i<leftHulls.length;i++){
+        console.log("Looking at point", leftHulls[i]);
         crossProd = (rightHullPointLower[0]-leftHullPointLower[0])*(leftHulls[i][1]-leftHullPointLower[1]) - 
                     (rightHullPointLower[1]-leftHullPointLower[1])*(leftHulls[i][0]-leftHullPointLower[0]);
         if(crossProd>0){
             //it means point leftHulls[i] is the point where we anchor out tangent end point in lefthull
             rightHullPointLower = leftHulls[i];
             console.log("Updating rightmost (in leftHulls)");
+            changed=true;
         }
-        i++;
     }
 
+    }
     console.log("The bottom tangent is a line passing through ", leftHullPointLower, "and", rightHullPointLower);
 
     //check which points actually form the merged hull
@@ -480,10 +494,6 @@ function mergeConvexHulls(leftHulls, rightHulls){
                 // console.log("THIS WILL PROBABLY NEVER GET EXECUTED...2")
         }
         else{
-            
-            if(rightHulls[i][0]===7 && rightHulls[i][1]===1){
-                console.log("HELOOOOÒÓÔÖ;;;;;;;;;;;;;;;;;;;;;;;",inRangeUpper,inRangeLower);
-            }
             if(!inRangeUpper && !inRangeLower){
                 console.log("Pushing", rightHulls[i]);
                 mergedHull.push(rightHulls[i]);
@@ -498,8 +508,8 @@ function mergeConvexHulls(leftHulls, rightHulls){
 
 function checkInRange(P,Q,R){
 
-    console.log("P[0]",P[0],"and Q[0]",Q[0],"and R[0]",R[0]);
-    console.log("P[1]",P[1],"and Q[1]",Q[1],"and R[1]",R[1]);
+    // console.log("P[0]",P[0],"and Q[0]",Q[0],"and R[0]",R[0]);
+    // console.log("P[1]",P[1],"and Q[1]",Q[1],"and R[1]",R[1]);
     if(( Math.min(P[0],Q[0])<R[0] && R[0]<Math.max(P[0],Q[0]) ) )
         //&&
     //   ( Math.min(P[1],Q[1])<=R[1] && R[1]<=Math.max(P[1],Q[1]) ))
