@@ -24,8 +24,15 @@ function inputCoordinates() {
     if(coord){ 
         console.log("Coord is this inside if case:", coord);
         if(coord[0]<=10 && coord[1]<=10){
-            coordinates.push(coord);   
-            console.log("The input coord is", coordinates);
+            if(!coordinates.some( a=> a[0]===coord[0] && a[1]===coord[1]))
+            {
+                coordinates.push(coord);   
+                console.log("The input coord is", coordinates);
+            }   
+            else{
+                console.log("Duplicate entry");
+                alert("Duplicate entry. Discarding it.");
+            }
         }
         else{
             alert("Enter a number <= 10");
@@ -205,9 +212,11 @@ function checkCollinear(coord, low, high){
     let i=low+2;
     let result=-1;
     while(i<=high){
-        result = ((refCoord2[0]-refCoord1[0])*(coord[i][1]-refCoord1[1])-
-                 (refCoord2[1]-refCoord1[1])*(coord[i][0]-refCoord1[0]));
+        result = cross(refCoord1, refCoord2, coord[i]);
+        //((refCoord2[0]-refCoord1[0])*(coord[i][1]-refCoord1[1])-
+                //  (refCoord2[1]-refCoord1[1])*(coord[i][0]-refCoord1[0]));
         console.log("Result is", result);
+        console.log("coord is", coord[i]);
         if(result!==0)
         {
             console.log("Not collinear");
@@ -284,14 +293,27 @@ function conquerCoordinates(){
 
     if(maxLevel===0){
         console.log("The convex hull is already found...dinkachika!");
+        let string_ans = []
+        for(let i=0 ; i<hulls[0].points.length ; i++)
+        {
+            string_ans.push("["+hulls[0].points[i]+"]");
+        }
+        console.log("String ans is...",string_ans);
+        // document.getElementById('finalans').value=Array(hulls[0].points);
+        document.getElementById('finalans2').textContent=string_ans;
         return;
     }
 
     //get all the hulls from the max lvel because thats what we will be merging first
     let levelHulls = hulls.filter(h=>h.level===maxLevel);
+    levelHulls.sort((a, b) => {
+        const minA = Math.min(...a.points.map(p => p[0]));
+        const minB = Math.min(...b.points.map(p => p[0]));
+        return minA - minB;
+      });
 
     //then sorting it based on the index so that we can merge the ones cliser together
-    levelHulls.sort((a,b)=>a.index-b.index);
+    //levelHulls.sort((a,b)=>a.index-b.index);
 
     let merged = [];    //this is an array to store merged hulls (so that we do not increase the length of levelHulls during its traversal)
     let i=0;
@@ -324,6 +346,11 @@ function conquerCoordinates(){
     }//end of while
     // Remove old level hulls and add merged ones
     hulls = hulls.filter(h => h.level !== maxLevel).concat(merged);
+    hulls.sort((a, b) => {
+        const minA = Math.min(...a.points.map(p => p[0]));
+        const minB = Math.min(...b.points.map(p => p[0]));
+        return minA - minB;
+      });
 
     console.log("After merging level", maxLevel, "->", maxLevel - 1);
     console.log("New hulls array:", hulls);
