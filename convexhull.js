@@ -398,8 +398,11 @@ function mergeConvexHulls(leftHulls, rightHulls){
     let crossProd=0;
     let changed=true;
 
+    let counterrrr=0;
     while(changed){
-
+        if(counterrrr===100){
+            break;
+        }
         changed=false;
 
         for(i=0;i<rightHulls.length;i++){
@@ -409,8 +412,23 @@ function mergeConvexHulls(leftHulls, rightHulls){
             if(crossProd<0){
                 //it means point rightHulls[i] is the point where we anchor our tangent end point in righthull
                 leftHullPointUpper = rightHulls[i];
-                console.log("Updating leftmost (in rightHulls)");
+                console.log("Updating leftmost (in rightHulls)...1");
                 changed=true;
+            }
+            else if(crossProd===0){
+                //select the point that is farthest from the two
+                if(leftHullPointUpper[0]===rightHulls[i][0] && leftHullPointUpper[1]===rightHulls[i][1]){
+                    console.log("since its the same point, doing nothing :)");
+                }
+                else if(   Math.abs(rightHullPointUpper[0]-rightHulls[i][0])>
+                      Math.abs(rightHullPointUpper[0]-leftHullPointUpper[0])){
+                        leftHullPointUpper = rightHulls[i];
+                        console.log("Updating leftmost (in rightHulls)...2");
+                        console.log("new point selected is",rightHulls[i] )
+
+                        changed=true;
+                }
+
             }
         }
 
@@ -421,11 +439,25 @@ function mergeConvexHulls(leftHulls, rightHulls){
             if(crossProd<0){
                 //it means point leftHulls[i] is the point where we anchor out tangent end point in lefthull
                 rightHullPointUpper = leftHulls[i];
-                console.log("Updating rightmost (in leftHulls)");
+                console.log("Updating rightmost (in leftHulls)...1");
                 changed=true;
             }
-        }
+            else if(crossProd===0){
 
+                if(rightHullPointUpper[0]===leftHulls[i][0] && rightHullPointUpper[1]===leftHulls[i][1]){
+                    console.log("its the same point. hence doing nothing ::)");
+                }
+                else if(Math.abs(leftHullPointUpper[0]-leftHulls[i][0])>
+                   Math.abs(leftHullPointUpper[0]-leftHullPointUpper[0])){
+                    rightHullPointUpper = leftHulls[i];
+                    console.log("Updating rightmost (in leftHulls)...2");
+                    console.log("new point selected is",leftHulls[i] )
+                    changed=true;
+                }
+            }
+        }
+        console.log("Finishing the while loop...counter is", counterrrr);
+        counterrrr++;
     }
     console.log("The top tangent is a line passing through ", leftHullPointUpper, "and", rightHullPointUpper);
 
@@ -438,6 +470,10 @@ function mergeConvexHulls(leftHulls, rightHulls){
     //fixed the rightmost... now iterating through the righthull
     changed=true;
     while(changed){
+
+        if(counterrrr===100){
+            break;
+        }
         changed=false;
     
         for(i=0;i<rightHulls.length;i++){
@@ -448,8 +484,21 @@ function mergeConvexHulls(leftHulls, rightHulls){
             if(crossProd>0){
                 //it means point rightHulls[i] is the point where we anchor our tangent end point in righthull
                 leftHullPointLower = rightHulls[i];
-                console.log("Updating leftmost (in rightHulls)");
+                console.log("Updating leftmost (in rightHulls)...1");
                 changed=true;
+            }
+            else if(crossProd===0){
+                if(leftHullPointLower[0]===rightHulls[i][0] && leftHullPointLower[1]===rightHulls[i][1]){
+                    console.log("doing nothing because its a repeated point :::)");
+                }
+                else if(Math.abs(rightHullPointLower[0]-rightHulls[i][0])>
+                   Math.abs(rightHullPointLower[0]-leftHullPointLower[0])){
+                    leftHullPointLower = rightHulls[i];
+                    console.log("Updating leftmost (in rightHulls)...2");
+                    console.log("new point selected is",rightHulls[i] )
+
+                    changed=true;
+                }
             }
         }
         //after coming out of loop, leftmost will be anchored
@@ -462,11 +511,25 @@ function mergeConvexHulls(leftHulls, rightHulls){
             if(crossProd>0){
                 //it means point leftHulls[i] is the point where we anchor out tangent end point in lefthull
                 rightHullPointLower = leftHulls[i];
-                console.log("Updating rightmost (in leftHulls)");
+                console.log("Updating rightmost (in leftHulls)...1");
                 changed=true;
             }
-        }
+            else if(crossProd===0){
+                if(rightHullPointLower[0]===leftHulls[i][0] && rightHullPointLower[1]===leftHulls[i][1]){
+                    console.log("enchina illa marre..becoz its same ::::)");
+                }
+                else if(Math.abs(leftHullPointLower[0]-leftHulls[i][0])>
+                   Math.abs(leftHullPointLower[0]-rightHullPointLower[0])){
+                    rightHullPointLower = leftHulls[i];
+                    console.log("Updating rightmost (in leftHulls)...2");
+                    console.log("new point selected is",leftHulls[i] )
 
+                    changed=true;
+                }
+            }
+        }
+        console.log("Finishing the while loop...counter is", counterrrr);
+        counterrrr++;
     }
     console.log("The bottom tangent is a line passing through ", leftHullPointLower, "and", rightHullPointLower);
 
@@ -499,8 +562,10 @@ function mergeConvexHulls(leftHulls, rightHulls){
         console.log("left hull is:",leftHulls[i]);
         crossUpper=cross(leftHullPointUpper, rightHullPointUpper, leftHulls[i]);
         crossLower=cross(leftHullPointLower, rightHullPointLower, leftHulls[i]);
-        inRangeLower = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
-        inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
+        // inRangeLower = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
+        // inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
+        inRangeLower = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, leftHulls[i]);
+        inRangeUpper = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, leftHulls[i]);
         if(crossUpper*crossLower===0){
             console.log("Product is zero for point", leftHulls[i]);
 
@@ -529,8 +594,11 @@ function mergeConvexHulls(leftHulls, rightHulls){
 
         crossUpper=cross(leftHullPointUpper, rightHullPointUpper, rightHulls[i]);
         crossLower=cross(leftHullPointLower, rightHullPointLower, rightHulls[i]);
-        inRangeLower = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
-        inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
+        // inRangeLower = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
+        // inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
+        inRangeLower = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, rightHulls[i]);
+        inRangeUpper = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, rightHulls[i]);
+
         if(crossUpper*crossLower===0){
             console.log("Product is zero for point", rightHulls[i]);
             //it means one of the two is zero.
@@ -553,7 +621,38 @@ function mergeConvexHulls(leftHulls, rightHulls){
     return mergedHull;
 
 }
+function checkInPolygon(LT, LB, RT, RB, pointToCheck){
+    //function call will be checkInPolygon(leftHullPointUpper, leftHullPointLower, rightHullPointUpper, rightHullPointLower, left/rightHulls[i]);
+    // point: [x, y]
+    // polygon: [[x1, y1], [x2, y2], ..., [xn, yn]] - where n will be 3 or 4
 
+    let x = pointToCheck[0], y = pointToCheck[1];
+    let inside = false;
+
+    let polygon = [];
+    polygon.push(LT);
+    polygon.push(LB);
+    polygon.push(RT);
+    polygon.push(RB);
+
+    polygon = reorderPolygonVertices(polygon);
+
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        let xi = polygon[i][0], yi = polygon[i][1];
+        let xj = polygon[j][0], yj = polygon[j][1];
+
+        // This is the core ray casting logic
+        let intersect = ((yi > y) != (yj > y)) &&
+                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        console.log("(xi,yi) is",xi, yi);
+        console.log("(xj,yj) is",xj, yj);
+        console.log("(x,y) is",x, y);
+        console.log("intersect is", intersect);
+        if (intersect) inside = !inside;
+    }
+
+    return inside;
+}
 function checkInRange(P,Q,R){
     //remember that i am checking only the x-axis value in this method
     // console.log("P[0]",P[0],"and Q[0]",Q[0],"and R[0]",R[0]);
@@ -597,6 +696,32 @@ function resetConvexHull(){
     console.log("reset all things");
     console.clear();
     console.log("Reset the interface. Starting fresh!");
+}
+
+function reorderPolygonVertices(points) {
+    if (points.length < 3) {
+        // Not enough points to form a polygon
+        return points;
+    }
+
+    // 1. Calculate Centroid
+    let centerX = 0;
+    let centerY = 0;
+    for (const p of points) {
+        centerX += p[0];
+        centerY += p[1];
+    }
+    centerX /= points.length;
+    centerY /= points.length;
+
+    // 2. Calculate Angles and 3. Sort by Angle
+    const sortedPoints = [...points].sort((a, b) => {
+        const angleA = Math.atan2(a[1] - centerY, a[0] - centerX);
+        const angleB = Math.atan2(b[1] - centerY, b[0] - centerX);
+        return angleA - angleB;
+    });
+
+    return sortedPoints;
 }
 
 document.getElementById('addButton2').addEventListener('click', inputCoordinates);
