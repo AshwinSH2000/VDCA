@@ -84,6 +84,14 @@ function deletePreorder(){
 // ---
 
 function addInorder(){
+
+    //for testing
+    // let inorder = [4,2,5,1,6,3,7];
+    // let preorder = [1,2,4,5,3,99,7];
+
+    // console.log("The result is...",checkTree(inorder, preorder));
+    // return;
+
     const w = document.getElementById('inorder').value.trim();
     // console.log("w.includes(space)",w.includes(" "));
     // console.log("w.includes(,)",w.includes(","));
@@ -175,6 +183,38 @@ function deleteInorder(){
         alert("Enter an inorder traversal to check and delete");
     }
 }
+
+function checkTree(inorder, preorder){
+    if(inorder.length!==preorder.length)
+        return false;
+
+    if(inorder.length===preorder.length && inorder.length===1 && inorder[0]===preorder[0])
+        return true;
+    else if(inorder.length===preorder.length && inorder.length===1 && inorder[0]!==preorder[0])
+        return false;
+
+
+    focus_elem = preorder[0];
+    let x=inorder.indexOf(focus_elem);
+    if(x==-1)
+        return false;
+    else{
+        let left_inorder = inorder.slice(0,x);
+        let right_inorder = inorder.slice(x+1);
+
+        let left_preorder = preorder.slice(1,1+left_inorder.length);
+        let right_preorder = preorder.slice(1+left_inorder.length);
+        
+        let result1 = checkTree(left_inorder, left_preorder);
+        let result2 = checkTree(right_inorder, right_preorder);
+
+        // console.log("Lin, Lpre, res1", left_inorder, left_preorder, result1);
+        // console.log("Rin, Rpre, res2", right_inorder, right_preorder, result2);
+
+        return result1 && result2;
+    }
+}
+
 
 document.getElementById('addButton4').addEventListener('click', addPreorder);
 document.getElementById('deleteButton4').addEventListener('click', deletePreorder);
