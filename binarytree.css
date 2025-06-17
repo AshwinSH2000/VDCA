@@ -1,3 +1,24 @@
 body{
     background-color: darkkhaki;
 }
+h1 {
+    color: black;
+}
+h4 {
+    color: darkslateblue
+}
+h6 {
+    color: darksalmon;
+}
+button {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 5px 5px;
+	cursor: pointer;
+}

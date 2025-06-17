@@ -8,27 +8,30 @@
     </head>
     <body>
         <center>
-        Error 404
-        <br>
-        Lol! Error 404 because there is nothing here to be displayed!
-        <br>
-        <form id="form_for_array_input" action="#">
-       
-            <input type="number" id="firstNum" min="-1000" max="1000">
-            <input type="number" id="secondNum" min="-1000" max="1000">
+            <h1><u>Visualising Divide and Conquer Algorithms</u></h1>
             <br>
-            <input type="number" id="thirdNum" min="-1000" max="1000">
-            <input type="number" id="fourthNum" min="-1000" max="1000">
-            <br>
-            <button type="submit" id="addButton2">Enter</button>
-            <button type="button" id="delete2">Delete</button>
-        </form>
+            <h4>Binary Tree</h4>
             <br>
             <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
             <br>
             <button onclick="window.location.href='quicksort.html';">Quick Sort</button>
             <button onclick="window.location.href='convexhull.html';">Convex Hull</button>
-        
+            <br>
+            <br>
+            <form id="form_for_array_input" action="#">
+                <br>
+                <label for="inorder">Inorder traversal:</label>
+                <input type="string" id="inorder" min="-1000" max="1000">
+                <br>
+                <button type="button" id="addButton3">Enter</button>
+                <button type="button" id="deleteButton3">Delete</button>
+                <br><br>----------------------<br><br>
+                <label for="preorder">Preorder traversal:</label>
+                <input type="string" id="preorder" min="-1000" max="1000">
+                <br>
+                <button type="button" id="addButton4">Enter</button>
+                <button type="button" id="deleteButton4">Delete</button>
+            </form>
         </center>
         <script src="binarytree.js"></script>
     </body>
