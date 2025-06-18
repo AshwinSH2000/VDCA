@@ -1,5 +1,6 @@
 let inorder = [];
 let preorder = [];
+document.getElementById('divideButton3').disabled=true;
 
 function addPreorder(){
     const w = document.getElementById('preorder').value.trim();
@@ -85,12 +86,20 @@ function deletePreorder(){
 
 function addInorder(){
 
-    //for testing
-    // let inorder = [4,2,5,1,6,3,7];
-    // let preorder = [1,2,4,5,3,99,7];
+    // for testing
+    // let inorder = [3,4,5,2,1];
+    // let preorder = [1,2,3,4,];
+    // let inorder = [4,2,1,5,3,6];
+    // let preorder = [1,2,4,3,5,6];
+    // let inorder = [6,4,7,2,5,1,3];
+    // let preorder = [1,2,4,6,7,5,3];
+    // let inorder = [];
+    // let preorder = [];
 
     // console.log("The result is...",checkTree(inorder, preorder));
     // return;
+
+    document.getElementById('divideButton3').disabled=false;
 
     const w = document.getElementById('inorder').value.trim();
     // console.log("w.includes(space)",w.includes(" "));
@@ -192,6 +201,8 @@ function checkTree(inorder, preorder){
         return true;
     else if(inorder.length===preorder.length && inorder.length===1 && inorder[0]!==preorder[0])
         return false;
+    else if(inorder.length===preorder.length && inorder.length===0)
+        return true;
 
 
     focus_elem = preorder[0];
@@ -208,15 +219,22 @@ function checkTree(inorder, preorder){
         let result1 = checkTree(left_inorder, left_preorder);
         let result2 = checkTree(right_inorder, right_preorder);
 
-        // console.log("Lin, Lpre, res1", left_inorder, left_preorder, result1);
-        // console.log("Rin, Rpre, res2", right_inorder, right_preorder, result2);
+        console.log("Rin, Rpre, res2", right_inorder, right_preorder, result2);
 
         return result1 && result2;
     }
 }
 
-
+function divide3(){
+    if(!checkTree(inorder, preorder)){
+        alert("Tree cannot be constructed from the inputs given.");
+        return;
+    }
+    //else begin computations
+    
+}
 document.getElementById('addButton4').addEventListener('click', addPreorder);
 document.getElementById('deleteButton4').addEventListener('click', deletePreorder);
 document.getElementById('addButton3').addEventListener('click', addInorder);
 document.getElementById('deleteButton3').addEventListener('click', deleteInorder);
+document.getElementById('divideButton3').addEventListener('click', divide3);
