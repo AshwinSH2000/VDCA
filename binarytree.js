@@ -236,6 +236,7 @@ function checkTree(inorder, preorder) {
   }
 }
 
+////////////////////////////divide3////////////////////////////
 function divide3() {
   if (!checkTree(inorder, preorder)) {
     alert("Tree cannot be constructed from the inputs given.");
@@ -280,6 +281,7 @@ function divide3() {
   console.log(partitionIndexes);
 }
 
+////////////////////////////divide4////////////////////////////
 function divide4() {
   if (!checkTree(inorder, preorder)) {
     alert("Tree cannot be constructed from the inputs given.");
@@ -339,6 +341,111 @@ function divide4() {
   console.log("Next preorder root index:", preIndex);
 }
 
+////////////////////////////divide5////////////////////////////
+let nodes = [];
+let limits = [];
+function divide5() {
+  if (!checkTree(inorder, preorder)) {
+    alert("Tree cannot be constructed from the inputs given.");
+    return;
+  }
+
+  if(nodes.length===inorder.length){
+    console.log("All nodes have been created. Cannot divide further. ")
+    return;
+  }
+
+  if (level === 0) {
+    limits = [-1, inorder.length];
+    //in this level, I need to find 2^0 = 1 root
+    nodes.push({
+      value: preorder[0],
+      left: null,
+      right: null,
+      level: level,
+    });
+    limits.push(inorder.indexOf(preorder[0]));
+    limits.sort((a, b) => a - b);
+
+    console.log("At the end of level 0:", nodes);
+    console.log("limits is", limits);
+    level++;
+    return;
+  } else {
+    //any higher level
+    let maxNodes = Math.pow(2, level);
+    let startpoint = level;
+    //need to iterate over all the limit nodes to find out the nodes(roots) for the sub trees
+    let limitsLength = limits.length;
+    for (let i = 0; i < limitsLength - 1; i++) {
+      let newinorder = inorder.slice(limits[i] + 1, limits[i + 1]);
+      let newpreorder = preorder.slice(startpoint, startpoint + newinorder.length);
+      console.log("inorder...", newinorder);
+      console.log("preorder...", newpreorder);
+      
+      for(let i=0 ; true ; i++){
+        if(!nodes.some(p=>p.value===preorder[startpoint+newinorder.length+i])){
+          startpoint = startpoint+newinorder.length+i;
+          break;
+        }
+        //if !preoroder[startpoint+=newinorder.length+i] is present in nodes.value
+        //    startpoint += newinorder.length+i;
+        //    break
+        //in my op, this wont be an infinite loop because not all numbers are present in nodes
+        
+      }
+      
+      //did you get it?.....yassss thisis working
+
+      let returnedRoot = doVirtualLevel0(newinorder, newpreorder, level);
+      console.log("returned root is", returnedRoot);
+      if(returnedRoot!==null){ 
+        if(!nodes.some((p)=>p.value===returnedRoot.value)){
+          console.log("pushing root");
+          limits.push(inorder.indexOf(returnedRoot.value));
+          nodes.push(returnedRoot);
+         
+        }
+        else
+          console.log("repetitive root. hence not pushing");
+      }
+      else{
+        console.log("got back null");
+      }
+
+      //send a portion of that inorder thing to identify the node in it.
+      //basically do a level 0 thing on that.
+    }
+    console.log("At the end of level "+level+" nodes is", nodes); 
+    limits.sort((a, b) => a - b);
+    console.log("limits is", limits);
+    level++;
+  }
+}
+
+function doVirtualLevel0(inorder, preorder, givelLevel) {
+  /* multiple cases
+	1. both null
+	2. both len=1 and same elem
+	3. both len=2 and same elems
+	4. 3 or more length
+	*/
+
+  if (inorder.length === preorder.length && inorder.length === 0) {
+    return null;
+  }
+
+  if(inorder.length=== preorder.length && inorder.length===1 && inorder[0]!==preorder[0]){
+    return null;
+  }
+  return {
+    value: preorder[0],
+    left: null,
+    right: null,
+    level: givelLevel,
+  };
+}
+
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document
   .getElementById("deleteButton4")
@@ -347,5 +454,5 @@ document.getElementById("addButton3").addEventListener("click", addInorder);
 document
   .getElementById("deleteButton3")
   .addEventListener("click", deleteInorder);
-document.getElementById("divideButton3").addEventListener("click", divide3);
+document.getElementById("divideButton3").addEventListener("click", divide5);
 document.getElementById("conquerButton3").addEventListener("click", divide4);
