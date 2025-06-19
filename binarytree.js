@@ -203,6 +203,7 @@ function deleteInorder() {
 function checkTree(inorder, preorder) {
   if (inorder.length !== preorder.length) return false;
 
+
   if (
     inorder.length === preorder.length &&
     inorder.length === 1 &&
@@ -217,6 +218,23 @@ function checkTree(inorder, preorder) {
     return false;
   else if (inorder.length === preorder.length && inorder.length === 0)
     return true;
+
+  //check for duplicates
+  for(let i=0 ; i<inorder.length ; i++){
+    for(let j=0 ; j<inorder.length ; j++){
+      if(i===j) continue;
+      else{
+        if(inorder[i]===inorder[j]){
+          console.log("Duplicates found INORDER");
+          return false;
+        }
+        if(preorder[i]===preorder[j]){
+          console.log("Duplicates dound PREORDER");
+          return false;
+        }
+      }
+    }
+  }
 
   let x = inorder.indexOf(preorder[0]);
   if (x == -1) return false;
@@ -403,6 +421,7 @@ function divide5() {
         if(!nodes.some((p)=>p.value===returnedRoot.value)){
           console.log("pushing root");
           limits.push(inorder.indexOf(returnedRoot.value));
+          findRoot(returnedRoot, level);
           nodes.push(returnedRoot);
          
         }
@@ -421,6 +440,53 @@ function divide5() {
     console.log("limits is", limits);
     level++;
   }
+}
+
+function findRoot(node, curLevel){
+  //goal is to find the closest root (in position) and level
+  //maybe like a linear search...
+  //first search and filter the roots with value (curLevel-1)
+  //if only one, then thats the root. if more, select the closest one (in distance/index)
+  let possibleRoots = nodes.filter(p=>p.level===curLevel-1);
+  console.log("The possible roots are", possibleRoots);
+
+  //now find the closest one...
+  if(possibleRoots.length===1){
+    //only one root to be attached..so problem simplified
+    //better to make changes i think,,,but which side to attach?
+    if(inorder.indexOf(node.value)<inorder.indexOf(possibleRoots[0].value)){
+      //leftside
+      console.log("This needs to be attached to the left side");
+      
+    }else{
+      console.log("This node needs to be attached to the right side");
+    }
+  }
+  else{
+    //need to calculate the closest root by iterating through all
+    let closest=Infinity;
+    let pointer=0;
+    for(let i=0 ; i<possibleRoots.length ; i++){
+      console.log("with root", possibleRoots[i].value, "the distance is", Math.abs(inorder.indexOf(node.value)-inorder.indexOf(possibleRoots[i].value)));
+      if(Math.abs(inorder.indexOf(node.value)-inorder.indexOf(possibleRoots[i].value))<closest){
+        closest = Math.abs(inorder.indexOf(node.value)-inorder.indexOf(possibleRoots[i].value));
+        pointer=i;
+      }
+    }
+    console.log("Root wil be", possibleRoots[pointer])
+    //i will have the root. but which direction?
+    if(inorder.indexOf(node.value)<inorder.indexOf(possibleRoots[pointer].value)){
+      //leftside
+      console.log("This needs to be attached to the left side");
+      
+    }else{
+      console.log("This node needs to be attached to the right side");
+    }
+  }
+
+  //inorder 4 2 5 1 6 3 7
+  //prorder 1 2 4 5 3 6 7
+
 }
 
 function doVirtualLevel0(inorder, preorder, givelLevel) {
