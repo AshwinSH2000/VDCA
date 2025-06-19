@@ -457,9 +457,13 @@ function findRoot(node, curLevel){
     if(inorder.indexOf(node.value)<inorder.indexOf(possibleRoots[0].value)){
       //leftside
       console.log("This needs to be attached to the left side");
+      let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[0].value);
+      nodes[indexToEdit].left = node.value;
       
     }else{
       console.log("This node needs to be attached to the right side");
+      let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[0].value);
+      nodes[indexToEdit].right = node.value;
     }
   }
   else{
@@ -478,9 +482,13 @@ function findRoot(node, curLevel){
     if(inorder.indexOf(node.value)<inorder.indexOf(possibleRoots[pointer].value)){
       //leftside
       console.log("This needs to be attached to the left side");
+      let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[pointer].value);
+      nodes[indexToEdit].left = node.value;
       
     }else{
       console.log("This node needs to be attached to the right side");
+      let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[pointer].value);
+      nodes[indexToEdit].right = node.value;
     }
   }
 
