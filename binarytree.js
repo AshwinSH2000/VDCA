@@ -2,6 +2,18 @@ let inorder = [];
 let preorder = [];
 let level = 0;
 let partitionIndexes = [];
+let treeNodes = []; //this is to store the class nodes
+let nodes = [];
+let limits = [];
+
+class treeNode {
+  constructor(value, level){
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.level = level;
+  }
+}
 
 document.getElementById("divideButton3").disabled = true;
 
@@ -360,8 +372,7 @@ function divide4() {
 }
 
 ////////////////////////////divide5////////////////////////////
-let nodes = [];
-let limits = [];
+
 function divide5() {
   if (!checkTree(inorder, preorder)) {
     alert("Tree cannot be constructed from the inputs given.");
@@ -369,7 +380,8 @@ function divide5() {
   }
 
   if(nodes.length===inorder.length){
-    console.log("All nodes have been created. Cannot divide further. ")
+    console.log("All nodes have been created. Cannot divide further. ");
+    console.log("The max level is", level);
     return;
   }
 
@@ -382,6 +394,9 @@ function divide5() {
       right: null,
       level: level,
     });
+    const newNode = new treeNode(preorder[0], level);
+    treeNodes.push(newNode);
+
     limits.push(inorder.indexOf(preorder[0]));
     limits.sort((a, b) => a - b);
 
@@ -423,6 +438,8 @@ function divide5() {
           limits.push(inorder.indexOf(returnedRoot.value));
           findRoot(returnedRoot, level);
           nodes.push(returnedRoot);
+          const newNode = new treeNode(returnedRoot.value, returnedRoot.level);
+          treeNodes.push(newNode);
          
         }
         else
@@ -436,6 +453,7 @@ function divide5() {
       //basically do a level 0 thing on that.
     }
     console.log("At the end of level "+level+" nodes is", nodes); 
+    console.log("The class object is", treeNodes);
     limits.sort((a, b) => a - b);
     console.log("limits is", limits);
     level++;
@@ -459,11 +477,13 @@ function findRoot(node, curLevel){
       console.log("This needs to be attached to the left side");
       let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[0].value);
       nodes[indexToEdit].left = node.value;
+      treeNodes[indexToEdit].left = node.value;
       
     }else{
       console.log("This node needs to be attached to the right side");
       let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[0].value);
       nodes[indexToEdit].right = node.value;
+      treeNodes[indexToEdit].right = node.value;
     }
   }
   else{
@@ -484,11 +504,13 @@ function findRoot(node, curLevel){
       console.log("This needs to be attached to the left side");
       let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[pointer].value);
       nodes[indexToEdit].left = node.value;
+      treeNodes[indexToEdit].left = node.value;
       
     }else{
       console.log("This node needs to be attached to the right side");
       let indexToEdit = nodes.findIndex(p=>p.value===possibleRoots[pointer].value);
       nodes[indexToEdit].right = node.value;
+      treeNodes[indexToEdit].right = node.value;
     }
   }
 
@@ -520,6 +542,62 @@ function doVirtualLevel0(inorder, preorder, givelLevel) {
   };
 }
 
+function mergeTree(){
+  //ok so i have the nodes array which has complete info about the tree... how to join?
+  //got a plannn
+
+  //so start from the max levels that was reached during divide and then decrease to zero.
+  //iterate through each of the node and check if anything needs to be attached.
+  if(level<0){
+    console.log("no more conquer possible...returning");
+    console.log("final binary tree:", treeNodes[0]);
+    return;
+  }
+  level--;
+  //decreasing the lvel because it was 1+maxLevel while coming out of divide part
+  let levelNodes = treeNodes.filter(p=>p.level===level);//.map(p => p.value);;
+  let posToDelete = 0;
+  for(let i=0;i<levelNodes.length;i++){
+    console.log("------begin------")
+    console.log("The nodes in this level are", levelNodes);
+
+    //find the corresponding treeNodes[i];
+    let nodePos = treeNodes.findIndex(p=>p.value===levelNodes[i].value);
+    //console.log("levelNodes[i].left...1",levelNodes[i].left);
+    
+    if(levelNodes[i].left!==null){
+      //find and attach the actual node
+      treeNodes[nodePos].left = treeNodes.filter(p=>p.value===levelNodes[i].left);
+
+      //code to delete
+      // console.log("levelNodes[i].left...2",levelNodes[i].left);
+      // posToDelete = treeNodes.findIndex(p=>p.value===levelNodes[i].left);
+      // console.log("posToDelete is", posToDelete);
+      // if(posToDelete!==-1){
+      //   console.log("Delete happening...", posToDelete);
+      //   treeNodes.splice(posToDelete,1);
+      // }
+
+    }
+    if(levelNodes[i].right!==null){
+      //find and attach the actual node
+      treeNodes[nodePos].right = treeNodes.filter(p=>p.value===levelNodes[i].right);
+
+      //code to delete
+      // posToDelete = treeNodes.findIndex(p=>p.value === levelNodes[i].right);
+      // console.log("posToDelete is", posToDelete);
+      // if(posToDelete!==-1){
+      //   console.log("Delete happening...", posToDelete);
+      //   treeNodes.splice(posToDelete,1);
+      // }
+    }
+    console.log("the levelnodes afer updating are:", levelNodes);
+    console.log("------end------")
+  }
+}
+
+
+
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document
   .getElementById("deleteButton4")
@@ -529,4 +607,4 @@ document
   .getElementById("deleteButton3")
   .addEventListener("click", deleteInorder);
 document.getElementById("divideButton3").addEventListener("click", divide5);
-document.getElementById("conquerButton3").addEventListener("click", divide4);
+document.getElementById("conquerButton3").addEventListener("click", mergeTree);
