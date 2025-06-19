@@ -374,6 +374,12 @@ function divide4() {
 ////////////////////////////divide5////////////////////////////
 
 function divide5() {
+
+  document.getElementById("addButton3").disabled=true;
+  document.getElementById("addButton4").disabled=true;
+  document.getElementById("deleteButton3").disabled=true;
+  document.getElementById("deleteButton4").disabled=true;
+
   if (!checkTree(inorder, preorder)) {
     alert("Tree cannot be constructed from the inputs given.");
     return;
@@ -382,6 +388,7 @@ function divide5() {
   if(nodes.length===inorder.length){
     console.log("All nodes have been created. Cannot divide further. ");
     console.log("The max level is", level);
+    document.getElementById('divideButton3').disabled=true;
     return;
   }
 
@@ -548,9 +555,10 @@ function mergeTree(){
 
   //so start from the max levels that was reached during divide and then decrease to zero.
   //iterate through each of the node and check if anything needs to be attached.
-  if(level<0){
+  if(level<=0){
     console.log("no more conquer possible...returning");
     console.log("final binary tree:", treeNodes[0]);
+    document.getElementById('conquerButton3').disabled=true;
     return;
   }
   level--;
@@ -596,15 +604,30 @@ function mergeTree(){
   }
 }
 
+function reset(){
+  document.getElementById("addButton3").disabled=false;
+  document.getElementById("addButton4").disabled=false;
+  document.getElementById("deleteButton3").disabled=false;
+  document.getElementById("deleteButton4").disabled=false;
+  document.getElementById("divideButton3").disabled=false;
+  document.getElementById("conquerButton3").disabled=false;
+  inorder = [];
+  preorder = [];
+  level = 0;
+  partitionIndexes = [];
+  treeNodes = []; //this is to store the class nodes
+  nodes = [];
+  limits = [];
+  console.clear();
+  console.log("cleared the console. starting fresh");
+}
+
 
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
-document
-  .getElementById("deleteButton4")
-  .addEventListener("click", deletePreorder);
+document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
 document.getElementById("addButton3").addEventListener("click", addInorder);
-document
-  .getElementById("deleteButton3")
-  .addEventListener("click", deleteInorder);
+document.getElementById("deleteButton3").addEventListener("click", deleteInorder);
 document.getElementById("divideButton3").addEventListener("click", divide5);
 document.getElementById("conquerButton3").addEventListener("click", mergeTree);
+document.getElementById("resetButton3").addEventListener('click', reset);

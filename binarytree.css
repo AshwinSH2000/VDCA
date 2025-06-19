@@ -22,3 +22,17 @@ button {
 	margin: 5px 5px;
 	cursor: pointer;
 }
+
+button:disabled {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 5px 5px;
+	cursor: not-allowed;
+	opacity: 0.5;
+}
