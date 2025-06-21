@@ -537,6 +537,8 @@ function mergeConvexHulls(leftHulls, rightHulls){
     i=0;
     let crossUpper=0;
     let crossLower=0;
+    let crossLeft=0;
+    let crossRight=0;
     let inRangeUpper=0;
     let inRangeLower=0;
     let mergedHull = [];
@@ -562,27 +564,61 @@ function mergeConvexHulls(leftHulls, rightHulls){
         console.log("left hull is:",leftHulls[i]);
         crossUpper=cross(leftHullPointUpper, rightHullPointUpper, leftHulls[i]);
         crossLower=cross(leftHullPointLower, rightHullPointLower, leftHulls[i]);
+
+        if(leftHullPointUpper!==leftHullPointLower)
+            crossLeft=cross(leftHullPointUpper, leftHullPointLower, leftHulls[i]);
+        else
+            crossLeft=1;
+
+        if(rightHullPointUpper!==rightHullPointLower)
+            crossRight=cross(rightHullPointUpper, rightHullPointLower, leftHulls[i]);
+        else
+            crossRight=1;
+        
         // inRangeLower = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
         // inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,leftHulls[i]);
         inRangeLower = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, leftHulls[i]);
         inRangeUpper = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, leftHulls[i]);
         if(crossUpper*crossLower===0){
-            console.log("Product is zero for point", leftHulls[i]);
 
+            //include the point if it is the tangent end point
+            //else it means it is a point on the tangent hence do not include
+
+            if(compareEndPoints([leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper], leftHulls[i])){
+                //it is a tangent end point
+                console.log("It is a tangent endpoint\nPushing it");
+                mergedHull.push(leftHulls[i]);
+            }
+            else{
+                console.log("Product is zero for point\nIt means it is on the top or bottom tangents. \n Hence not including it. ", leftHulls[i]);
+            }
+            
+
+            //old code
             //it means one of the two is zero.
             //mathematically it can also mean both are zero but thats not possible in this case
             // if(inRangeUpper||inRangeLower)
-                mergedHull.push(leftHulls[i]);
+
+                //commenting the below line
+                // mergedHull.push(leftHulls[i]);
+
             // else
                 // console.log("THIS WILL PROBABLY NEVER GET EXECUTED...1");
         }
-        else{
-            if(!inRangeUpper && !inRangeLower){
+        else if(crossLeft * crossRight === 0){
+            console.log("It is present in one of the sides\nHence not including it");
+        }
+        else if(inRangeUpper && inRangeLower){
+            
                 //this means the point is not on the tangent but not inside the polygon too
                 //it means it is a part of the merged hull.
-                console.log("Pushing", leftHulls[i]);
-                mergedHull.push(leftHulls[i]);
-            }
+                console.log("Strictly inside the polygon..\nHence not including it", leftHulls[i]);
+                // mergedHull.push(leftHulls[i]);
+            
+        }
+        else{
+            console.log("Finally a point between tangents but outside the polygon.\nPushing it in", leftHulls[i]);
+            mergedHull.push(leftHulls[i]);
         }
         i++;
     }
@@ -594,26 +630,59 @@ function mergeConvexHulls(leftHulls, rightHulls){
 
         crossUpper=cross(leftHullPointUpper, rightHullPointUpper, rightHulls[i]);
         crossLower=cross(leftHullPointLower, rightHullPointLower, rightHulls[i]);
+
+        //do the below only if there are distinct values for LU&LL or RU&RL
+        if(leftHullPointUpper!==leftHullPointLower)
+            crossLeft=cross(leftHullPointUpper, leftHullPointLower, rightHulls[i]);
+        else
+            crossLeft=1;
+
+        if(rightHullPointUpper!==rightHullPointLower)
+            crossRight=cross(rightHullPointUpper, rightHullPointLower, rightHulls[i]);
+        else
+            crossRight=1;
+
         // inRangeLower = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
         // inRangeUpper = checkInRange(leftMostPoint,rightMostPoint,rightHulls[i]);
         inRangeLower = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, rightHulls[i]);
         inRangeUpper = checkInPolygon(leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper, rightHulls[i]);
 
         if(crossUpper*crossLower===0){
-            console.log("Product is zero for point", rightHulls[i]);
+
+            if(compareEndPoints([leftHullPointLower, leftHullPointUpper, rightHullPointLower, rightHullPointUpper], rightHulls[i])){
+                console.log("It is a tangent end point\n Pushing it");
+                mergedHull.push(rightHulls[i]);
+            }
+            else{
+                //it is on the tangents but are not the end points
+                console.log("Product is zero for point\nIt means it is on the top or bottom tangents. \n Hence not including it. ", rightHulls[i]);
+            }
+            
+            //old code
             //it means one of the two is zero.
             //mathematically it can also mean both are zero but thats not possible in this case
 
             // if(inRangeUpper||inRangeLower)
-                mergedHull.push(rightHulls[i]);
+
+            //commenting the below line
+                // mergedHull.push(rightHulls[i]);
+
+
             // else
                 // console.log("THIS WILL PROBABLY NEVER GET EXECUTED...2")
         }
+        else if(crossLeft * crossRight === 0){
+            console.log("It is present in one of the sides\nHence not including it");
+        }
+        else if(inRangeUpper && inRangeLower){
+
+                console.log("Strictly inside the polygon..\nHence not including it", rightHulls[i]);
+               // mergedHull.push(rightHulls[i]);
+            
+        }
         else{
-            if(!inRangeUpper && !inRangeLower){
-                console.log("Pushing", rightHulls[i]);
-                mergedHull.push(rightHulls[i]);
-            }
+            console.log("Finally a point between tangents but outside the polygon.\nPushing it in", rightHulls[i]);
+            mergedHull.push(rightHulls[i]);
         }
         i++;
     }
@@ -621,6 +690,26 @@ function mergeConvexHulls(leftHulls, rightHulls){
     return mergedHull;
 
 }
+
+function testingForPolygon(){
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,3]));    //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [2,2]));    //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,0]));        //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,5]));     //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,5]));        //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,0]));        //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,3]));        //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,0]));        //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,3]));    //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,5]));        //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,1]));    //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [1,0]));        //true
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [1,5]));    //false
+    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,1])); //false
+    console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [4,4]));
+
+}
+
 function checkInPolygon(LT, LB, RT, RB, pointToCheck){
     //function call will be checkInPolygon(leftHullPointUpper, leftHullPointLower, rightHullPointUpper, rightHullPointLower, left/rightHulls[i]);
     // point: [x, y]
@@ -724,11 +813,23 @@ function reorderPolygonVertices(points) {
     return sortedPoints;
 }
 
+function compareEndPoints(endPoints, point){
+
+    let ans=endPoints.some(p=>(p[0]===point[0]&&p[1]===point[1]));
+    if(point[0]===3 && (point[1]===0 || point[1]===5)){
+        console.log("Special case, the endPoints array is", endPoints);
+        console.log("The value of ans is", ans);
+        
+    }
+    return ans;
+}
+
 document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
 document.getElementById('resetButton2').addEventListener('click', resetConvexHull);
 document.getElementById('conquerButton2').addEventListener('click', conquerCoordinates);
+// document.getElementById('conquerButton2').addEventListener('click', compareEndPoints);
 
 
 /*
