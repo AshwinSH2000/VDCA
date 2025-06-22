@@ -3,12 +3,26 @@ body{
 }
 h1 {
     color: black;
+	text-align: center;
 }
 h4 {
     color: darkslateblue
 }
 h6 {
     color: darksalmon;
+}
+
+button.mainButton{
+	background-color: rgb(112, 219, 143);
+	border:rgb(from color 1 1 1);
+	color: rgb(15, 30, 15);
+	padding: 15px 15px;
+	text-align: center;
+	text-decoration: dotted;
+	display: inline-block;
+	font-size: 25px;
+	margin: 15px 15px;
+	cursor: pointer;
 }
 button {
 	background-color: lightyellow;
