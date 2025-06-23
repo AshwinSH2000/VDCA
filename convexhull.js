@@ -782,7 +782,9 @@ function resetConvexHull(){
     coordinates = [];
     partitions = [];
     
-    // renderPoints();
+    points.clear();
+    pointsLayer.innerHTML="";
+    renderPoints();
     partitionAdded = true;
     level=0;
     console.log("reset all things");
