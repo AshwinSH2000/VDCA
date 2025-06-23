@@ -5,6 +5,7 @@ let partitionAdded = true;
 let level=0;
 let hulls = [];
 let currentIndex=0;
+let string_ans = []
 function inputCoordinates(inputStr) {
     // @type {HTMLInputElement}
     // const inputStr = document.getElementById("coordinates2").value.trim(); //disabled this to have points by clickong on the graph
@@ -294,7 +295,7 @@ function conquerCoordinates(){
 
     if(maxLevel===0){
         console.log("The convex hull is already found...dinkachika!");
-        let string_ans = []
+        
         for(let i=0 ; i<hulls[0].points.length ; i++)
         {
             string_ans.push("["+hulls[0].points[i]+"]");
@@ -783,13 +784,15 @@ function resetConvexHull(){
     partitions = [];
     
     points.clear();
-    pointsLayer.innerHTML="";
+    // pointsLayer.innerHTML="";
     renderPoints();
     partitionAdded = true;
     level=0;
     console.log("reset all things");
     console.clear();
     console.log("Reset the interface. Starting fresh!");
+    string_ans = [];
+    document.getElementById('finalans2').textContent=string_ans;
 }
 
 function reorderPolygonVertices(points) {
@@ -852,7 +855,7 @@ function renderPoints() {
     pointsLayer.innerHTML = "";
     points.forEach(p => {
       const [x, y] = p.split(",").map(Number);
-      pointsLayer.innerHTML += `<circle cx="${x}" cy="${11 - y}" r="0.06" />`;
+      pointsLayer.innerHTML += `<circle cx="${x}" cy="${10-y}" r="0.08" />`;
     });
 }
 
@@ -860,8 +863,8 @@ grid.addEventListener("click", (e) => {
     const bbox = grid.getBoundingClientRect(); 
 
     //the below code converts pixels to grid units itseems. bbox contains left, right, hright and with in pixels and we are converting that into more usable form (grid units).
-    const scaleX = 11 / bbox.width;
-    const scaleY = 11 / bbox.height;
+    const scaleX = 12 / bbox.width;
+    const scaleY = 12 / bbox.height;
 
     //this is to get the left top coordinate when clicked. 
     // const x = Math.floor((e.clientX - bbox.left) * scaleX);
@@ -880,9 +883,9 @@ grid.addEventListener("click", (e) => {
     const radius = 0.15;
     //this poiont clicking is my logic of an invisible activation circle
     //rather than clicking inside the box, it expects users to normally click on the point.
-    for (let x = 1; x <= 10 && !found; x++) {
-        for (let y = 1; y <= 10 && !found; y++) {
-          const dx = logicalX - x;
+    for (let x = 0; x <= 10 && !found; x++) {
+        for (let y = 0; y <= 10 && !found; y++) {
+          const dx = logicalX - x-1;
           const dy = logicalY - (11 - y); // invert y back
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist <= radius) {
