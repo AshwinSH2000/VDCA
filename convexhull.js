@@ -5,9 +5,10 @@ let partitionAdded = true;
 let level=0;
 let hulls = [];
 let currentIndex=0;
-function inputCoordinates() {
+function inputCoordinates(inputStr) {
     // @type {HTMLInputElement}
-    const inputStr = document.getElementById("coordinates2").value.trim();
+    // const inputStr = document.getElementById("coordinates2").value.trim(); //disabled this to have points by clickong on the graph
+
     let coord = [];
     if(inputStr.includes(",")){
         coord = inputStr.split(",").map(Number);
@@ -44,8 +45,8 @@ function inputCoordinates() {
     document.getElementById('coordinates2').value='';
 }
 
-function deleteCoordinates() {
-    const inputStr = document.getElementById("coordinates2").value.trim();
+function deleteCoordinates(inputStr) {
+    // const inputStr = document.getElementById("coordinates2").value.trim();   //disabling this to enable deleting points from the graph
     let coord = [];
     if(inputStr.includes(",")){
         coord = inputStr.split(",").map(Number);
@@ -780,6 +781,8 @@ function resetConvexHull(){
     document.getElementById('deleteButton2').disabled=false;
     coordinates = [];
     partitions = [];
+    
+    // renderPoints();
     partitionAdded = true;
     level=0;
     console.log("reset all things");
@@ -823,6 +826,71 @@ function compareEndPoints(endPoints, point){
     }
     return ans;
 }
+
+
+//////////////////codeforgraph
+const grid = document.getElementById("grid");
+const pointsLayer = document.getElementById("points");
+const points = new Set(); // store as "x,y" strings for easy lookup 
+
+function togglePoint(x, y) {
+    const key = `${x},${y}`;
+    // console.log("key is...",key);
+    if (points.has(key)) {
+      points.delete(key);
+      deleteCoordinates(key)
+    } else {
+      points.add(key);
+        inputCoordinates(key);
+    }
+    renderPoints();
+}
+
+function renderPoints() {
+    pointsLayer.innerHTML = "";
+    points.forEach(p => {
+      const [x, y] = p.split(",").map(Number);
+      pointsLayer.innerHTML += `<circle cx="${x}" cy="${11 - y}" r="0.06" />`;
+    });
+}
+
+grid.addEventListener("click", (e) => {
+    const bbox = grid.getBoundingClientRect(); 
+
+    //the below code converts pixels to grid units itseems. bbox contains left, right, hright and with in pixels and we are converting that into more usable form (grid units).
+    const scaleX = 11 / bbox.width;
+    const scaleY = 11 / bbox.height;
+
+    //this is to get the left top coordinate when clicked. 
+    // const x = Math.floor((e.clientX - bbox.left) * scaleX);
+    // const y = Math.floor((e.clientY - bbox.top) * scaleY);
+    // Only allow clicks in valid range (1 to 10)
+    // if (x >= 1 && x <= 10 && y >= 1 && y <= 10) {
+    //   togglePoint(x, 11 - y); // invert y-axis
+    // }
+
+    
+    const clickX = (e.clientX - bbox.left) * scaleX;
+    const clickY = (e.clientY - bbox.top) * scaleY;
+    const logicalX = clickX;
+    const logicalY = clickY;
+    let found = false;
+    const radius = 0.15;
+    //this poiont clicking is my logic of an invisible activation circle
+    //rather than clicking inside the box, it expects users to normally click on the point.
+    for (let x = 1; x <= 10 && !found; x++) {
+        for (let y = 1; y <= 10 && !found; y++) {
+          const dx = logicalX - x;
+          const dy = logicalY - (11 - y); // invert y back
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist <= radius) {
+            togglePoint(x, y);
+            found = true;
+          }
+        }
+      }
+});
+//////////////////codeforgraph
 
 document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
