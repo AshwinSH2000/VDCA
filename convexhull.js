@@ -5,7 +5,8 @@ let partitionAdded = true;
 let level=0;
 let hulls = [];
 let currentIndex=0;
-let string_ans = []
+let string_ans = [];
+let partitionForRendering = [];
 function inputCoordinates(inputStr) {
     // @type {HTMLInputElement}
     // const inputStr = document.getElementById("coordinates2").value.trim(); //disabled this to have points by clickong on the graph
@@ -79,6 +80,7 @@ function divideCoordinates(){
         console.log("All partitions are now terminal convex hulls. No further division needed. ");
         //convexHulls.sort( (a,b)  =>  a[0][0]-b[0][0] );
         console.log("The final terminal CHs are", convexHulls);
+        console.log("Partitions for rendering array is", partitionForRendering);
         document.getElementById("divideButton2").disabled=true;
         return;
     }
@@ -118,6 +120,11 @@ function divideCoordinates(){
             median = findMedianPartition(coordinates, 0, coordinates.length-1);
             console.log("The median for division is", median);
             partitions.push(median);
+            partitionForRendering.push({
+                value: median,
+                level: level,
+            });
+            renderPartitionLines();
             partitionAdded=true;
             partitions.sort((a,b)=>a-b);
             console.log("New partitions is", partitions);
@@ -193,6 +200,11 @@ function divideCoordinates(){
                 median = findMedianPartition(coordinates, low, high);
                 console.log("The median for division is", median);
                 partitions.push(median);
+                partitionForRendering.push({
+                    value: median,
+                    level: level,
+                });
+                renderPartitionLines();
                 partitionAdded=true;
                 console.log("New partitions is", partitions); 
             }
@@ -869,6 +881,11 @@ function compareEndPoints(endPoints, point){
 //////////////////codeforgraph
 const grid = document.getElementById("grid");
 const pointsLayer = document.getElementById("points");
+const redLines = document.getElementById("redline");
+const blueLines = document.getElementById("blueline");
+const yellowLines = document.getElementById("yellowline");
+const greenLines = document.getElementById("greenline");
+const orangeLines = document.getElementById("orangeline");
 const points = new Set(); // store as "x,y" strings for easy lookup 
 
 function togglePoint(x, y) {
@@ -890,6 +907,40 @@ function renderPoints() {
       const [x, y] = p.split(",").map(Number);
       pointsLayer.innerHTML += `<circle cx="${x}" cy="${10-y}" r="0.08" />`;
     });
+}
+
+function renderPartitionLines(){
+    //i will invoke thsi function before i increment the level. 
+    //hence i can use the same level value
+
+    // level0: red partition
+    // level1: blue partition 
+    // level2: green partition
+    // level3: yellow partition
+    // level4: orange partition
+
+    //use the values present in partitionForRendering along with level to draw the lines
+    for(let i=0 ; i<partitionForRendering.length ; i++){
+        if(partitionForRendering[i].level===0){
+            redLines.innerHTML=""; //this doesnt give error here but is it required? probably not
+            redLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            // <line x1="0" y1="0" x2="0" y2="10" />
+        }
+        else if(partitionForRendering[i].level===1){
+            // blueLines.innerHTML="";
+            blueLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            // console.log("Printed blue line.............................");
+        }
+        else if(partitionForRendering[i].level===2){
+            greenLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+        }
+        else if(partitionForRendering[i].level===3){
+            yellowLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+        }
+        else if(partitionForRendering[i].level===4){
+            orangeLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+        }
+    }
 }
 
 grid.addEventListener("click", (e) => {
