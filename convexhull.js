@@ -78,6 +78,7 @@ function divideCoordinates(){
         console.log("All partitions are now terminal convex hulls. No further division needed. ");
         //convexHulls.sort( (a,b)  =>  a[0][0]-b[0][0] );
         console.log("The final terminal CHs are", convexHulls);
+        document.getElementById("divideButton2").disabled=true;
         return;
     }
     partitionAdded=false;
@@ -303,6 +304,7 @@ function conquerCoordinates(){
         console.log("String ans is...",string_ans);
         // document.getElementById('finalans').value=Array(hulls[0].points);
         document.getElementById('finalans2').textContent=string_ans;
+        document.getElementById("conquerButton2").disabled=true;
         return;
     }
 
@@ -371,6 +373,7 @@ function conquerCoordinates(){
         console.log("String ans is...",string_ans);
         // document.getElementById('finalans').value=Array(hulls[0].points);
         document.getElementById('finalans2').textContent=string_ans;
+        document.getElementById("conquerButton2").disabled=true;
 
     }
     
@@ -783,6 +786,8 @@ function resetConvexHull(){
 
     document.getElementById('addButton2').disabled=false;
     document.getElementById('deleteButton2').disabled=false;
+    document.getElementById("conquerButton2").disabled=false;
+    document.getElementById("divideButton2").disabled=false;
     coordinates = [];
     partitions = [];
     
