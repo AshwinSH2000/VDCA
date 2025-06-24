@@ -82,6 +82,7 @@ function divideCoordinates(){
         console.log("The final terminal CHs are", convexHulls);
         console.log("Partitions for rendering array is", partitionForRendering);
         document.getElementById("divideButton2").disabled=true;
+        renderTerminalHulls();
         return;
     }
     partitionAdded=false;
@@ -838,6 +839,12 @@ function resetConvexHull(){
     document.getElementById('finalans2').textContent=string_ans;
     convexHulls = [];
     hulls = [];
+
+    redLines.innerHTML="";
+    blueLines.innerHTML="";
+    greenLines.innerHTML="";
+    yellowLines.innerHTML="";
+    orangeLines.innerHTML="";
 }
 
 function reorderPolygonVertices(points) {
@@ -886,6 +893,7 @@ const blueLines = document.getElementById("blueline");
 const yellowLines = document.getElementById("yellowline");
 const greenLines = document.getElementById("greenline");
 const orangeLines = document.getElementById("orangeline");
+const whiteLines = document.getElementById("whiteline");
 const points = new Set(); // store as "x,y" strings for easy lookup 
 
 function togglePoint(x, y) {
@@ -923,24 +931,53 @@ function renderPartitionLines(){
     for(let i=0 ; i<partitionForRendering.length ; i++){
         if(partitionForRendering[i].level===0){
             redLines.innerHTML=""; //this doesnt give error here but is it required? probably not
-            redLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            redLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // <line x1="0" y1="0" x2="0" y2="10" />
         }
         else if(partitionForRendering[i].level===1){
             // blueLines.innerHTML="";
-            blueLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            blueLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // console.log("Printed blue line.............................");
         }
         else if(partitionForRendering[i].level===2){
-            greenLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            greenLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if(partitionForRendering[i].level===3){
-            yellowLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            yellowLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if(partitionForRendering[i].level===4){
-            orangeLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="0" x2="${partitionForRendering[i].value}" y2="10"/>`;
+            orangeLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
     }
+}
+
+function renderTerminalHulls(){
+    //use the convexHulls to draw the termial hulls
+    for(let i=0 ; i<convexHulls.length ; i++){
+        console.log("Drawing a line between the points", convexHulls[i]);
+        if(convexHulls[i].length===1){
+            //just a single point
+            //do nothing I guess....as it is already highlighted
+            console.log("A POINT");
+        }
+        else if(convexHulls[i].length===2){
+            //proper two points
+            whiteLines.innerHTML += `<line x1="${convexHulls[i][0][0]}" y1="${10-convexHulls[i][0][1]}" x2="${convexHulls[i][1][0]}" y2="${10-convexHulls[i][1][1]}"/>`;
+            console.log("A LINE");
+
+        }
+        else if(convexHulls[i].length>2){
+            console.log("collinear points detected. hence selecting the end points");
+             whiteLines.innerHTML += `<line x1="${convexHulls[i][0][0]}" y1="${10-convexHulls[i][0][1]}" x2="${convexHulls[i][convexHulls[i].length-1][0]}" y2="${10-convexHulls[i][convexHulls[i].length-1][1]}"/>`;
+        }
+
+    }
+}
+
+function renderMergedHulls(){
+    //so ...what do i need to do?
+    //i have the hulls array. ok
+    //take
 }
 
 grid.addEventListener("click", (e) => {
