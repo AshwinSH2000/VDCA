@@ -99,9 +99,14 @@ function divideCoordinates(){
             console.log("The CH is a line joining", CH);
             console.log("niurngsieurhsy4859tnvwiutywno8475nywo7348ytnov875ytvow8745tyvwno478tywvno8745ytnvw   \nuiwbiurybivurtynhvqiuynoitwrurtbywoiurtyni4ytwio34tycoi4ynaewiunvehfnvaeiufnlaieud\nieuhcnaiwuefaeilufnhalceiucflmaheifhaleiufhnaceiufhaeiwufhihiy384iuaebniauwawkniir");
             //this push likely wont cause trouble as its the first push into convexHulls. 
-            convexHulls.push(CH);   
+            CH.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+            //now push only the end points. 
+            
+            // convexHulls.push(CH);   
+            convexHulls.push([CH[0], CH[CH.length-1]]);
             hulls.push({
-                points: CH,
+                // points: CH,
+                points: [CH[0], CH[CH.length-1]],
                 level: level,
                 index: currentIndex++
             });
