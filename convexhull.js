@@ -802,6 +802,8 @@ function resetConvexHull(){
     string_ans = [];
     document.getElementById('finalans2').textContent=string_ans;
     convexHulls = [];
+    hulls = [];
+    con
 }
 
 function reorderPolygonVertices(points) {
