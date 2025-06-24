@@ -796,6 +796,7 @@ function resetConvexHull(){
     console.log("Reset the interface. Starting fresh!");
     string_ans = [];
     document.getElementById('finalans2').textContent=string_ans;
+    convexHulls = [];
 }
 
 function reorderPolygonVertices(points) {
