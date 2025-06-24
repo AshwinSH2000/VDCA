@@ -415,6 +415,8 @@ function mergeConvexHulls(leftHulls, rightHulls){
                 //it means point rightHulls[i] is the point where we anchor our tangent end point in righthull
                 leftHullPointUpper = rightHulls[i];
                 console.log("Updating leftmost (in rightHulls)...1");
+                console.log("new point selected is...(1)",rightHulls[i] )
+
                 changed=true;
             }
             else if(crossProd===0){
@@ -426,7 +428,7 @@ function mergeConvexHulls(leftHulls, rightHulls){
                       Math.abs(rightHullPointUpper[0]-leftHullPointUpper[0])){
                         leftHullPointUpper = rightHulls[i];
                         console.log("Updating leftmost (in rightHulls)...2");
-                        console.log("new point selected is",rightHulls[i] )
+                        console.log("new point selected is...(2)",rightHulls[i] )
 
                         changed=true;
                 }
@@ -442,6 +444,7 @@ function mergeConvexHulls(leftHulls, rightHulls){
                 //it means point leftHulls[i] is the point where we anchor out tangent end point in lefthull
                 rightHullPointUpper = leftHulls[i];
                 console.log("Updating rightmost (in leftHulls)...1");
+                console.log("new point selected is (1)...",leftHulls[i] )
                 changed=true;
             }
             else if(crossProd===0){
@@ -450,10 +453,10 @@ function mergeConvexHulls(leftHulls, rightHulls){
                     console.log("its the same point. hence doing nothing ::)");
                 }
                 else if(Math.abs(leftHullPointUpper[0]-leftHulls[i][0])>
-                   Math.abs(leftHullPointUpper[0]-leftHullPointUpper[0])){
+                   Math.abs(leftHullPointUpper[0]-rightHullPointUpper[0])){
                     rightHullPointUpper = leftHulls[i];
                     console.log("Updating rightmost (in leftHulls)...2");
-                    console.log("new point selected is",leftHulls[i] )
+                    console.log("new point selected is...(2)",leftHulls[i] );
                     changed=true;
                 }
             }
