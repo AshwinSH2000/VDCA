@@ -60,7 +60,8 @@ function deleteCoordinates(inputStr) {
     }
     if(coord){
         if(coordinates.some(p=>(p[0]==coord[0]&&p[1]==coord[1]))){
-            let index=coordinates.findIndex(p=>(p[0]==coord[0]&&p[1]==coord[1]))
+            let index=0;
+            index=coordinates.findIndex(p=>(p[0]==coord[0]&&p[1]==coord[1]))
             console.log("Found at index", index);
             coordinates.splice(index, 1);
             console.log("This works!", coordinates);
@@ -89,7 +90,8 @@ function divideCoordinates(){
         partitions.push(11);
         console.log(partitions);
         coordinates.sort((a,b)=>a[0]-b[0]);
-        let CH = checkCollinear(coordinates, 0, coordinates.length-1)
+        let CH = [];
+        CH = checkCollinear(coordinates, 0, coordinates.length-1)
         if(CH==null){
             console.log("Empty coordinates array. Hence no CH");
         }
@@ -107,7 +109,8 @@ function divideCoordinates(){
         else
         {
             console.log("Need to find a CH using algo");
-            let median = findMedianPartition(coordinates, 0, coordinates.length-1);
+            let median = 0;
+            median = findMedianPartition(coordinates, 0, coordinates.length-1);
             console.log("The median for division is", median);
             partitions.push(median);
             partitionAdded=true;
@@ -152,7 +155,8 @@ function divideCoordinates(){
             console.log("partition",counter,"is",low,high);
 
             //checking for collinearity
-            let CH = checkCollinear(coordinates, low, high);
+            let CH = [];
+            CH = checkCollinear(coordinates, low, high);
             if(CH){
                 if(CH.length===1){
                     console.log("The CH is the point", CH);
@@ -172,7 +176,8 @@ function divideCoordinates(){
             }
             else{
                 console.log("Need to find a CH using algo");
-                let median = findMedianPartition(coordinates, low, high);
+                let median = 0;
+                median = findMedianPartition(coordinates, low, high);
                 console.log("The median for division is", median);
                 partitions.push(median);
                 partitionAdded=true;
@@ -327,7 +332,8 @@ function conquerCoordinates(){
             let right = levelHulls[i + 1];
 
             // Merge them using your mergeConvexHulls() function
-            let mergedHull = mergeConvexHulls(left.points, right.points);
+            let mergedHull = [];
+            mergedHull = mergeConvexHulls(left.points, right.points);
 
             merged.push({
                 points: mergedHull,
@@ -803,7 +809,6 @@ function resetConvexHull(){
     document.getElementById('finalans2').textContent=string_ans;
     convexHulls = [];
     hulls = [];
-    con
 }
 
 function reorderPolygonVertices(points) {
