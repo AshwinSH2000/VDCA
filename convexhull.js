@@ -97,7 +97,7 @@ function divideCoordinates(){
         }
         else if(CH){
             console.log("The CH is a line joining", CH);
-
+            console.log("niurngsieurhsy4859tnvwiutywno8475nywo7348ytnov875ytvow8745tyvwno478tywvno8745ytnvw   \nuiwbiurybivurtynhvqiuynoitwrurtbywoiurtyni4ytwio34tycoi4ynaewiunvehfnvaeiufnlaieud\nieuhcnaiwuefaeilufnhalceiucflmaheifhaleiufhnaceiufhaeiwufhihiy384iuaebniauwawkniir");
             //this push likely wont cause trouble as its the first push into convexHulls. 
             convexHulls.push(CH);   
             hulls.push({
@@ -165,13 +165,21 @@ function divideCoordinates(){
                     console.log("The CH is a line joining", CH);
                 }
                 //this if case is common to both the cases. hence added at the bottom
-                if(!convexHulls.some(p=>(p[0][0]===CH[0][0]&&p[0][1]===CH[0][1]))){
+                CH.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+                // if(!convexHulls.some(p=>(p[0][0]===CH[0][0]&&p[0][1]===CH[0][1]))){
+                if(!convexHulls.some(hull => isHullAlreadyPresent(hull, CH))){
+                    // console.log("p is", convexHulls);
+                    // console.log("CH[0] is", CH[0]);
                     convexHulls.push(CH);
                     hulls.push({
                         points: CH,
                         level: level,
                         index: currentIndex++
                     });
+                    convexHulls.sort((a,b)=> a[0]-b[0]||a[1]-b[1]);
+                    console.log("hulls before pushing ...", hulls);
+                    console.log("Pushed...", CH);
+                    console.log("hulls after pushing ...", hulls);
                 }
             }
             else{
@@ -192,6 +200,10 @@ function divideCoordinates(){
     }
 }
 
+function isHullAlreadyPresent(a, b){
+    if (a.length !== b.length) return false;
+    return a.every((point, i) => point[0] === b[i][0] && point[1] === b[i][1]);
+}
 
 function checkCollinear(coord, low, high){
     //if(coord.length===0){
