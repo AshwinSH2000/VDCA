@@ -940,11 +940,13 @@ function renderPartitionLines(){
             // console.log("Printed blue line.............................");
         }
         else if(partitionForRendering[i].level===2){
-            greenLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
-        }
-        else if(partitionForRendering[i].level===3){
             yellowLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
+        else if(partitionForRendering[i].level===3){
+            cyanLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+        }
+
+        //not sure if this will get executed as in my set of coordinates, I dont think level 4 will be reached
         else if(partitionForRendering[i].level===4){
             cyanLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
@@ -994,6 +996,8 @@ function renderTerminalHulls(){
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10-hulls[i].points[1][1]}"
                                             />`;
+                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                cyanLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10-hulls[i].points[1][1]}" r="0.08" />`;
                 console.log("A LINE");
     
             }
@@ -1001,9 +1005,12 @@ function renderTerminalHulls(){
                 console.log("collinear points detected. hence selecting the end points");
                  cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                     y1="${10-hulls[i].points[0][1]}" 
-                                                    x2="${hulls.points[i][hulls[i].points.length-1][0]}" 
+                                                    x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
                                                     y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
                                                 />`;
+                
+                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                cyanLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
             }
         }
 
@@ -1022,10 +1029,14 @@ function renderTerminalHulls(){
                                                 y2="${10-hulls[i].points[1][1]}"
                                             />`;
                 console.log("A LINE");
+                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                yellowLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10-hulls[i].points[1][1]}" r="0.08" />`;
     
             }
             else if(hulls[i].points.length>2){
                 console.log("collinear points detected. hence selecting the end points");
+                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                yellowLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
                  yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                     y1="${10-hulls[i].points[0][1]}" 
                                                     x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
@@ -1048,10 +1059,14 @@ function renderTerminalHulls(){
                                                 y2="${10-hulls[i].points[1][1]}"
                                             />`;
                 console.log("A LINE");
+                greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                greenLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10-hulls[i].points[1][1]}" r="0.08" />`;
     
             }
             else if(hulls[i].points.length>2){
                 console.log("collinear points detected. hence selecting the end points");
+                greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                greenLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
                  greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                 y1="${10-hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
@@ -1074,10 +1089,14 @@ function renderTerminalHulls(){
                                                 y2="${10-hulls[i].points[1][1]}"
                                     />`;
                 console.log("A LINE");
+                blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                blueLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10-hulls[i].points[1][1]}" r="0.08" />`;
     
             }
             else if(hulls[i].points.length>2){
                 console.log("collinear points detected. hence selecting the end points");
+                blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                blueLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
                  blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                 y1="${10-hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
@@ -1100,10 +1119,14 @@ function renderTerminalHulls(){
                                                 y2="${10-hulls[i].points[1][1]}"
                                         />`;
                 console.log("A LINE");
+                redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                redLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10-hulls[i].points[1][1]}" r="0.08" />`;
     
             }
             else if(hulls[i].points.length>2){
                 console.log("collinear points detected. hence selecting the end points");
+                redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                redLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
                  redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                             y1="${10-hulls[i].points[0][1]}" 
                                             x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
@@ -1147,7 +1170,7 @@ grid.addEventListener("click", (e) => {
     const logicalX = clickX;
     const logicalY = clickY;
     let found = false;
-    const radius = 0.15;
+    const radius = 0.35;
     //this poiont clicking is my logic of an invisible activation circle
     //rather than clicking inside the box, it expects users to normally click on the point.
     for (let x = 0; x <= 10 && !found; x++) {
