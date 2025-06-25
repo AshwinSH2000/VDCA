@@ -87,8 +87,8 @@ function divideCoordinates(){
     }
     partitionAdded=false;
     if(level==0){
-        document.getElementById('addButton2').disabled=true;
-        document.getElementById('deleteButton2').disabled=true;
+        // document.getElementById('addButton2').disabled=true;
+        // document.getElementById('deleteButton2').disabled=true;
         partitions.push(-1);
         partitions.push(11);
         console.log(partitions);
@@ -412,7 +412,8 @@ function conquerCoordinates(){
     if (hulls.length === 1 && hulls[0].level === 0) {
         //alert("✅ Final convex hull computed!");
         console.log("The merging is complete...FINAL CH:", hulls[0].points);
-        document.getElementById('finalans').textContent='The final convex hull is:';
+        
+        // document.getElementById('finalans').textContent='The final convex hull is:';
         //need to fix this one
         let string_ans = []
         for(let i=0 ; i<hulls[0].points.length ; i++)
@@ -833,8 +834,8 @@ function cross(a,b,c){
 
 function resetConvexHull(){
 
-    document.getElementById('addButton2').disabled=false;
-    document.getElementById('deleteButton2').disabled=false;
+    // document.getElementById('addButton2').disabled=false;
+    // document.getElementById('deleteButton2').disabled=false;
     document.getElementById("conquerButton2").disabled=false;
     document.getElementById("divideButton2").disabled=false;
     coordinates = [];
@@ -1272,8 +1273,8 @@ grid.addEventListener("click", (e) => {
 });
 //////////////////codeforgraph
 
-document.getElementById('addButton2').addEventListener('click', inputCoordinates);
-document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
+// document.getElementById('addButton2').addEventListener('click', inputCoordinates);
+// document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
 document.getElementById('resetButton2').addEventListener('click', resetConvexHull);
 document.getElementById('conquerButton2').addEventListener('click', conquerCoordinates);
