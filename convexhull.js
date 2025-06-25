@@ -394,7 +394,8 @@ function conquerCoordinates(){
 
     console.log("After merging level", maxLevel, "->", maxLevel - 1);
     console.log("New hulls array:", hulls);
- 
+      renderMergedHulls();
+      renderTerminalHulls();
     // If only one hull left at level 0, done!
     if (hulls.length === 1 && hulls[0].level === 0) {
         //alert("✅ Final convex hull computed!");
@@ -884,6 +885,13 @@ function compareEndPoints(endPoints, point){
     return ans;
 }
 
+function findSmallestY(){
+    let min = 100;
+    //use hulls to find the lowest y coord value
+    for (let i=0 ; i<hulls.length ; i++){
+
+    }
+}
 
 //////////////////codeforgraph
 const grid = document.getElementById("grid");
@@ -977,6 +985,13 @@ function renderTerminalHullsWhite(){
 }
 
 function renderTerminalHulls(){
+
+    redLines.innerHTML="";
+    blueLines.innerHTML="";
+    yellowLines.innerHTML="";
+    cyanLines.innerHTML="";
+
+
     //use the hulls to draw the termial hulls
     for(let i=0 ; i<hulls.length ; i++){
         console.log("Drawing a line between the points", hulls[i]);
@@ -1002,15 +1017,32 @@ function renderTerminalHulls(){
     
             }
             else if(hulls[i].points.length>2){
-                console.log("collinear points detected. hence selecting the end points");
-                 cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                                                    y1="${10-hulls[i].points[0][1]}" 
-                                                    x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                                                    y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                console.log("collinear points detected. hence selecting the hull points of that polygon");
+
+                //  cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                //                                     y1="${10-hulls[i].points[0][1]}" 
+                //                                     x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                //                                     y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                //                                 />`;
+
+                //iterate through all the points of the hulls[i]...make a polygon out of it. 
+                //then draw a line joining each part of the polygon
+                //hulls[i].points will have all the points needed
+                let colouredHullPoints = hulls[i].points;
+                colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
+                for(let i=0, j=colouredHullPoints.length-1 ; i<colouredHullPoints.length ; j = i++){
+                    cyanLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                                                    cy="${10-colouredHullPoints[i][1]}" r="0.08" />`;
+
+                    cyanLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                                                    y1="${10-colouredHullPoints[i][1]}" 
+                                                    x2="${colouredHullPoints[j][0]}" 
+                                                    y2="${10-colouredHullPoints[j][1]}"
                                                 />`;
+                }
                 
-                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
-                cyanLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
+                
+                // cyanLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
             }
         }
 
@@ -1035,23 +1067,35 @@ function renderTerminalHulls(){
             }
             else if(hulls[i].points.length>2){
                 console.log("collinear points detected. hence selecting the end points");
-                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
-                yellowLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
-                 yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                                                    y1="${10-hulls[i].points[0][1]}" 
-                                                    x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                                                    y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
-                                            />`;
+                // yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                // yellowLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
+                //  yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                //                                     y1="${10-hulls[i].points[0][1]}" 
+                //                                     x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                //                                     y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                //                             />`;
+                let colouredHullPoints = hulls[i].points;
+                colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
+                for(let i=0, j=colouredHullPoints.length-1 ; i<colouredHullPoints.length ; j = i++){
+                    yellowLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                                                    cy="${10-colouredHullPoints[i][1]}" r="0.08" />`;
+
+                    yellowLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                                                    y1="${10-colouredHullPoints[i][1]}" 
+                                                    x2="${colouredHullPoints[j][0]}" 
+                                                    y2="${10-colouredHullPoints[j][1]}"
+                                                />`;
+                }
             }
         }
-        else if(hulls[i].level===2){
+        else if(hulls[i].level===0){
             if(hulls[i].points.length===1){
                 //just a single point
                 //do nothing I guess....as it is already highlighted
                 console.log("A POINT");
                 greenLines.innerHTML+= `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`
             }
-            else if(hulls[i].points.length===2){
+            else if(hulls[i].points.length===3){
                 //proper two points
                 greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                 y1="${10-hulls[i].points[0][1]}" 
@@ -1064,17 +1108,29 @@ function renderTerminalHulls(){
     
             }
             else if(hulls[i].points.length>2){
-                console.log("collinear points detected. hence selecting the end points");
-                greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
-                greenLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
-                 greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                                                y1="${10-hulls[i].points[0][1]}" 
-                                                x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                                                y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
-                                            />`;
+                console.log("collinear points detected. hence selecting the points forming the hull");
+                // greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                // greenLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
+                //  greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                //                                 y1="${10-hulls[i].points[0][1]}" 
+                //                                 x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                //                                 y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                //                             />`;
+                let colouredHullPoints = hulls[i].points;
+                colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
+                for(let i=0, j=colouredHullPoints.length-1 ; i<colouredHullPoints.length ; j = i++){
+                    greenLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                                                    cy="${10-colouredHullPoints[i][1]}" r="0.08" />`;
+
+                    greenLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                                                    y1="${10-colouredHullPoints[i][1]}" 
+                                                    x2="${colouredHullPoints[j][0]}" 
+                                                    y2="${10-colouredHullPoints[j][1]}"
+                                                />`;
+                }
             }   
         }
-        else if(hulls[i].level===1){
+        else if(hulls[i].level===2){
             if(hulls[i].points.length===1){
                 //just a single point
                 //do nothing I guess....as it is already highlighted
@@ -1094,17 +1150,29 @@ function renderTerminalHulls(){
     
             }
             else if(hulls[i].points.length>2){
-                console.log("collinear points detected. hence selecting the end points");
-                blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
-                blueLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
-                 blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                                                y1="${10-hulls[i].points[0][1]}" 
-                                                x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                                                y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
-                                        />`;
+                console.log("collinear points detected. hence selecting the points of the hull");
+                // blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                // blueLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
+                //  blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                //                                 y1="${10-hulls[i].points[0][1]}" 
+                //                                 x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                //                                 y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                //                         />`;
+                let colouredHullPoints = hulls[i].points;
+                colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
+                for(let i=0, j=colouredHullPoints.length-1 ; i<colouredHullPoints.length ; j = i++){
+                    blueLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                                                    cy="${10-colouredHullPoints[i][1]}" r="0.08" />`;
+
+                    blueLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                                                    y1="${10-colouredHullPoints[i][1]}" 
+                                                    x2="${colouredHullPoints[j][0]}" 
+                                                    y2="${10-colouredHullPoints[j][1]}"
+                                                />`;
+                }
             }
         }
-        else if(hulls[i].level===0){
+        else if(hulls[i].level===1){
             if(hulls[i].points.length===1){
                 //just a single point
                 //do nothing I guess....as it is already highlighted
@@ -1124,14 +1192,26 @@ function renderTerminalHulls(){
     
             }
             else if(hulls[i].points.length>2){
-                console.log("collinear points detected. hence selecting the end points");
-                redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
-                redLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
-                 redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                                            y1="${10-hulls[i].points[0][1]}" 
-                                            x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                                            y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
-                                        />`;
+                console.log("collinear points detected. hence selecting the points forming the hull");
+                // redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                // redLines.innerHTML += `<circle cx="${hulls[i].points[hulls[i].points.length-1][0]}" cy="${10-hulls[i].points[hulls[i].points.length-1][1]}" r="0.08" />`;
+                //  redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                //                             y1="${10-hulls[i].points[0][1]}" 
+                //                             x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                //                             y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                //                         />`;
+                let colouredHullPoints = hulls[i].points;
+                colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
+                for(let i=0, j=colouredHullPoints.length-1 ; i<colouredHullPoints.length ; j = i++){
+                    redLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                                                    cy="${10-colouredHullPoints[i][1]}" r="0.08" />`;
+
+                    redLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                                                    y1="${10-colouredHullPoints[i][1]}" 
+                                                    x2="${colouredHullPoints[j][0]}" 
+                                                    y2="${10-colouredHullPoints[j][1]}"
+                                                />`;
+                }
             }
         }
     }
