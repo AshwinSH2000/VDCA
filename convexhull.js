@@ -897,14 +897,6 @@ function compareEndPoints(endPoints, point){
     return ans;
 }
 
-function findSmallestY(){
-    let min = 100;
-    //use hulls to find the lowest y coord value
-    for (let i=0 ; i<hulls.length ; i++){
-
-    }
-}
-
 //////////////////codeforgraph
 const grid = document.getElementById("grid");
 const pointsLayer = document.getElementById("points");
@@ -1108,7 +1100,7 @@ function renderTerminalHulls(){
                 console.log("A POINT");
                 greenLines.innerHTML+= `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`
             }
-            else if(hulls[i].points.length===3){
+            else if(hulls[i].points.length===2){
                 //proper two points
                 greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                 y1="${10-hulls[i].points[0][1]}" 
