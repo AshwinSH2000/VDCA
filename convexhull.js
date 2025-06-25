@@ -98,7 +98,7 @@ function divideCoordinates(){
         if(CH==null){
             console.log("Empty coordinates array. Hence no CH");
         }
-        else if(CH.length===1){
+        else if(CH && CH.length===1){
             console.log("The CH is the point", CH);
             convexHulls.push(CH);
             hulls.push({
@@ -108,7 +108,7 @@ function divideCoordinates(){
                 index: currentIndex++
             });
         }
-        else if(CH.length===2){
+        else if( CH && (CH.length===2 || CH.every(p=>p[0]===CH[0][0]))){
             console.log("The CH is a line joining", CH);
             //this push likely wont cause trouble as its the first push into convexHulls. 
             CH.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
@@ -179,7 +179,7 @@ function divideCoordinates(){
             //checking for collinearity
             let CH = [];
             CH = checkCollinear(coordinates, low, high);
-            if(CH.length===1 || CH.length===2){
+            if(CH && (CH.length===1 || CH.length===2 || CH.every(p=>p[0]===CH[0][0]))){
                 if(CH.length===1){
                     console.log("The CH is the point", CH);
                 }
@@ -231,6 +231,15 @@ function isHullAlreadyPresent(a, b){
     if (a.length !== b.length) return false;
     return a.every((point, i) => point[0] === b[i][0] && point[1] === b[i][1]);
 }
+
+// function checkIfAllXAreSame(CH){
+    
+//     for(let i=0 ; i<CH.length ; i++){
+//         if(CH[i][0]!==CH[0][0])
+//             return false;
+//     }
+//     return true;
+// }
 
 function checkCollinear(coord, low, high){
     //if(coord.length===0){
