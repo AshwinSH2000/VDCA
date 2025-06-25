@@ -394,8 +394,20 @@ function conquerCoordinates(){
 
     console.log("After merging level", maxLevel, "->", maxLevel - 1);
     console.log("New hulls array:", hulls);
-      renderMergedHulls();
-      renderTerminalHulls();
+
+      
+    //   renderPartitionLines() is the function that is called inside renderTerminalHulls()
+    //   in that I access partitionForRendering...so here i need to edit that
+    //   can i remove all the elements in partitionForRendering whose level=maxlevel? mostly yes
+    let tempPos = 0;
+    while(tempPos!==-1){
+        tempPos =  partitionForRendering.findIndex((p)=>p.level===maxLevel-1);
+        if(tempPos>-1){
+            partitionForRendering.splice(tempPos, 1);
+        }
+    }
+    renderTerminalHulls();
+
     // If only one hull left at level 0, done!
     if (hulls.length === 1 && hulls[0].level === 0) {
         //alert("✅ Final convex hull computed!");
@@ -991,6 +1003,7 @@ function renderTerminalHulls(){
     yellowLines.innerHTML="";
     cyanLines.innerHTML="";
 
+    renderPartitionLines();
 
     //use the hulls to draw the termial hulls
     for(let i=0 ; i<hulls.length ; i++){
