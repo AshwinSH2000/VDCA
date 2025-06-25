@@ -844,7 +844,7 @@ function resetConvexHull(){
     blueLines.innerHTML="";
     greenLines.innerHTML="";
     yellowLines.innerHTML="";
-    orangeLines.innerHTML="";
+    cyanLines.innerHTML="";
 }
 
 function reorderPolygonVertices(points) {
@@ -892,7 +892,7 @@ const redLines = document.getElementById("redline");
 const blueLines = document.getElementById("blueline");
 const yellowLines = document.getElementById("yellowline");
 const greenLines = document.getElementById("greenline");
-const orangeLines = document.getElementById("orangeline");
+const cyanLines = document.getElementById("cyanline");
 const whiteLines = document.getElementById("whiteline");
 const points = new Set(); // store as "x,y" strings for easy lookup 
 
@@ -925,7 +925,7 @@ function renderPartitionLines(){
     // level1: blue partition 
     // level2: green partition
     // level3: yellow partition
-    // level4: orange partition
+    // level4: cyan partition
 
     //use the values present in partitionForRendering along with level to draw the lines
     for(let i=0 ; i<partitionForRendering.length ; i++){
@@ -946,12 +946,12 @@ function renderPartitionLines(){
             yellowLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if(partitionForRendering[i].level===4){
-            orangeLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            cyanLines.innerHTML+=`<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
     }
 }
 
-function renderTerminalHulls(){
+function renderTerminalHullsWhite(){
     //use the convexHulls to draw the termial hulls
     for(let i=0 ; i<convexHulls.length ; i++){
         console.log("Drawing a line between the points", convexHulls[i]);
@@ -974,10 +974,156 @@ function renderTerminalHulls(){
     }
 }
 
+function renderTerminalHulls(){
+    //use the hulls to draw the termial hulls
+    for(let i=0 ; i<hulls.length ; i++){
+        console.log("Drawing a line between the points", hulls[i]);
+
+        if(hulls[i].level===4)
+        {
+            if(hulls[i].points.length===1){
+                //just a single point
+                //do nothing I guess....as it is already highlighted
+                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                console.log("A POINT");
+            }
+            else if(hulls[i].points.length===2){
+                //proper two points
+                cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[1][0]}" 
+                                                y2="${10-hulls[i].points[1][1]}"
+                                            />`;
+                console.log("A LINE");
+    
+            }
+            else if(hulls[i].points.length>2){
+                console.log("collinear points detected. hence selecting the end points");
+                 cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                    y1="${10-hulls[i].points[0][1]}" 
+                                                    x2="${hulls.points[i][hulls[i].points.length-1][0]}" 
+                                                    y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                                                />`;
+            }
+        }
+
+        else if(hulls[i].level===3){
+            if(hulls[i].points.length===1){
+                //just a single point
+                //do nothing I guess....as it is already highlighted
+                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+                console.log("A POINT");
+            }
+            else if(hulls[i].points.length===2){
+                //proper two points
+                yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[1][0]}" 
+                                                y2="${10-hulls[i].points[1][1]}"
+                                            />`;
+                console.log("A LINE");
+    
+            }
+            else if(hulls[i].points.length>2){
+                console.log("collinear points detected. hence selecting the end points");
+                 yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                    y1="${10-hulls[i].points[0][1]}" 
+                                                    x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                                                    y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                                            />`;
+            }
+        }
+        else if(hulls[i].level===2){
+            if(hulls[i].points.length===1){
+                //just a single point
+                //do nothing I guess....as it is already highlighted
+                console.log("A POINT");
+                greenLines.innerHTML+= `<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`
+            }
+            else if(hulls[i].points.length===2){
+                //proper two points
+                greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[1][0]}" 
+                                                y2="${10-hulls[i].points[1][1]}"
+                                            />`;
+                console.log("A LINE");
+    
+            }
+            else if(hulls[i].points.length>2){
+                console.log("collinear points detected. hence selecting the end points");
+                 greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                                                y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                                            />`;
+            }   
+        }
+        else if(hulls[i].level===1){
+            if(hulls[i].points.length===1){
+                //just a single point
+                //do nothing I guess....as it is already highlighted
+                console.log("A POINT");
+                blueLines.innerHTML+=`<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+            }
+            else if(hulls[i].points.length===2){
+                //proper two points
+                blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[1][0]}" 
+                                                y2="${10-hulls[i].points[1][1]}"
+                                    />`;
+                console.log("A LINE");
+    
+            }
+            else if(hulls[i].points.length>2){
+                console.log("collinear points detected. hence selecting the end points");
+                 blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                                                y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                                        />`;
+            }
+        }
+        else if(hulls[i].level===0){
+            if(hulls[i].points.length===1){
+                //just a single point
+                //do nothing I guess....as it is already highlighted
+                console.log("A POINT");
+                redLines.innerHTML+=`<circle cx="${hulls[i].points[0][0]}" cy="${10-hulls[i].points[0][1]}" r="0.08" />`;
+            }
+            else if(hulls[i].points.length===2){
+                //proper two points
+                redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                                y1="${10-hulls[i].points[0][1]}" 
+                                                x2="${hulls[i].points[1][0]}" 
+                                                y2="${10-hulls[i].points[1][1]}"
+                                        />`;
+                console.log("A LINE");
+    
+            }
+            else if(hulls[i].points.length>2){
+                console.log("collinear points detected. hence selecting the end points");
+                 redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                                            y1="${10-hulls[i].points[0][1]}" 
+                                            x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
+                                            y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
+                                        />`;
+            }
+        }
+    }
+}
+
 function renderMergedHulls(){
     //so ...what do i need to do?
     //i have the hulls array. ok
-    //take
+    //take convexHulls..it will most probably contain the latest hull information. 
+    //combine that with the level info and use appropriate colors ... 
+    //most imp ly, merge/draw the hull only belonging to that level, 
+    // tasks...
+    // 1. go through all the code quickly (maybe before meeting on friday)
+    // 2. read about DISS page on opencourse
+    // 3. write all the rough details before friday as to what you have done
 }
 
 grid.addEventListener("click", (e) => {
