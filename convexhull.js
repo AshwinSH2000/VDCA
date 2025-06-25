@@ -98,9 +98,18 @@ function divideCoordinates(){
         if(CH==null){
             console.log("Empty coordinates array. Hence no CH");
         }
-        else if(CH){
+        else if(CH.length===1){
+            console.log("The CH is the point", CH);
+            convexHulls.push(CH);
+            hulls.push({
+                // points: CH,
+                points: [CH[0]],
+                level: level,
+                index: currentIndex++
+            });
+        }
+        else if(CH.length===2){
             console.log("The CH is a line joining", CH);
-            console.log("niurngsieurhsy4859tnvwiutywno8475nywo7348ytnov875ytvow8745tyvwno478tywvno8745ytnvw   \nuiwbiurybivurtynhvqiuynoitwrurtbywoiurtyni4ytwio34tycoi4ynaewiunvehfnvaeiufnlaieud\nieuhcnaiwuefaeilufnhalceiucflmaheifhaleiufhnaceiufhaeiwufhihiy384iuaebniauwawkniir");
             //this push likely wont cause trouble as its the first push into convexHulls. 
             CH.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
             //now push only the end points. 
@@ -170,7 +179,7 @@ function divideCoordinates(){
             //checking for collinearity
             let CH = [];
             CH = checkCollinear(coordinates, low, high);
-            if(CH){
+            if(CH.length===1 || CH.length===2){
                 if(CH.length===1){
                     console.log("The CH is the point", CH);
                 }
