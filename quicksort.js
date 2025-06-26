@@ -12,9 +12,14 @@ function inputNumbers(){
     if(item){
         arrayList.push(Number(item));
         console.log("Added:", item, "Array:", arrayList);
-
+        
+        
         const bar = document.createElement('div');
+        //bar.classList.add(`level-${level}`);
+        
+        //old aprch
         bar.classList.add('bar');
+
         let barheight = Number(item);
         //bar.style.height = `${Number(item)}px`;
         bar.style.height = `${barheight*5}px`;
@@ -120,8 +125,8 @@ function divide2(){
             document.getElementById('addButton').disabled= true;
             document.getElementById('deleteButton').disabled=true;
             
-            pivots.push({ position: Number(-1), pivot: -1 } );         //this is the position of 
-            pivots.push( {position: arrayList.length, pivot: -1});    //this is also the position of pivots. 
+            pivots.push({ position: Number(-1), pivot: -1 , level: -1} );         //this is the position of 
+            pivots.push( {position: arrayList.length, pivot: -1, level: -1});    //this is also the position of pivots. 
             console.log("I AM HERE!!!");
             console.log(pivots);
 
@@ -138,7 +143,7 @@ function divide2(){
             tempPos = partition(arrayList, pivots[counter].position+1, pivots[counter+1].position-1, tempPos);
 
             //store the position of the pivot for next rounds
-            pivots.push({ position: tempPos , pivot: tempPivot});
+            pivots.push({ position: tempPos , pivot: tempPivot, level: level});
             //pivots.sort();  commenting since have that statement at the end. 
             
             console.log("Currently at level 0");
@@ -167,7 +172,7 @@ function divide2(){
             if(!pivots.some(p=> p.position===tempPos && p.pivot===tempPivot))
             {
                 console.log("Since "+tempPos+" is not present, inserting it.");
-                pivots.push({position: tempPos, pivot: tempPivot});
+                pivots.push({position: tempPos, pivot: tempPivot, level: level});
             }
             
             console.log("Currently at level "+level+" iteration "+counter);
@@ -281,7 +286,7 @@ function findPivot(arr, low, high){
 }
 
 
-function visualise(){
+function visualiseOld(){
     for(let i=0 ; i<arrayList.length ; i++){
         const bar = document.createElement('div');
         bar.classList.add('bar');
@@ -289,17 +294,109 @@ function visualise(){
         //bar.style.height = `${Number(item)}px`;
         bar.style.height = `${barheight*5}px`;
         bar.textContent = barheight;
-        if (level==0)
-            document.getElementById('bar-container2').appendChild(bar);
-        else if(level==1)
-            document.getElementById('bar-container3').appendChild(bar);
-        else if(level==2)
-            document.getElementById('bar-container4').appendChild(bar);
-        else if(level==3)
-            document.getElementById('bar-container5').appendChild(bar);
+        document.getElementById(`bar-container${level+2}`).appendChild(bar);
+        // if (level==0)
+        //     document.getElementById('bar-container2').appendChild(bar);
+        // else if(level==1)
+        //     document.getElementById('bar-container3').appendChild(bar);
+        // else if(level==2)
+        //     document.getElementById('bar-container4').appendChild(bar);
+        // else if(level==3)
+        //     document.getElementById('bar-container5').appendChild(bar);
 
     }      
 }
+
+function visualise(){
+    // Clear all containers
+    // for (let i = 2; i <= 5; i++) {
+    //     document.getElementById(`bar-container${i}`).innerHTML = '';
+    // }
+
+    const container = document.getElementById(`bar-container${level + 2}`);
+    for(let i = 0; i < arrayList.length; i++){
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        let barheight = Number(arrayList[i]);
+        bar.style.height = `${barheight * 5}px`;
+        bar.textContent = barheight;
+        
+
+        // Check if this index is a pivot at this level
+        const pivotData = pivots.find(p => p.position === i);
+        if (pivotData) {
+            bar.classList.add(`pivot-level-${pivotData.level}`);
+            bar.style.marginLeft = '15px';
+            bar.style.marginRight = '15px';
+        }
+        container.appendChild(bar);
+    }
+
+    // const container = document.getElementById('bar-container');
+    // container.innerHTML = ''; // Clear previous bars
+
+    // for (let i = 0; i < arrayList.length; i++) {
+    //     const bar = document.createElement('div');
+    //     bar.classList.add('bar');
+
+    //     let barHeight = Number(arrayList[i]);
+    //     bar.style.height = `${barHeight * 5}px`;
+    //     bar.textContent = barHeight;
+
+    //     const isPivot = pivots.some(p => p.position === i && p.pivot === arrayList[i]);
+    //     if (isPivot) {
+    //         bar.classList.add('bg-red-500'); // Pivot style
+    //         bar.style.marginLeft = '12px'; // Separation from left partition
+    //         bar.style.marginRight = '12px'; // Separation from right partition
+    //     } else {
+    //         bar.classList.add('bg-blue-500'); // Normal style
+    //     }
+
+    //     container.appendChild(bar);
+    // }
+}
+
+// function visualise(level) {
+//     let container = document.getElementById(`bar-container-level-${level}`);
+
+//     // If container doesn't exist yet, create it
+//     if (!container) {
+//         container = document.createElement('div');
+//         container.id = `bar-container-level-${level}`;
+//         // container.className = 'flex gap-2 mb-4 flex-wrap';
+//         container.className = 'flex flex-row gap-2 flex-wrap';
+//         document.getElementById('bar-wrapper').appendChild(container); // Wrap all bar-containers in one parent
+//     }
+
+//     // Create the bar group
+//     const barGroup = document.createElement('div');
+//     // barGroup.className = 'flex gap-2';
+//     barGroup.className = 'flex flex-row gap-2';
+
+//     for (let i = 0; i < arrayList.length; i++) {
+//         const bar = document.createElement('div');
+//         bar.classList.add('bar');
+
+//         let barHeight = Number(arrayList[i]);
+//         bar.style.height = `${barHeight * 5}px`;
+//         bar.textContent = barHeight;
+
+//         const isPivot = pivots.some(p => p.position === i && p.pivot === arrayList[i]);
+//         if (isPivot) {
+//             bar.classList.add('bg-red-500');
+//             bar.style.marginLeft = '12px';
+//             bar.style.marginRight = '12px';
+//             bar.style.width = '30px';
+//         } else {
+//             bar.classList.add('bg-blue-500');
+//         }
+
+//         barGroup.appendChild(bar);
+//     }
+
+//     container.appendChild(barGroup); // Append barGroup to this level's container
+// }
+
 
 function resetQuickSort(){
     //this has many debugging statements. clear them
@@ -311,6 +408,10 @@ function resetQuickSort(){
     pivots=[];
     arrayList=[];
     console.log("reset all the variables");
+    for (let i = 0; i <= 5; i++) {
+        const container = document.getElementById(`bar-container${i}`);
+        if (container) container.innerHTML = '';
+    }
     console.clear();
     console.log("Reset the interface. Starting fresh!");
 }
