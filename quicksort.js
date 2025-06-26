@@ -3,6 +3,7 @@
 let arrayList = [];
 let pivots = [];
 let level = 0;
+let conquerFlag = false;
 
 function inputNumbers(){
     const item = document.getElementById('array_number').value.trim();
@@ -313,7 +314,26 @@ function visualise(){
     //     document.getElementById(`bar-container${i}`).innerHTML = '';
     // }
 
-    const container = document.getElementById(`bar-container${level + 2}`);
+    let container = document.getElementById(`bar-container${level + 2}`);
+    if(conquerFlag)
+        container = document.getElementById(`bar-container${level + 1}`);
+    else
+        container = document.getElementById(`bar-container${level + 2}`);
+
+    if(level===0 && conquerFlag){
+        container = document.getElementById('bar-container');
+    }
+
+
+
+    if(!container){
+        console.log("afnaioenjfavliejaf\naufhnvaliefhvabih\naiufybaieufybavaufha\nawkunerca");
+        container = document.createElement('div');
+        container.id = `bar-container${level+2}`;
+        console.log("Current level is", level, container.id);
+        return;
+
+    }
     for(let i = 0; i < arrayList.length; i++){
         const bar = document.createElement('div');
         bar.classList.add('bar');
@@ -415,8 +435,36 @@ function resetQuickSort(){
     console.clear();
     console.log("Reset the interface. Starting fresh!");
 }
+
+function conquer(){
+
+    conquerFlag=true;
+
+    if(level >= 0){
+        
+        console.log("When I first cae onto conquer, the level is ", level);
+        level--;
+        
+        //remove the maxlevel partitions from 
+        let maxLevel = Math.max(...pivots.map(p=>p.level));
+        console.log("maxlevel deleted",maxLevel);
+        let flag=true;
+        while(flag){
+            flag=false;
+            let delIndex = pivots.findIndex(p=>p.level===maxLevel);
+            console.log("deIndex is", delIndex);
+            if(delIndex>=0){
+                pivots.splice(delIndex, 1);
+                console.log("After deleting, pivots is", pivots);
+                flag=true;
+            }
+        }
+
+        visualise();
+    }
+}
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
 document.getElementById('divideButton').addEventListener('click', divide2);
-document.getElementById('conquerButton').addEventListener('click', divide2);
+document.getElementById('conquerButton').addEventListener('click', conquer);
 document.getElementById('resetButton').addEventListener('click', resetQuickSort);

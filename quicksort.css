@@ -26,60 +26,16 @@ h4{
   color: darkslategray;
   /* margin-top: 1%; */
 }
-#bar-container {
+
+.bar-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 5px;
   margin-top: 10px;
-  height: 200px;
+  height: 100px;
   /* border: 1px solid #ccc; */
   /* border: 1px solid #21a86b; */
-}
-
-#bar-container2 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  margin-top: 10px;
-  height: 200px;
-  /* border: 1px solid #ccc; */
-  /* border: 1px solid #c2861e; */
-}
-
-#bar-container3 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  margin-top: 10px;
-  height: 200px;
-  /* border: 1px solid #ccc; */
-  /* border: 1px solid #c21e1e; */
-}
-
-#bar-container4 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  margin-top: 10px;
-  height: 200px;
-
-  /* border: 1px solid #ccc; */
-  /* border: 1px solid #c2861e; */
-}
-
-#bar-container5 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  margin-top: 10px;
-  height: 200px;
-  /* border: 1px solid #ccc; */
-  /* border: 1px solid #1e60c2; */
 }
 
 .bar {
@@ -99,7 +55,7 @@ h4{
 }
 
 .pivot-level-1 {
-  background-color: #fb923c;
+  background-color: #b35100;
 }
 
 .pivot-level-2 {
@@ -108,6 +64,14 @@ h4{
 
 .pivot-level-3 {
   background-color: #007c1d;
+}
+
+.pivot-level-4 {
+  background-color: #92a200;
+}
+
+.pivot-level-5 {
+  background-color: #9300b1;
 }
 
 .gap-div {
