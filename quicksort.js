@@ -109,10 +109,12 @@ function divide2(){
     //let i=0;
     if (level===arrayList.length-1){
         console.log("reached max levels...terminating");
+        document.getElementById('divideButton').disabled=true;
         return;
     }
     if(pivots.length>arrayList.length){
         console.log("array is sorted...terminating");
+        document.getElementById('divideButton').disabled=true;
         return;
     }
 
@@ -313,16 +315,45 @@ function visualise(){
     // for (let i = 2; i <= 5; i++) {
     //     document.getElementById(`bar-container${i}`).innerHTML = '';
     // }
+    if(level<0){
+        return;
+    }
 
     let container = document.getElementById(`bar-container${level + 2}`);
-    if(conquerFlag)
+
+    if(level===0 && conquerFlag){
+    {
+        container = document.getElementById('bar-container');
+
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = "0px";
+
+        const bar2 = document.createElement('div');
+        bar2.classList.add('bar');
+        bar2.style.height = "0px";
+        
+        container.appendChild(bar);
+        container.appendChild(bar2);
+    }   
+    }
+    else if(conquerFlag)
+    {
         container = document.getElementById(`bar-container${level + 1}`);
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = "0px";
+
+        const bar2 = document.createElement('div');
+        bar2.classList.add('bar');
+        bar2.style.height = "0px";
+        container.appendChild(bar);
+        container.appendChild(bar2);
+    }   
     else
         container = document.getElementById(`bar-container${level + 2}`);
 
-    if(level===0 && conquerFlag){
-        container = document.getElementById('bar-container');
-    }
+    
 
 
 
@@ -423,6 +454,8 @@ function resetQuickSort(){
     console.log("reached reset");
     document.getElementById('addButton').disabled=false;
     document.getElementById('deleteButton').disabled=false;
+    document.getElementById('divideButton').disabled=false;
+    document.getElementById('conquerButton').disabled=false;
     console.log("enabled all the buttons");
     level=0;
     pivots=[];
@@ -432,12 +465,19 @@ function resetQuickSort(){
         const container = document.getElementById(`bar-container${i}`);
         if (container) container.innerHTML = '';
     }
+    document.getElementById("bar-container").innerHTML='';
     console.clear();
     console.log("Reset the interface. Starting fresh!");
 }
 
 function conquer(){
 
+    console.log("level is", level);
+    if(level<=0){
+        console.log("All partitions conquered. They array is sorted. ");
+        document.getElementById('conquerButton').disabled=true;
+        // return;
+    }
     conquerFlag=true;
 
     if(level >= 0){
