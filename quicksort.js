@@ -461,12 +461,19 @@ function resetQuickSort(){
     pivots=[];
     arrayList=[];
     console.log("reset all the variables");
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 2, flag=true; flag ; i++) {
+        flag=false;
+        
         const container = document.getElementById(`bar-container${i}`);
-        if (container) container.innerHTML = '';
+        
+        if (container) {
+            container.innerHTML = '';
+            flag=true;
+            
+        }
     }
     document.getElementById("bar-container").innerHTML='';
-    console.clear();
+    //console.clear();
     console.log("Reset the interface. Starting fresh!");
 }
 

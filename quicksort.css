@@ -58,7 +58,7 @@ h4{
 }
 
 .pivot-level-1 {
-  background-color: #b35100;
+  background-color: #a64b00;
 }
 
 .pivot-level-2 {
@@ -75,6 +75,9 @@ h4{
 
 .pivot-level-5 {
   background-color: #9300b1;
+}
+.pivot-level-6 {
+  background-color: #ff7402;
 }
 
 .gap-div {
