@@ -7,6 +7,9 @@ let hulls = [];
 let currentIndex=0;
 let string_ans = [];
 let partitionForRendering = [];
+let divideFlag = false;
+let conquerFlag = false;
+
 function inputCoordinates(inputStr) {
     // @type {HTMLInputElement}
     // const inputStr = document.getElementById("coordinates2").value.trim(); //disabled this to have points by clickong on the graph
@@ -21,7 +24,7 @@ function inputCoordinates(inputStr) {
     else{
         console.log("none got exed");
         alert("Enter both x and y coordinates!");
-        document.getElementById('coordinates2').value='';
+        //document.getElementById('coordinates2').value='';
         return;
     }
     if(coord){ 
@@ -44,7 +47,7 @@ function inputCoordinates(inputStr) {
     else{
         alert('Enter a number');
     }
-    document.getElementById('coordinates2').value='';
+    //document.getElementById('coordinates2').value='';
 }
 
 function deleteCoordinates(inputStr) {
@@ -71,10 +74,12 @@ function deleteCoordinates(inputStr) {
             console.log("This doesnt work", coordinates);
         }
     }
-    document.getElementById("coordinates2").value='';
+    //document.getElementById("coordinates2").value='';
 }
 
 function divideCoordinates(){
+
+    divideFlag=true;
     
     if(partitionAdded===false){
         console.log("All partitions are now terminal convex hulls. No further division needed. ");
@@ -317,6 +322,7 @@ function findMedianPartition(coord, low, high){
     return median;
 }
 function conquerCoordinates(){
+    conquerFlag = true;
     //access convexHulls array and partitions array
     console.log("The CHs are:",convexHulls);
     console.log("The partitions are:",partitions);
@@ -852,6 +858,8 @@ function cross(a,b,c){
 
 function resetConvexHull(){
 
+    divideFlag = false;
+    conquerFlag = false;
     // document.getElementById('addButton2').disabled=false;
     // document.getElementById('deleteButton2').disabled=false;
     document.getElementById("conquerButton2").disabled=false;
@@ -1254,6 +1262,11 @@ function renderMergedHulls(){
 }
 
 grid.addEventListener("click", (e) => {
+
+    if(divideFlag || conquerFlag){
+        return;
+    }
+
     const bbox = grid.getBoundingClientRect(); 
 
     //the below code converts pixels to grid units itseems. bbox contains left, right, hright and with in pixels and we are converting that into more usable form (grid units).
@@ -1268,7 +1281,6 @@ grid.addEventListener("click", (e) => {
     //   togglePoint(x, 11 - y); // invert y-axis
     // }
 
-    
     const clickX = (e.clientX - bbox.left) * scaleX;
     const clickY = (e.clientY - bbox.top) * scaleY;
     const logicalX = clickX;
