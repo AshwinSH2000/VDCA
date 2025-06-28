@@ -69,3 +69,38 @@ button:disabled {
 	text-anchor: middle;
 }
 
+.treeContainer {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: xx-large;
+	font-weight: 900; /*heavy bold*/
+	display: flex;
+	justify-content: center;
+}
+
+.partitionLevel0{
+	color: #ff0000;
+}
+
+.partitionLevel1{
+	color: rgb(95, 100, 255);
+}
+
+.partitionLevel2{
+	color: green;
+}
+
+.partitionLevel3{
+	color: yellow;
+}
+
+.partitionLevel4{
+	color: cyan;
+}
+
+.partitionLevel5{
+	color: white;
+}
+
+.partitionLevelBlack{
+	color: black;
+}

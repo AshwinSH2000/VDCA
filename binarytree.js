@@ -347,6 +347,10 @@ function divide4() {
 
 function divide5() {
 
+  //test code
+  // let textttt = document.getElementById("treeContainer");
+  // textttt.innerHTML="Hello";
+
   document.getElementById("addButton3").disabled=true;
   document.getElementById("addButton4").disabled=true;
   document.getElementById("deleteButton3").disabled=true;
@@ -381,6 +385,7 @@ function divide5() {
 
     console.log("At the end of level 0:", nodes);
     console.log("limits is", limits);
+    visualiseBT();
     level++;
     return;
   } else {
@@ -435,6 +440,7 @@ function divide5() {
     console.log("The class object is", treeNodes);
     limits.sort((a, b) => a - b);
     console.log("limits is", limits);
+    visualiseBT();
     level++;
   }
 }
@@ -595,7 +601,37 @@ function reset(){
 }
 
 function visualiseBT(){
-    
+
+  let container = document.getElementById(`treeContainer`);
+  console.log("Inside the visualise fn");
+  if(level===0)
+   {
+      container = document.getElementById(`treeContainer`);
+      container.innerHTML = '';
+   } 
+  else{
+      container = document.getElementById(`treeContainer${level+1}`);
+      container.innerHTML = '';
+  }
+
+  for(let i=0 ; i<inorder.length ; i++){
+      //output the value of each node based on its level's colour'
+      console.log("Inside the forloop");
+      const NODE = document.createElement('div');
+      NODE.textContent = inorder[i];
+      let textToDisplay = nodes.findIndex((p)=>p.value===inorder[i]);
+      console.log("textToDisplay is", textToDisplay);
+      if(textToDisplay===-1){
+        NODE.classList.add('partitionLevelBlack');
+      }
+      else{
+        NODE.classList.add(`partitionLevel${nodes[textToDisplay].level}`);
+      }
+      // NODE.classList.add(`partitionLevel${1}`);
+      container.appendChild(NODE);
+      console.log("appended sth");
+      //  += nodes[i].value;
+  }
 }
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
