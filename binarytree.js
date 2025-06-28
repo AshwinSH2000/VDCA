@@ -5,6 +5,9 @@ let partitionIndexes = [];
 let treeNodes = []; //this is to store the class nodes
 let nodes = [];
 let limits = [];
+let divideSteps = [];
+let treeLevels = [];
+let currentLevel = 0;
 
 class treeNode {
   constructor(value, level){
@@ -589,6 +592,10 @@ function reset(){
   limits = [];
   console.clear();
   console.log("cleared the console. starting fresh");
+}
+
+function visualiseBT(){
+    
 }
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);

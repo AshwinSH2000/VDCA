@@ -10,42 +10,53 @@
 </head>
 
 <body>
-    <center>
-        <h1><u>Visualising Divide and Conquer Algorithms</u></h1>
+    <h1><u>Visualising Divide and Conquer Algorithms</u></h1>
+    <br>
+    <h4>Binary Tree</h4>
+    <br>
+    <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
+    <br>
+    <button onclick="window.location.href='quicksort.html';">Quick Sort</button>
+    <button onclick="window.location.href='convexhull.html';">Convex Hull</button>
+    <br>
+    <br>
+    <form id="form_for_array_input" action="#">
         <br>
-        <h4>Binary Tree</h4>
+        <label for="inorder">Inorder traversal:</label>
+        <input type="string" id="inorder" min="-1000" max="1000">
         <br>
-        <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
+        <button type="button" id="addButton3">Enter</button>
+        <button type="button" id="deleteButton3">Delete</button>
+        <br><br>----------------------<br><br>
+        <label for="preorder">Preorder traversal:</label>
+        <input type="string" id="preorder" min="-1000" max="1000">
         <br>
-        <button onclick="window.location.href='quicksort.html';">Quick Sort</button>
-        <button onclick="window.location.href='convexhull.html';">Convex Hull</button>
+        <button type="button" id="addButton4">Enter</button>
+        <button type="button" id="deleteButton4">Delete</button>
         <br>
+        <label id="binTreeRes"></label>
+        <!-- not going to help for this usecase -->
         <br>
-        <form id="form_for_array_input" action="#">
-            <br>
-            <label for="inorder">Inorder traversal:</label>
-            <input type="string" id="inorder" min="-1000" max="1000">
-            <br>
-            <button type="button" id="addButton3">Enter</button>
-            <button type="button" id="deleteButton3">Delete</button>
-            <br><br>----------------------<br><br>
-            <label for="preorder">Preorder traversal:</label>
-            <input type="string" id="preorder" min="-1000" max="1000">
-            <br>
-            <button type="button" id="addButton4">Enter</button>
-            <button type="button" id="deleteButton4">Delete</button>
-            <br>
-            <label id="binTreeRes"></label>
-            <!-- not going to help for this usecase -->
-            <br>
-            <button type="button" id="divideButton3">Divide</button>
-            <button type="button" id="conquerButton3">Conquer</button>
-            <br><br>
-            <button type="button" id="resetButton3">Reset</button>
-        </form>
-        <br>
-        <svg id="treeCanvas"></svg>
-    </center>
+        <button type="button" id="divideButton3">Divide</button>
+        <button type="button" id="conquerButton3">Conquer</button>
+        <br><br>
+        <button type="button" id="resetButton3">Reset</button>
+    </form>
+    <br>
+    <!-- <svg id="treeCanvas"> -->
+    <div id="treeContainer" class="treeContainer"></div>
+    <div id="treeContainer2" class="treeContainer"></div>
+    <div id="treeContainer3" class="treeContainer"></div>
+    <div id="treeContainer4" class="treeContainer"></div>
+    <div id="treeContainer5" class="treeContainer"></div>
+    <div id="treeContainer6" class="treeContainer"></div>
+    <div id="treeContainer7" class="treeContainer"></div>
+    <div id="treeContainer8" class="treeContainer"></div>
+    <div id="treeContainer9" class="treeContainer"></div>
+    <div id="treeContainer10" class="treeContainer"></div>
+
+
+    <!-- </svg> -->
     <script src="binarytree.js"></script>
 </body>
 

@@ -1,5 +1,7 @@
 body{
+	text-align: center;
     background-color: darkkhaki;
+	
 }
 h1 {
     color: black;
@@ -24,6 +26,7 @@ button.mainButton{
 	margin: 15px 15px;
 	cursor: pointer;
 }
+/* no prefix = component level setting */
 button {
 	background-color: lightyellow;
 	border:rgb(from color 1 1 1);
@@ -51,15 +54,18 @@ button:disabled {
 	cursor: not-allowed;
 	opacity: 0.5;
 }
+
+/* not sure if i will use this one but good to have */
 #treeCanvas {
 	width: 100%;
 	height: 500px;
 	border: 1px solid black;
 	background-color: #f9f9f9;
-  }
+}
 
-  .tree-node {
+.tree-node {
 	font-size: 14px;
 	dominant-baseline: middle;
 	text-anchor: middle;
-  }
+}
+

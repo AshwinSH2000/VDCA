@@ -1,5 +1,6 @@
 body {
   background-color: lightgray;
+  text-align: center;
 }
 button {
 	background-color: lightyellow;
@@ -32,6 +33,9 @@ h4{
   /* margin-top: 1%; */
 }
 
+/* prefix fullstop means class level  */
+/* prefix # means id level  */
+/* no prefix means component level  */
 .bar-container {
   display: flex;
   justify-content: center;
