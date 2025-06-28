@@ -18,25 +18,6 @@ class treeNode {
 document.getElementById("divideButton3").disabled = true;
 
 function addPreorder() {
-  //   let a = [];
-  //   a.push({
-  //     x: 1,
-  //     y: 2,
-  //   });
-  //   let b = [];
-  //   b.push({
-  //     x: 3,
-  //     y: 4,
-  //   });
-  //   b.push({
-  //     x: 5,
-  //     y: 6,
-  //   });
-  //   a.push(...b);
-  //   console.log(a);
-  //   console.log(b);
-  //   return;
-
   const w = document.getElementById("preorder").value.trim();
   if (w) {
     let singleNum = Number(w);
@@ -110,21 +91,9 @@ function deletePreorder() {
 }
 
 // ---
-
 function addInorder() {
-  // for testing
-  // let inorder = [3,4,5,2,1];
-  // let preorder = [1,2,3,4,];
-  // let inorder = [4,2,1,5,3,6];
-  // let preorder = [1,2,4,3,5,6];
-  // let inorder = [6,4,7,2,5,1,3];
-  // let preorder = [1,2,4,6,7,5,3];
-  // let inorder = [];
-  // let preorder = [];
-
   // console.log("The result is...",checkTree(inorder, preorder));
   // return;
-
   document.getElementById("divideButton3").disabled = false;
 
   const w = document.getElementById("inorder").value.trim();
@@ -621,8 +590,6 @@ function reset(){
   console.clear();
   console.log("cleared the console. starting fresh");
 }
-
-
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
