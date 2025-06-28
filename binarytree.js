@@ -617,18 +617,66 @@ function visualiseBT(){
   for(let i=0 ; i<inorder.length ; i++){
       //output the value of each node based on its level's colour'
       console.log("Inside the forloop");
-      const NODE = document.createElement('div');
-      NODE.textContent = inorder[i];
-      let textToDisplay = nodes.findIndex((p)=>p.value===inorder[i]);
-      console.log("textToDisplay is", textToDisplay);
-      if(textToDisplay===-1){
+      
+      let indexOfText = nodes.findIndex((p)=>p.value===inorder[i]);
+      console.log("indexOfText is", indexOfText);
+
+      if(indexOfText===-1){
+        //output the number only
+        const NODE = document.createElement('div');
+        NODE.textContent = inorder[i];
         NODE.classList.add('partitionLevelBlack');
+        container.appendChild(NODE);
       }
       else{
-        NODE.classList.add(`partitionLevel${nodes[textToDisplay].level}`);
+        //create and push a node
+        // const NODE = document.createElement('g');
+        // NODE.classList.add(`partitionLevel${nodes[indexOfText].level}`);
+        // NODE.innerHTML+= '<circle cx="10" cy="10" r="5" />'
+        // container.appendChild(NODE);
+
+    const SVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    SVG.setAttribute("width", "30");
+    SVG.setAttribute("height", "30");
+    SVG.style.display = "flex";
+    SVG.style.justifyContent = "center";
+    SVG.style.alignItems = "center";
+
+
+    // const G = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    SVG.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
+
+    const CIRCLE = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    CIRCLE.setAttribute("cx", "15");
+    CIRCLE.setAttribute("cy", "15");
+    CIRCLE.setAttribute("r", "12");
+    CIRCLE.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
+    CIRCLE.setAttribute("fill", "none");        // Hollow circle
+    // CIRCLE.setAttribute("stroke", "black");     // Border color
+    CIRCLE.setAttribute("stroke-width", "2"); 
+    
+
+
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", "15");
+    text.setAttribute("y", "21"); // a little below center
+    text.setAttribute("text-anchor", "middle"); // center horizontally
+    text.setAttribute("font-size", "20");
+    text.textContent = inorder[i];
+    text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
+
+
+    // G.appendChild(CIRCLE);
+    // SVG.appendChild(CIRCLE);
+    // container.appendChild(SVG);
+
+    SVG.appendChild(CIRCLE);
+    SVG.appendChild(text);
+    container.appendChild(SVG);
       }
       // NODE.classList.add(`partitionLevel${1}`);
-      container.appendChild(NODE);
+      
+      
       console.log("appended sth");
       //  += nodes[i].value;
   }

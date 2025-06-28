@@ -11,134 +11,134 @@
 </head>
 
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
-    <h1 class="text-2xl font-bold mb-4"><u>Visualising Divide and Conquer Algorithms</u></h1>
-    <!-- <br> -->
-    <h4>Convex Hull</h4>
-    <!-- <br> -->
-    <form id="form_for_input2" action="#">
-      <button type="button" onclick="window.location.href='main.html';">HomePage</button>
-      <button type="button" onclick="window.location.href='quicksort.html';">Quick Sort</button>
-      <button type="button" onclick="window.location.href='binarytree.html';">Binary Tree</button>
-      <br>
+  <h1 class="text-2xl font-bold mb-4"><u>Visualising Divide and Conquer Algorithms</u></h1>
+  <!-- <br> -->
+  <h4>Convex Hull</h4>
+  <!-- <br> -->
+  <form id="form_for_input2" action="#">
+    <button type="button" onclick="window.location.href='main.html';">HomePage</button>
+    <button type="button" onclick="window.location.href='quicksort.html';">Quick Sort</button>
+    <button type="button" onclick="window.location.href='binarytree.html';">Binary Tree</button>
+    <br>
 
-      <!-- <label for="coordinates2">Enter the coordinates (between 0 and 10) :</label> -->
-      <!-- <input type="string" id="coordinates2" name="coordinates2" min="0" max="20"> -->
-      <br>
-      <label for="finalans" id="finalans"></label>
-      <!-- <label for="finalans2" id="finalans2"></label> -->
+    <!-- <label for="coordinates2">Enter the coordinates (between 0 and 10) :</label> -->
+    <!-- <input type="string" id="coordinates2" name="coordinates2" min="0" max="20"> -->
+    <br>
+    <label for="finalans" id="finalans"></label>
+    <!-- <label for="finalans2" id="finalans2"></label> -->
 
-      <!-- <input type="string" id="finalans" name="finalans" size="36"> -->
-      <!-- <br><br> -->
-      <!-- <button type="button" id="addButton2">Insert coordinate</button>
+    <!-- <input type="string" id="finalans" name="finalans" size="36"> -->
+    <!-- <br><br> -->
+    <!-- <button type="button" id="addButton2">Insert coordinate</button>
       <button type="button" id="deleteButton2">Delete coordinate</button>
       <br> -->
-      <button type="button" id="divideButton2">Divide</button>
-      <button type="button" id="conquerButton2">Conquer</button>
-      <br>
-      <button type="button" id="resetButton2">Reset</button>
-    </form>
+    <button type="button" id="divideButton2">Divide</button>
+    <button type="button" id="conquerButton2">Conquer</button>
+    <br>
+    <button type="button" id="resetButton2">Reset</button>
+  </form>
 
-    <!-- 
+  <!-- 
     <div class="justify-center items-center min-h-screen bg-gray-100 ">
       <svg id="grid" viewBox="-1 -1 12 12" preserveAspectRatio="xMidYMid meet" style="width: 700px; height: 700px;"
         class="bg-gray-100"> 
     -->
 
-    <!-- <div class="max-w-[200px] w-full mx-auto"> 
+  <!-- <div class="max-w-[200px] w-full mx-auto"> 
       <svg id="grid" viewBox="-1 -1 12 12" preserveAspectRatio="xMidYMid meet"
         class="w-full h-auto bg-gray-100 border border-gray-400 cursor-pointer"> -->
 
-    <div class="flex justify-center"> <!-- Centering container -->
-      <svg id="grid" viewBox="-1 -1 12 12" preserveAspectRatio="xMidYMid meet"
-        class="w-[80vw] h-auto max-w-[400px] bg-gray-100 border border-gray-400 cursor-pointer"
-        style="max-height: 80vh;">
+  <div class="flex justify-center"> <!-- Centering container -->
+    <svg id="grid" viewBox="-1 -1 12 12" preserveAspectRatio="xMidYMid meet"
+      class="w-[80vw] h-auto max-w-[400px] bg-gray-100 border border-gray-400 cursor-pointer" style="max-height: 80vh;">
 
 
-        <!-- Grid lines -->
-        <g stroke="#000" stroke-width="0.025">
-          <!-- <g stroke="gray" width="0.01"></g> -->
-          <!-- Vertical lines -->
-          <line x1="0" y1="0" x2="0" y2="10" />
-          <line x1="1" y1="0" x2="1" y2="10" />
-          <line x1="2" y1="0" x2="2" y2="10" />
-          <line x1="3" y1="0" x2="3" y2="10" />
-          <line x1="4" y1="0" x2="4" y2="10" />
-          <line x1="5" y1="0" x2="5" y2="10" />
-          <line x1="6" y1="0" x2="6" y2="10" />
-          <line x1="7" y1="0" x2="7" y2="10" />
-          <line x1="8" y1="0" x2="8" y2="10" />
-          <line x1="9" y1="0" x2="9" y2="10" />
-          <line x1="10" y1="0" x2="10" y2="10" />
-          <!-- Horizontal lines -->
-          <line y1="0" x1="0" y2="0" x2="10" />
-          <line y1="1" x1="0" y2="1" x2="10" />
-          <line y1="2" x1="0" y2="2" x2="10" />
-          <line y1="3" x1="0" y2="3" x2="10" />
-          <line y1="4" x1="0" y2="4" x2="10" />
-          <line y1="5" x1="0" y2="5" x2="10" />
-          <line y1="6" x1="0" y2="6" x2="10" />
-          <line y1="7" x1="0" y2="7" x2="10" />
-          <line y1="8" x1="0" y2="8" x2="10" />
-          <line y1="9" x1="0" y2="9" x2="10" />
-          <line y1="10" x1="0" y2="10" x2="10" />
-        </g>
+      <!-- Grid lines -->
+      <g stroke="#000" stroke-width="0.025">
+        <!-- <g stroke="gray" width="0.01"></g> -->
+        <!-- Vertical lines -->
+        <line x1="0" y1="0" x2="0" y2="10" />
+        <line x1="1" y1="0" x2="1" y2="10" />
+        <line x1="2" y1="0" x2="2" y2="10" />
+        <line x1="3" y1="0" x2="3" y2="10" />
+        <line x1="4" y1="0" x2="4" y2="10" />
+        <line x1="5" y1="0" x2="5" y2="10" />
+        <line x1="6" y1="0" x2="6" y2="10" />
+        <line x1="7" y1="0" x2="7" y2="10" />
+        <line x1="8" y1="0" x2="8" y2="10" />
+        <line x1="9" y1="0" x2="9" y2="10" />
+        <line x1="10" y1="0" x2="10" y2="10" />
+        <!-- Horizontal lines -->
+        <line y1="0" x1="0" y2="0" x2="10" />
+        <line y1="1" x1="0" y2="1" x2="10" />
+        <line y1="2" x1="0" y2="2" x2="10" />
+        <line y1="3" x1="0" y2="3" x2="10" />
+        <line y1="4" x1="0" y2="4" x2="10" />
+        <line y1="5" x1="0" y2="5" x2="10" />
+        <line y1="6" x1="0" y2="6" x2="10" />
+        <line y1="7" x1="0" y2="7" x2="10" />
+        <line y1="8" x1="0" y2="8" x2="10" />
+        <line y1="9" x1="0" y2="9" x2="10" />
+        <line y1="10" x1="0" y2="10" x2="10" />
+      </g>
 
-        <!-- Axes -->
-        <g stroke="black" stroke-width="0.05">
-          <line x1="0" y1="0" x2="0" y2="10" />
-          <line x1="0" y1="10" x2="10" y2="10" />
-          <line x1="10" y1="10" x2="10" y2="0" />
-          <line x1="0" y1="0" x2="10" y2="0" />
-        </g>
+      <!-- Axes -->
+      <g stroke="black" stroke-width="0.05">
+        <line x1="0" y1="0" x2="0" y2="10" />
+        <line x1="0" y1="10" x2="10" y2="10" />
+        <line x1="10" y1="10" x2="10" y2="0" />
+        <line x1="0" y1="0" x2="10" y2="0" />
+      </g>
 
-        <!-- Points will be drawn here -->
-        <g id="points" fill="white"></g>
-
-
-        <g id="y-axis-labels" font-size="0.4" text-anchor="end" font-family="monospace">
-          <text x="-0.3" y="0.1">10</text>
-          <text x="-0.3" y="1.1">9</text>
-          <text x="-0.3" y="2.1">8</text>
-          <text x="-0.3" y="3.1">7</text>
-          <text x="-0.3" y="4.1">6</text>
-          <text x="-0.3" y="5.1">5</text>
-          <text x="-0.3" y="6.1">4</text>
-          <text x="-0.3" y="7.1">3</text>
-          <text x="-0.3" y="8.1">2</text>
-          <text x="-0.3" y="9.1">1</text>
-          <text x="-0.3" y="10.1">0</text>
-        </g>
-
-        <g id="x-axis-labels" font-size="0.4" text-anchor="end" font-family="monospace">
-          <text x="10.1" y="10.6">10</text>
-          <text x="9.1" y="10.6">9</text>
-          <text x="8.1" y="10.6">8</text>
-          <text x="7.1" y="10.6">7</text>
-          <text x="6.1" y="10.6">6</text>
-          <text x="5.1" y="10.6">5</text>
-          <text x="4.1" y="10.6">4</text>
-          <text x="3.1" y="10.6">3</text>
-          <text x="2.1" y="10.6">2</text>
-          <text x="1.1" y="10.6">1</text>
-          <text x="0.1" y="10.6">0</text>
-        </g>
-
-        <g id="redline" stroke="red" stroke-width="0.05" fill="red"></g>
-        <g id="blueline" stroke="rgb(95, 100, 255)" stroke-width="0.05" fill="rgb(95, 100, 255)"></g>
-        <g id="greenline" stroke="green" stroke-width="0.05" fill="green"></g>
-        <g id="yellowline" stroke="yellow" stroke-width="0.05" fill="yellow"></g>
-        <g id="cyanline" stroke="cyan" stroke-width="0.05" fill="cyan"></g>
-        <g id="whiteline" stroke="white" stroke-width="0.1" fill="white"> </g>
+      <!-- Points will be drawn here -->
+      <g id="points" fill="white"></g>
 
 
-      </svg>
-    </div>
+      <g id="y-axis-labels" font-size="0.4" text-anchor="end" font-family="monospace">
+        <text x="-0.3" y="0.1">10</text>
+        <text x="-0.3" y="1.1">9</text>
+        <text x="-0.3" y="2.1">8</text>
+        <text x="-0.3" y="3.1">7</text>
+        <text x="-0.3" y="4.1">6</text>
+        <text x="-0.3" y="5.1">5</text>
+        <text x="-0.3" y="6.1">4</text>
+        <text x="-0.3" y="7.1">3</text>
+        <text x="-0.3" y="8.1">2</text>
+        <text x="-0.3" y="9.1">1</text>
+        <text x="-0.3" y="10.1">0</text>
+      </g>
 
-    <!-- <div class="mt-4 text-center">
+      <g id="x-axis-labels" font-size="0.4" text-anchor="end" font-family="monospace">
+        <text x="10.1" y="10.6">10</text>
+        <text x="9.1" y="10.6">9</text>
+        <text x="8.1" y="10.6">8</text>
+        <text x="7.1" y="10.6">7</text>
+        <text x="6.1" y="10.6">6</text>
+        <text x="5.1" y="10.6">5</text>
+        <text x="4.1" y="10.6">4</text>
+        <text x="3.1" y="10.6">3</text>
+        <text x="2.1" y="10.6">2</text>
+        <text x="1.1" y="10.6">1</text>
+        <text x="0.1" y="10.6">0</text>
+      </g>
+
+      <g id="redline" stroke="red" stroke-width="0.05" fill="red"></g>
+      <g id="blueline" stroke="rgb(95, 100, 255)" stroke-width="0.05" fill="rgb(95, 100, 255)"></g>
+      <g id="greenline" stroke="green" stroke-width="0.05" fill="green"></g>
+      <g id="yellowline" stroke="yellow" stroke-width="0.05" fill="yellow"></g>
+      <g id="cyanline" stroke="cyan" stroke-width="0.05" fill="cyan"></g>
+      <g id="whiteline" stroke="white" stroke-width="0.1" fill="white"> </g>
+
+
+    </svg>
+  </div>
+
+  <!-- <div class="mt-4 text-center">
       <button onclick="console.log(points)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Log
         Points</button>
     </div> -->
-    <h1 id="finalans2">The convex hull is...</h1>
+  <h1 id="finalans2">The convex hull is...</h1>
+
   <script src="convexhull.js"></script>
 </body>
 

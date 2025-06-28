@@ -79,28 +79,43 @@ button:disabled {
 
 .partitionLevel0{
 	color: #ff0000;
+	stroke: #ff0000;
 }
 
 .partitionLevel1{
 	color: rgb(95, 100, 255);
+	stroke: rgb(95,100,255);
+	
+}
+
+.textPartitionLevel1{
+	color: rgb(95, 100, 255);
+	fill: rgb(95,100,255);
+	stroke: rgb(95,100,255);
 }
 
 .partitionLevel2{
 	color: green;
+	stroke: green;
 }
 
 .partitionLevel3{
 	color: yellow;
+	stroke:yellow;
 }
 
 .partitionLevel4{
 	color: cyan;
+	stroke: cyan;
+	
 }
 
 .partitionLevel5{
 	color: white;
+	stroke: white;
 }
 
 .partitionLevelBlack{
 	color: black;
+	stroke: black;
 }
