@@ -724,7 +724,7 @@ async function vizConquerBT() {
       drawLines(SVG, nodes[indexOfText]);
     }
     updateLines();
-    await sleep(1000);
+    await sleep(50);
   }
   console.log("Loop done");
   // updateLines();
@@ -764,7 +764,7 @@ function drawLines(topSVG, focusNode) {
     line1.setAttribute("y1", RootPtr.y);
     line1.setAttribute("x2", ChildPtr.x);
     line1.setAttribute("y2", ChildPtr.y);
-    line1.setAttribute("stroke-width", "4");
+    line1.setAttribute("stroke-width", "2");
     line1.setAttribute("class", `partitionLevelBlack`);
     outerSVG.appendChild(line1);
     updateDict.push({
@@ -968,7 +968,7 @@ function drawLinesOld() {
 
 }
 
-function vizDivideBT() {
+async function vizDivideBT() {
 
   let container = document.getElementById(`treeContainer`);
   console.log("Inside the visualise fn");
@@ -1090,7 +1090,7 @@ function vizDivideBT() {
       // SVG.style.border = "0.5px solid";
     }
     container.appendChild(SVG);
-
+    await sleep(50);
     // }
     // NODE.classList.add(`partitionLevel${1}`);
     console.log("appended sth");
@@ -1167,13 +1167,13 @@ function createOverlaySVG() {
   svg.style.left = "0";
   svg.style.pointerEvents = "none"; // Let clicks pass through
   svg.style.zIndex = "0"; // Behind content
-  svg.style.border = "1px solid black";
+  // svg.style.border = "1px solid black";
 
   // Match the size and position of .rightHalfDiv
   const rect = rightHalfDiv.getBoundingClientRect();
   console.log("The bounding client rect of right half div is...", rect);
   svg.style.width = rect.width + "px";
-  svg.style.height = rect.height + "px";
+  svg.style.height = rect.height + 250 + "px";
   svg.style.transform = `translate(${rect.left}px, ${rect.top}px)`;
 
   svg.style.display = "flex";
@@ -1197,7 +1197,7 @@ function updateLines() {
     line1.setAttribute("y1", RootPtr.y);
     line1.setAttribute("x2", ChildPtr.x);
     line1.setAttribute("y2", ChildPtr.y);
-    line1.setAttribute("stroke-width", "4");
+    line1.setAttribute("stroke-width", "2");
     line1.setAttribute("class", `partitionLevelBlack`);
     outerSVG.appendChild(line1);
     console.log("Drew a new line");
