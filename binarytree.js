@@ -11,6 +11,7 @@ let vizLevel = -1;
 let divLevel = 0;
 let vizConcPtr = [];
 const SVGLink = "http://www.w3.org/2000/svg";
+let updateDict = [];
 
 class treeNode {
   constructor(value, level) {
@@ -608,13 +609,14 @@ function reset() {
   console.log("cleared the console. starting fresh");
 }
 
-function vizConquerBT() {
+async function vizConquerBT() {
   //use the level var to find the nodes to display in this level. 
   //but have to display the elements found in the order of inorder...so basically the same as divide but in reverse order
   //one important part is to add link between the root and children
   //another imp part is to try to have circular nodes. 
   //try if it is possible...to search the left and right of each node and link it to the value present there...
   //how to do it im not sure. 
+
 
 
   let container = document.getElementById(`RtreeContainer`);
@@ -648,7 +650,7 @@ function vizConquerBT() {
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
-      SVG.style.border = "0.5px solid";
+      // SVG.style.border = "0.5px solid";
       SVG.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
 
       //circle for the node
@@ -700,7 +702,7 @@ function vizConquerBT() {
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
-      SVG.style.border = "0.5px solid";
+      // SVG.style.border = "0.5px solid";
     }
 
     container.appendChild(SVG);
@@ -721,9 +723,11 @@ function vizConquerBT() {
       console.log("The values inside conqurtBT is5", nodes[indexOfText]);
       drawLines(SVG, nodes[indexOfText]);
     }
-
+    updateLines();
+    await sleep(1000);
   }
-
+  console.log("Loop done");
+  // updateLines();
 }
 
 function drawLines(topSVG, focusNode) {
@@ -760,10 +764,14 @@ function drawLines(topSVG, focusNode) {
     line1.setAttribute("y1", RootPtr.y);
     line1.setAttribute("x2", ChildPtr.x);
     line1.setAttribute("y2", ChildPtr.y);
-    console.log("This shit");
     line1.setAttribute("stroke-width", "4");
     line1.setAttribute("class", `partitionLevelBlack`);
     outerSVG.appendChild(line1);
+    updateDict.push({
+      top: topSVG,
+      bot: botSVG,
+    });
+    // updateLines();
 
   }
   else {
@@ -796,12 +804,16 @@ function drawLines(topSVG, focusNode) {
     line2.setAttribute("stroke-width", "4");
     line2.setAttribute("class", `partitionLevelBlack`);
     outerSVG.appendChild(line2);
-
+    updateDict.push({
+      top: topSVG,
+      bot: botSVG,
+    });
+    // updateLines();
   }
   else {
     console.log("Null needs to be attached to right child of", focusNode);
   }
-
+  // updateLines();
 }
 
 function drawLinesOld2(topSVG, inorderElem) {
@@ -1155,7 +1167,7 @@ function createOverlaySVG() {
   svg.style.left = "0";
   svg.style.pointerEvents = "none"; // Let clicks pass through
   svg.style.zIndex = "0"; // Behind content
-  // svg.style.border = "1px solid black";
+  svg.style.border = "1px solid black";
 
   // Match the size and position of .rightHalfDiv
   const rect = rightHalfDiv.getBoundingClientRect();
@@ -1172,6 +1184,29 @@ function createOverlaySVG() {
   document.body.appendChild(svg);
 }
 
+function updateLines() {
+
+  console.log("Im in updateLines");
+  let outerSVG = document.getElementById("linkLayer");
+  outerSVG.innerHTML = "";
+  for (let i = 0; i < updateDict.length; i++) {
+    const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    let RootPtr = getPointInOuterSVG(updateDict[i].top, 25, 50, outerSVG);
+    let ChildPtr = getPointInOuterSVG(updateDict[i].bot, 25, 0, outerSVG);
+    line1.setAttribute("x1", RootPtr.x);
+    line1.setAttribute("y1", RootPtr.y);
+    line1.setAttribute("x2", ChildPtr.x);
+    line1.setAttribute("y2", ChildPtr.y);
+    line1.setAttribute("stroke-width", "4");
+    line1.setAttribute("class", `partitionLevelBlack`);
+    outerSVG.appendChild(line1);
+    console.log("Drew a new line");
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
