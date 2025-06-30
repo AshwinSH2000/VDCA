@@ -9,6 +9,8 @@ let divideSteps = [];
 let treeLevels = [];
 let vizLevel = -1;
 let divLevel = 0;
+let vizConcPtr = [];
+const SVGLink = "http://www.w3.org/2000/svg";
 
 class treeNode {
   constructor(value, level) {
@@ -20,6 +22,8 @@ class treeNode {
 }
 
 document.getElementById("divideButton3").disabled = true;
+document.getElementById("conquerButton3").disabled = true;
+createOverlaySVG();
 
 function addPreorder() {
   const w = document.getElementById("preorder").value.trim();
@@ -99,6 +103,7 @@ function addInorder() {
   // console.log("The result is...",checkTree(inorder, preorder));
   // return;
   document.getElementById("divideButton3").disabled = false;
+  document.getElementById("conquerButton3").disabled = false;
 
   const w = document.getElementById("inorder").value.trim();
   // console.log("w.includes(space)",w.includes(" "));
@@ -611,6 +616,7 @@ function vizConquerBT() {
   //try if it is possible...to search the left and right of each node and link it to the value present there...
   //how to do it im not sure. 
 
+
   let container = document.getElementById(`RtreeContainer`);
   console.log("Inside the conquer visualiser fn");
   if (level === 0) {
@@ -622,124 +628,332 @@ function vizConquerBT() {
     container.innerHTML = '';
   }
 
-  const SVGLink = "http://www.w3.org/2000/svg";
+  let outerSVG = document.getElementById("linkLayer");
+
+
   for (let i = 0; i < inorder.length; i++) {
     console.log("Inside the conquer forloop");
 
     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
     console.log("indexOfText is", indexOfText);
-
-
-
+    console.log("The values inside conqurtBT is1", nodes[indexOfText]);
     const SVG = document.createElementNS(SVGLink, "svg");
 
     if (nodes[indexOfText].level === level) {
+      console.log("The values inside conqurtBT is2", nodes[indexOfText]);
+      //svg for the node
+      SVG.setAttribute("width", "50");   //used when there was circle around node
+      // SVG.setAttribute("width", "30"); //used whrn there is no circle around node
+      SVG.setAttribute("height", "50");
+      SVG.style.display = "flex";
+      SVG.style.justifyContent = "center";
+      SVG.style.alignItems = "center";
+      SVG.style.border = "0.5px solid";
+      SVG.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
 
+      //circle for the node
+      const CIRCLE = document.createElementNS(SVGLink, "circle");
+      CIRCLE.setAttribute("cx", "25");
+      CIRCLE.setAttribute("cy", "25");
+      CIRCLE.setAttribute("r", "24");
+      CIRCLE.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
+      CIRCLE.setAttribute("fill", "none");
+      // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
+      // CIRCLE.style.background = "rgba(120,120,120,50)";
+      // CIRCLE.setAttribute("stroke", "black");     // Border color
+      CIRCLE.setAttribute("stroke-width", "3");
+      SVG.appendChild(CIRCLE);
 
-      if (indexOfText === -1) {
-        SVG.setAttribute("width", "30");
-        SVG.setAttribute("height", "50");
-        SVG.style.display = "flex";
-        SVG.style.justifyContent = "center";
-        SVG.style.alignItems = "center";
-        // SVG.style.border = "0.5px solid";
-        SVG.style.background = "rgba(120,120,120,50)";
-        SVG.setAttribute("class", 'partitionLevelBlack');
-      }
-      else {
-        SVG.setAttribute("width", "50");   //used when there was circle around node
-        // SVG.setAttribute("width", "30");
-        SVG.setAttribute("height", "50");
+      // EITHER HARD CODE EVERYTHING
+      // OR TRY GETTING THE X, Y, TOP, RIGHT, BOTTOM AND LEFT SOMEHOW.THEN TRY SOME.
 
-        SVG.style.display = "flex";
-        SVG.style.justifyContent = "center";
-        SVG.style.alignItems = "center";
-        SVG.style.border = "0.5px solid";
-        SVG.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
-      }
-
-
-      if (indexOfText !== -1) {
-        const CIRCLE = document.createElementNS(SVGLink, "circle");
-        CIRCLE.setAttribute("cx", "25");
-        CIRCLE.setAttribute("cy", "25");
-        CIRCLE.setAttribute("r", "24");
-        CIRCLE.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
-        CIRCLE.setAttribute("fill", "none");
-        // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
-        // CIRCLE.style.background = "rgba(120,120,120,50)";
-        // CIRCLE.setAttribute("stroke", "black");     // Border color
-        CIRCLE.setAttribute("stroke-width", "3");
-        SVG.appendChild(CIRCLE);
-
-        // const line1 = document.createElementNS(SVGLink, "line");
-        // line1.setAttribute("x1", 0);
-        // line1.setAttribute("y1", 0);
-        // line1.setAttribute("x2", 0);
-        // line1.setAttribute("y2", 50);
-        // line1.setAttribute("stroke-width", "4");
-        // line1.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
-        // SVG.appendChild(line1);
-        // const line2 = document.createElementNS(SVGLink, "line");
-        // line2.setAttribute("x1", 30);
-        // line2.setAttribute("y1", 0);
-        // line2.setAttribute("x2", 30);
-        // line2.setAttribute("y2", 50);
-        // line2.setAttribute("stroke-width", "4");
-        // line2.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
-        // SVG.appendChild(line2);
-      }
-
+      //text for the node
       const text = document.createElementNS(SVGLink, "text");
-
       text.textContent = inorder[i];
-      if (indexOfText === -1) {
-        text.setAttribute("x", "15");
-        text.setAttribute("y", "29"); // a little below center
-        text.setAttribute("text-anchor", "middle"); // center horizontally
-        text.setAttribute("font-size", "20");
-        text.setAttribute("class", 'textPartitionLevelBlack');
-      } else {
-        // text.setAttribute("x", "15");
-        text.setAttribute("x", "25");   //used when there was a circle around node
-        text.setAttribute("y", "29"); // a little below center
-        text.setAttribute("text-anchor", "middle"); // center horizontally
-        text.setAttribute("font-size", "20");
-        text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
-      }
-
+      text.setAttribute("x", "25");   //used when there was a circle around node
+      text.setAttribute("y", "29"); // a little below center
+      text.setAttribute("text-anchor", "middle"); // center horizontally
+      text.setAttribute("font-size", "20");
+      text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
+      SVG.setAttribute("id", `Node${inorder[i]}`);
       SVG.appendChild(text);
+      console.log("The values inside conqurtBT is3", nodes[indexOfText]);
     }
     else {
-
-      if (level <= 1)
-        SVG.setAttribute("width", "30");
-      else if (level === 2)
-        SVG.setAttribute("width", "40");
-      else if (level === 3)
-        SVG.setAttribute("width", "50");
-      else if (level === 4)
-        SVG.setAttribute("width", "60");
-      else if (level === 5)
-        SVG.setAttribute("width", "70");
-      else if (level === 6)
-        SVG.setAttribute("width", "80");
-      else
-        SVG.setAttribute("width", "90");
+      //inserting a black space
+      // if (level <= 1)
+      SVG.setAttribute("width", "30");
+      // else if (level === 2)
+      //   SVG.setAttribute("width", "40");
+      // else if (level === 3)
+      //   SVG.setAttribute("width", "50");
+      // else if (level === 4)
+      //   SVG.setAttribute("width", "60");
+      // else if (level === 5)
+      //   SVG.setAttribute("width", "70");
+      // else if (level === 6)
+      //   SVG.setAttribute("width", "80");
+      // else
+      //   SVG.setAttribute("width", "90");
 
       SVG.setAttribute("height", "50");
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
-      // SVG.style.border = "0.5px solid";
+      SVG.style.border = "0.5px solid";
     }
-    container.appendChild(SVG);
 
-    // }
-    // NODE.classList.add(`partitionLevel${1}`);
+    container.appendChild(SVG);
     console.log("appended sth");
+    console.log("The values inside conqurtBT is4", nodes[indexOfText]);
+    if (nodes[indexOfText].level === level) {
+      //   let belowPoints = getPointInOuterSVG(SVG, 25, 50, outerSVG);
+      //   let abovePoints = getPointInOuterSVG(SVG, 25, 0, outerSVG);
+      //   vizConcPtr.push({
+      //     value: inorder[i],
+      //     topX: abovePoints.x,
+      //     topY: abovePoints.y,
+      //     botX: belowPoints.x,
+      //     botY: belowPoints.y,
+      //   })
+      //   console.log("vizConcPtr is", vizConcPtr);
+
+      console.log("The values inside conqurtBT is5", nodes[indexOfText]);
+      drawLines(SVG, nodes[indexOfText]);
+    }
 
   }
+
+}
+
+function drawLines(topSVG, focusNode) {
+
+  console.log("Focus node is", focusNode);
+
+  let outerSVG = document.getElementById("linkLayer");
+
+  //need to draw the lines...
+  if (focusNode.left !== null) {
+    console.log("Printing the left path now");
+
+    //created the line..ok
+    const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+    //get the present svg and the one below
+    //present SVG is topSVG
+    let bottomContainer = document.getElementById('RtreeContainer');
+    if (level === 0) {
+      bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+    } else {
+      bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+    }
+    let botSVG = bottomContainer.querySelector(`#Node${focusNode.left}`);
+    console.log("Bottom container is", bottomContainer);
+    console.log("Bottom svg is", botSVG);
+    console.log("`Node${focusNode.left}` is", `#Node${focusNode.left}`)
+
+    let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
+    let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
+
+
+    line1.setAttribute("x1", RootPtr.x);
+    line1.setAttribute("y1", RootPtr.y);
+    line1.setAttribute("x2", ChildPtr.x);
+    line1.setAttribute("y2", ChildPtr.y);
+    console.log("This shit");
+    line1.setAttribute("stroke-width", "4");
+    line1.setAttribute("class", `partitionLevelBlack`);
+    outerSVG.appendChild(line1);
+
+  }
+  else {
+    console.log("Null needs to be attached to left child of", focusNode);
+  }
+  if (focusNode.right !== null) {
+    console.log("Printing the right path now");
+    //no need to create an svg, this marking will come in linkLayer
+    //but need to find the x and y coords... how
+
+
+    const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+    let bottomContainer = document.getElementById('RtreeContainer');
+    if (level === 0) {
+      bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+    } else {
+      bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+    }
+    let botSVG = bottomContainer.querySelector(`#Node${focusNode.right}`);
+
+    let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
+    let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
+
+
+    line2.setAttribute("x1", RootPtr.x);
+    line2.setAttribute("y1", RootPtr.y);
+    line2.setAttribute("x2", ChildPtr.x);
+    line2.setAttribute("y2", ChildPtr.y);
+    line2.setAttribute("stroke-width", "4");
+    line2.setAttribute("class", `partitionLevelBlack`);
+    outerSVG.appendChild(line2);
+
+  }
+  else {
+    console.log("Null needs to be attached to right child of", focusNode);
+  }
+
+}
+
+function drawLinesOld2(topSVG, inorderElem) {
+  let outerSVG = document.getElementById("linkLayer");
+
+  //now get the element to check. 
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].level === level) {
+      //need to draw the lines...
+      if (nodes[i].left !== null) {
+        console.log("Printing the left path now");
+
+        //created the line..ok
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+        //get the present svg and the one below
+        //present SVG is topSVG
+        let bottomContainer = document.getElementById('RtreeContainer');
+        if (level === 0) {
+          bottomContainer = document.getElementById('RtreeContainer');
+        } else {
+          bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+        }
+        let botSVG = bottomContainer.querySelector(`svg#${inorderElem}Node`);
+
+        let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
+        let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
+
+
+        line1.setAttribute("x1", RootPtr.x);
+        line1.setAttribute("y1", RootPtr.y);
+        line1.setAttribute("x2", ChildPtr.x);
+        line1.setAttribute("y2", ChildPtr.y);
+        console.log("This shit");
+        line1.setAttribute("stroke-width", "4");
+        line1.setAttribute("class", `partitionLevelBlack`);
+        outerSVG.appendChild(line1);
+
+      }
+      else {
+        console.log("Null needs to be attached to left child of", nodes[i].value);
+      }
+      if (nodes[i].right !== null) {
+        console.log("Printing the right path now");
+        //no need to create an svg, this marking will come in linkLayer
+        //but need to find the x and y coords... how
+
+
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+        let bottomContainer = document.getElementById('RtreeContainer');
+        if (level === 0) {
+          bottomContainer = document.getElementById('RtreeContainer');
+        } else {
+          bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
+        }
+        let botSVG = bottomContainer.querySelector(`svg#${inorderElem}Node`);
+
+        if (index !== -1) {
+          line1.setAttribute("x1", vizConcPtr[index].topX);
+          line1.setAttribute("y1", vizConcPtr[index].topY);
+          line1.setAttribute("x2", vizConcPtr[index].botX);
+          line1.setAttribute("y2", vizConcPtr[index].botY);
+          line1.setAttribute("stroke-width", "4");
+          line1.setAttribute("class", `partitionLevelBlack`);
+          outerSVG.appendChild(line1);
+        }
+      }
+      else {
+        console.log("Null needs to be attached to right child of", nodes[i].value);
+      }
+    }
+
+  }
+}
+function drawLinesOld() {
+
+  // testcode
+  // const svg = document.getElementById("linkLayer");
+  // const testLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  // testLine.setAttribute("x1", 0);
+  // testLine.setAttribute("y1", 0);
+  // testLine.setAttribute("x2", 300);
+  // testLine.setAttribute("y2", 300);
+  // testLine.setAttribute("stroke", "red");
+  // testLine.setAttribute("stroke-width", "2");
+  // svg.appendChild(testLine);
+
+  // let container = document.getElementById(`RpathContainer`);
+  // console.log("Inside the drawlines fn");
+  // if (level === 0) {
+  //   container = document.getElementById(`RpathContainer`);
+  //   container.innerHTML = '';
+  // }
+  // else {
+  //   container = document.getElementById(`RpathContainer${level + 1}`);
+  //   container.innerHTML = '';
+  // }
+
+  let outerSVG = document.getElementById("linkLayer");
+
+  //now get the element to check. 
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].level === level) {
+      //need to draw the lines...
+      if (nodes[i].left !== null) {
+        console.log("Printing the left path now");
+        //no need to create an svg, this marking will come in linkLayer
+        //but need to find the x and y coords... how
+
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        let index = vizConcPtr.findIndex(p => p.value === nodes[i].left);
+        if (index !== -1) {
+          line1.setAttribute("x1", vizConcPtr[index].topX);
+          line1.setAttribute("y1", vizConcPtr[index].topY);
+          line1.setAttribute("x2", vizConcPtr[index].botX);
+          line1.setAttribute("y2", vizConcPtr[index].botY);
+          ;
+          console.log("This shit");
+          line1.setAttribute("stroke-width", "4");
+          line1.setAttribute("class", `partitionLevelBlack`);
+          outerSVG.appendChild(line1);
+        }
+      }
+      else {
+        console.log("Null needs to be attached to left child of", nodes[i].value);
+      }
+      if (nodes[i].right !== null) {
+        console.log("Printing the right path now");
+        //no need to create an svg, this marking will come in linkLayer
+        //but need to find the x and y coords... how
+
+
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        let index = vizConcPtr.findIndex(p => p.value === nodes[i].right);
+        if (index !== -1) {
+          line1.setAttribute("x1", vizConcPtr[index].topX);
+          line1.setAttribute("y1", vizConcPtr[index].topY);
+          line1.setAttribute("x2", vizConcPtr[index].botX);
+          line1.setAttribute("y2", vizConcPtr[index].botY);
+          line1.setAttribute("stroke-width", "4");
+          line1.setAttribute("class", `partitionLevelBlack`);
+          outerSVG.appendChild(line1);
+        }
+      }
+      else {
+        console.log("Null needs to be attached to right child of", nodes[i].value);
+      }
+    }
+  }
+  // container.appendChild(outerSVG);
+
 }
 
 function vizDivideBT() {
@@ -778,7 +992,7 @@ function vizDivideBT() {
     // NODE.classList.add(`partitionLevel${nodes[indexOfText].level}`);
     // NODE.innerHTML+= '<circle cx="10" cy="10" r="5" />'
     // container.appendChild(NODE);
-    const SVGLink = "http://www.w3.org/2000/svg";
+
 
     const SVG = document.createElementNS(SVGLink, "svg");
 
@@ -871,6 +1085,94 @@ function vizDivideBT() {
   }
   vizLevel++;
 }
+
+
+function getPointInOuterSVG(innerSVG, x, y, outerSVG) {
+  console.log(innerSVG, outerSVG);
+  if (!innerSVG || !outerSVG) {
+    throw new Error("Invalid SVG elements provided.");
+  }
+
+  const pt = innerSVG.createSVGPoint();
+  pt.x = x;
+  pt.y = y;
+  // console.log("pt is", pt);
+
+  // Get screen CTMs
+  const screenCTM = innerSVG.getScreenCTM();
+  // console.log("screenCTM is", screenCTM);
+  const outerScreenCTM = outerSVG.getScreenCTM();
+  // console.log("outerScreenCTM is", outerScreenCTM);
+
+  if (!screenCTM || !outerScreenCTM) {
+    throw new Error("Elements must be in the DOM to compute CTM.");
+  }
+
+  // Transform to screen coordinates
+  const screenPoint = pt.matrixTransform(screenCTM);
+  // console.log("screenPoint is", screenPoint);
+
+  // Invert outer CTM (handle non-invertible)
+  const inverseOuterCTM = outerScreenCTM.inverse();
+  // console.log("inverseOuterCTM is", inverseOuterCTM);
+  if (!inverseOuterCTM) {
+    throw new Error("Outer SVG's CTM is not invertible.");
+  }
+
+  // Transform to outer SVG's space
+  const outerPoint = screenPoint.matrixTransform(inverseOuterCTM);
+  // console.log("outerPoint is", outerPoint);
+
+  return { x: outerPoint.x, y: outerPoint.y };
+}
+
+function getPointInOuterSVGold(innerSVG, x, y, outerSVG) {
+  const pt = innerSVG.createSVGPoint();
+  pt.x = x;
+  pt.y = y;
+
+  // Transform the point to screen space
+  const screenCTM = innerSVG.getScreenCTM();
+  const screenPoint = pt.matrixTransform(screenCTM);
+
+  // Convert the screen point to outerSVG's coordinate space
+  const outerCTM = outerSVG.getScreenCTM().inverse();
+  const outerPoint = screenPoint.matrixTransform(outerCTM);
+
+  return { x: outerPoint.x, y: outerPoint.y };
+}
+
+function createOverlaySVG() {
+  const rightHalfDiv = document.querySelector('.rightHalfDiv');
+
+  // Create the SVG element
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+
+  svg.setAttribute("id", "linkLayer");
+  svg.style.position = "absolute";
+  svg.style.top = "0";
+  svg.style.left = "0";
+  svg.style.pointerEvents = "none"; // Let clicks pass through
+  svg.style.zIndex = "0"; // Behind content
+  // svg.style.border = "1px solid black";
+
+  // Match the size and position of .rightHalfDiv
+  const rect = rightHalfDiv.getBoundingClientRect();
+  console.log("The bounding client rect of right half div is...", rect);
+  svg.style.width = rect.width + "px";
+  svg.style.height = rect.height + "px";
+  svg.style.transform = `translate(${rect.left}px, ${rect.top}px)`;
+
+  svg.style.display = "flex";
+  svg.style.justifyContent = "center";
+  svg.style.alignItems = "center";
+
+  // Add to body or a positioned parent
+  document.body.appendChild(svg);
+}
+
+
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
