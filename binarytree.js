@@ -245,111 +245,6 @@ function checkTree(inorder, preorder) {
   }
 }
 
-////////////////////////////divide3////////////////////////////
-function divide3() {
-  if (!checkTree(inorder, preorder)) {
-    alert("Tree cannot be constructed from the inputs given.");
-    return;
-  }
-  //else begin computations
-  if (level === 0) {
-    partitionIndexes.push(0);
-    partitionIndexes.push(inorder.length);
-    let focus_elem = preorder[0];
-    let pos = inorder.indexOf(focus_elem);
-    partitionIndexes.push(pos);
-    partitionIndexes.sort((a, b) => a - b);
-    //need a stopping point to know if i have to stop at level 0 itself.
-    level++;
-  } else {
-    //find a similar partition for all the partitions created in the partitionIndexes
-    //if a partition index results in being null, you can treat it as valid(remember the len==0 usecase in checktree?)
-    let traverseVar = partitionIndexes.length;
-    for (let i = 0; i < traverseVar - 1; i++) {
-      //need to find the partiton in range partitionIndex[i]+1...partition[i+1]
-      if (partitionIndexes[i] >= inorder.length - 1) {
-        //this is because the code below accesses the element present in partitionIndexes[i] + 1 pos
-        //which wont exist
-        console.log("adhakhkjhskjfhskfjdhskfjhslfkjbhs i=", i);
-        continue;
-      }
-      let focus_elem2 = preorder[partitionIndexes[i] + 1];
-      let pos = inorder.indexOf(focus_elem2);
-      if (!partitionIndexes.some((p) => p === pos)) {
-        partitionIndexes.push(pos);
-        console.log("pushed", pos);
-        console.log("focuselem is", focus_elem2);
-        console.log("i is", i);
-      } else {
-        console.log("repeated element pos", pos);
-      }
-    }
-    level++;
-  }
-  partitionIndexes.sort((a, b) => a - b);
-  console.log(partitionIndexes);
-}
-
-////////////////////////////divide4////////////////////////////
-function divide4() {
-  if (!checkTree(inorder, preorder)) {
-    alert("Tree cannot be constructed from the inputs given.");
-    return;
-  }
-
-  if (level === 0) {
-    partitionIndexes = [0, inorder.length];
-    level++;
-    preIndex = 0;
-    return;
-  }
-
-  if (partitionIndexes.length >= inorder.length) {
-    console.log("all elements traversed");
-    return;
-  }
-
-  let newPartitions = [];
-
-  // For every current partition, split it based on the root from preorder
-  for (let i = 0; i < partitionIndexes.length - 1; i++) {
-    let start = partitionIndexes[i];
-    let end = partitionIndexes[i + 1];
-
-    if (start >= end) continue;
-
-    if (preIndex >= preorder.length) {
-      console.warn("Ran out of preorder elements unexpectedly");
-      continue;
-    }
-
-    let root = preorder[preIndex];
-    let rootIndex = inorder.indexOf(root, start); // restrict to current partition
-
-    if (rootIndex === -1 || rootIndex >= end) {
-      console.warn(
-        `Root ${root} not found in inorder segment [${start}, ${end})`
-      );
-      continue;
-    }
-
-    preIndex++; // move to next root in preorder
-
-    // Split the current segment around the root
-    newPartitions.push(rootIndex);
-  }
-
-  partitionIndexes.push(...newPartitions);
-  partitionIndexes = Array.from(new Set(partitionIndexes)).sort(
-    (a, b) => a - b
-  ); // keep unique & sorted
-  level++;
-
-  console.log("Level:", level);
-  console.log("Partition Indexes:", partitionIndexes);
-  console.log("Next preorder root index:", preIndex);
-}
-
 ////////////////////////////divide5////////////////////////////
 
 function divide5() {
@@ -373,6 +268,7 @@ function divide5() {
     console.log("The max level is", level);
     console.log("Vizlevel is", vizLevel);
     document.getElementById('divideButton3').disabled = true;
+    solveDivideFlag = true;
     return;
   }
 
@@ -683,20 +579,20 @@ async function vizConquerBT() {
     }
     else {
       //inserting a black space
-      // if (level <= 1)
-      SVG.setAttribute("width", "30");
-      // else if (level === 2)
-      //   SVG.setAttribute("width", "40");
-      // else if (level === 3)
-      //   SVG.setAttribute("width", "50");
-      // else if (level === 4)
-      //   SVG.setAttribute("width", "60");
-      // else if (level === 5)
-      //   SVG.setAttribute("width", "70");
-      // else if (level === 6)
-      //   SVG.setAttribute("width", "80");
-      // else
-      //   SVG.setAttribute("width", "90");
+      if (level <= 1)
+        SVG.setAttribute("width", "30");
+      else if (level === 2)
+        SVG.setAttribute("width", "40");
+      else if (level === 3)
+        SVG.setAttribute("width", "50");
+      else if (level === 4)
+        SVG.setAttribute("width", "60");
+      else if (level === 5)
+        SVG.setAttribute("width", "70");
+      else if (level === 6)
+        SVG.setAttribute("width", "80");
+      else
+        SVG.setAttribute("width", "90");
 
       SVG.setAttribute("height", "50");
       SVG.style.display = "flex";
@@ -724,7 +620,7 @@ async function vizConquerBT() {
       drawLines(SVG, nodes[indexOfText]);
     }
     updateLines();
-    await sleep(50);
+    // await sleep(50);
   }
   console.log("Loop done");
   // updateLines();
@@ -814,158 +710,6 @@ function drawLines(topSVG, focusNode) {
     console.log("Null needs to be attached to right child of", focusNode);
   }
   // updateLines();
-}
-
-function drawLinesOld2(topSVG, inorderElem) {
-  let outerSVG = document.getElementById("linkLayer");
-
-  //now get the element to check. 
-  for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].level === level) {
-      //need to draw the lines...
-      if (nodes[i].left !== null) {
-        console.log("Printing the left path now");
-
-        //created the line..ok
-        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-
-        //get the present svg and the one below
-        //present SVG is topSVG
-        let bottomContainer = document.getElementById('RtreeContainer');
-        if (level === 0) {
-          bottomContainer = document.getElementById('RtreeContainer');
-        } else {
-          bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
-        }
-        let botSVG = bottomContainer.querySelector(`svg#${inorderElem}Node`);
-
-        let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
-        let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
-
-
-        line1.setAttribute("x1", RootPtr.x);
-        line1.setAttribute("y1", RootPtr.y);
-        line1.setAttribute("x2", ChildPtr.x);
-        line1.setAttribute("y2", ChildPtr.y);
-        console.log("This shit");
-        line1.setAttribute("stroke-width", "4");
-        line1.setAttribute("class", `partitionLevelBlack`);
-        outerSVG.appendChild(line1);
-
-      }
-      else {
-        console.log("Null needs to be attached to left child of", nodes[i].value);
-      }
-      if (nodes[i].right !== null) {
-        console.log("Printing the right path now");
-        //no need to create an svg, this marking will come in linkLayer
-        //but need to find the x and y coords... how
-
-
-        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-
-        let bottomContainer = document.getElementById('RtreeContainer');
-        if (level === 0) {
-          bottomContainer = document.getElementById('RtreeContainer');
-        } else {
-          bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
-        }
-        let botSVG = bottomContainer.querySelector(`svg#${inorderElem}Node`);
-
-        if (index !== -1) {
-          line1.setAttribute("x1", vizConcPtr[index].topX);
-          line1.setAttribute("y1", vizConcPtr[index].topY);
-          line1.setAttribute("x2", vizConcPtr[index].botX);
-          line1.setAttribute("y2", vizConcPtr[index].botY);
-          line1.setAttribute("stroke-width", "4");
-          line1.setAttribute("class", `partitionLevelBlack`);
-          outerSVG.appendChild(line1);
-        }
-      }
-      else {
-        console.log("Null needs to be attached to right child of", nodes[i].value);
-      }
-    }
-
-  }
-}
-function drawLinesOld() {
-
-  // testcode
-  // const svg = document.getElementById("linkLayer");
-  // const testLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  // testLine.setAttribute("x1", 0);
-  // testLine.setAttribute("y1", 0);
-  // testLine.setAttribute("x2", 300);
-  // testLine.setAttribute("y2", 300);
-  // testLine.setAttribute("stroke", "red");
-  // testLine.setAttribute("stroke-width", "2");
-  // svg.appendChild(testLine);
-
-  // let container = document.getElementById(`RpathContainer`);
-  // console.log("Inside the drawlines fn");
-  // if (level === 0) {
-  //   container = document.getElementById(`RpathContainer`);
-  //   container.innerHTML = '';
-  // }
-  // else {
-  //   container = document.getElementById(`RpathContainer${level + 1}`);
-  //   container.innerHTML = '';
-  // }
-
-  let outerSVG = document.getElementById("linkLayer");
-
-  //now get the element to check. 
-  for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].level === level) {
-      //need to draw the lines...
-      if (nodes[i].left !== null) {
-        console.log("Printing the left path now");
-        //no need to create an svg, this marking will come in linkLayer
-        //but need to find the x and y coords... how
-
-        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        let index = vizConcPtr.findIndex(p => p.value === nodes[i].left);
-        if (index !== -1) {
-          line1.setAttribute("x1", vizConcPtr[index].topX);
-          line1.setAttribute("y1", vizConcPtr[index].topY);
-          line1.setAttribute("x2", vizConcPtr[index].botX);
-          line1.setAttribute("y2", vizConcPtr[index].botY);
-          ;
-          console.log("This shit");
-          line1.setAttribute("stroke-width", "4");
-          line1.setAttribute("class", `partitionLevelBlack`);
-          outerSVG.appendChild(line1);
-        }
-      }
-      else {
-        console.log("Null needs to be attached to left child of", nodes[i].value);
-      }
-      if (nodes[i].right !== null) {
-        console.log("Printing the right path now");
-        //no need to create an svg, this marking will come in linkLayer
-        //but need to find the x and y coords... how
-
-
-        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        let index = vizConcPtr.findIndex(p => p.value === nodes[i].right);
-        if (index !== -1) {
-          line1.setAttribute("x1", vizConcPtr[index].topX);
-          line1.setAttribute("y1", vizConcPtr[index].topY);
-          line1.setAttribute("x2", vizConcPtr[index].botX);
-          line1.setAttribute("y2", vizConcPtr[index].botY);
-          line1.setAttribute("stroke-width", "4");
-          line1.setAttribute("class", `partitionLevelBlack`);
-          outerSVG.appendChild(line1);
-        }
-      }
-      else {
-        console.log("Null needs to be attached to right child of", nodes[i].value);
-      }
-    }
-  }
-  // container.appendChild(outerSVG);
-
 }
 
 async function vizDivideBT() {
@@ -1090,7 +834,7 @@ async function vizDivideBT() {
       // SVG.style.border = "0.5px solid";
     }
     container.appendChild(SVG);
-    await sleep(50);
+    // await sleep(50);
     // }
     // NODE.classList.add(`partitionLevel${1}`);
     console.log("appended sth");
@@ -1208,6 +952,24 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let solveDivideFlag = false;
+let solveConquerFlag = false;
+function solve() {
+  //so get the level...then call divide until it is no longer possible to divide. 
+  //then call conquer button all the way until the level is reached. 
+  let calledLevel = level;
+  while (!solveDivideFlag) {
+    divide5();
+    console.log("Called divide5 in solve");
+  }
+  while (level >= calledLevel) {
+    mergeTree();
+    if (level === 0)
+      break;
+    console.log("Called mergetree in solve");
+  }
+
+}
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
@@ -1216,3 +978,4 @@ document.getElementById("deleteButton3").addEventListener("click", deleteInorder
 document.getElementById("divideButton3").addEventListener("click", divide5);
 document.getElementById("conquerButton3").addEventListener("click", mergeTree);
 document.getElementById("resetButton3").addEventListener('click', reset);
+document.getElementById("solveButton3").addEventListener('click', solve);
