@@ -485,6 +485,12 @@ function mergeTree() {
     console.log("------end------")
   }
   vizConquerBT();
+  if (level <= 0) {
+    console.log("no more conquer possible...returning");
+    console.log("final binary tree:", treeNodes[0]);
+    document.getElementById('conquerButton3').disabled = true;
+    return;
+  }
 }
 
 function reset() {
@@ -968,7 +974,7 @@ function solve() {
       break;
     console.log("Called mergetree in solve");
   }
-
+  document.getElementById("solveButton3").disabled = true;
 }
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);

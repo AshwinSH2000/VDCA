@@ -1320,6 +1320,7 @@ function solveCoordinates() {
         conquerCoordinates();
         console.log("Called conquerCoordinates in solve");
     }
+    document.getElementById("solveButton2").disabled = true;
 }
 
 // document.getElementById('addButton2').addEventListener('click', inputCoordinates);

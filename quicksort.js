@@ -4,132 +4,134 @@ let arrayList = [];
 let pivots = [];
 let level = 0;
 let conquerFlag = false;
+let solveDivideFlag = false;
 
-function inputNumbers(){
+function inputNumbers() {
     const item = document.getElementById('array_number').value.trim();
     //console.log(typeof item);
     //const value = parseInt(item.value);
-    
-    if(item){
+
+    if (item) {
         arrayList.push(Number(item));
         console.log("Added:", item, "Array:", arrayList);
-        
-        
+
+
         const bar = document.createElement('div');
         //bar.classList.add(`level-${level}`);
-        
+
         //old aprch
         bar.classList.add('bar');
 
         let barheight = Number(item);
         //bar.style.height = `${Number(item)}px`;
-        bar.style.height = `${barheight*5}px`;
+        bar.style.height = `${barheight * 5}px`;
         bar.textContent = barheight;
         bar.accessKey = barheight;
         document.getElementById('bar-container').append(bar);
     }
-    else{
+    else {
         alert("Enter a number!");
     }
     document.getElementById('array_number').value = '';
 }
 
-function deleteNumbers(){
+function deleteNumbers() {
     const item = document.getElementById('array_number').value.trim();
-    if(item){
+    if (item) {
         const index = arrayList.indexOf(Number(item));
-        if(index !== -1){
+        if (index !== -1) {
             arrayList.splice(index, 1);
             console.log("Removed:", item, "Array:", arrayList);
 
             const container = document.getElementById('bar-container').children;
-            for(let i=0 ; i<container.length ; i++){
-                if (container[i].accessKey === item){
+            for (let i = 0; i < container.length; i++) {
+                if (container[i].accessKey === item) {
                     document.getElementById('bar-container').removeChild(container[i]);
                     break;
                 }
             }
         }
-        else{
+        else {
             console.log("number not found to delete")
         }
     }
     //item.value = '';
-    document.getElementById('array_number').value='';
+    document.getElementById('array_number').value = '';
 }
 
-function divide(){
+function divide() {
 
     let map = new Map();
     map.set(3, "ash");
     map.set(2, "win");
 
-for (let [key, value] of map.entries()) {
-  console.log(`Key: ${key}, Type: ${typeof key}`);
-}
+    for (let [key, value] of map.entries()) {
+        console.log(`Key: ${key}, Type: ${typeof key}`);
+    }
     console.log(map);
     map.
-    console.log(map);
+        console.log(map);
     //return;
 
-    if(level==0)
-    {
+    if (level == 0) {
         //this is the first "divide" operation. 
-        let pivot=findPivot(arrayList, 0, arrayList.length-1);
+        let pivot = findPivot(arrayList, 0, arrayList.length - 1);
         // console.log("IN DIVIDE... PIVOT IS "+pivot);
         pivots.push(pivot);
-        partition(arrayList, 0, arrayList.length-1, arrayList.indexOf(pivot));
+        partition(arrayList, 0, arrayList.length - 1, arrayList.indexOf(pivot));
         visualise();
         level++;
     }
-    else if(level==1){
-        let pivot1=findPivot(arrayList, 0, arrayList.indexOf(pivots[level-1])-1);
-        let pivot2=findPivot(arrayList, arrayList.indexOf(pivots[level-1])+1, arrayList.length-1);
+    else if (level == 1) {
+        let pivot1 = findPivot(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1);
+        let pivot2 = findPivot(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1);
         pivots.push(pivot1);
         pivots.push(pivot2);
-     
-        partition(arrayList, 0, arrayList.indexOf(pivots[level-1])-1, arrayList.indexOf(pivot1));
-        partition(arrayList, arrayList.indexOf(pivots[level-1])+1, arrayList.length-1, arrayList.indexOf(pivot2))
+
+        partition(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1, arrayList.indexOf(pivot1));
+        partition(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1, arrayList.indexOf(pivot2))
 
         visualise();
         console.log("displayed stuff once");
         level++;
     }
-    else if(level==2){
-        
+    else if (level == 2) {
+
         console.log("going for the third divide");
         visualise();
         level++;
     }
 }
-function divide2(){
+function divide2() {
 
     console.log("----------------------------------------------");
 
     //let i=0;
-    if (level===arrayList.length-1){
+    if (level === arrayList.length - 1) {
         console.log("reached max levels...terminating");
-        document.getElementById('divideButton').disabled=true;
+        document.getElementById('divideButton').disabled = true;
+        solveDivideFlag = true;
         return;
     }
-    if(pivots.length>arrayList.length){
+    if (pivots.length > arrayList.length) {
         console.log("array is sorted...terminating");
-        document.getElementById('divideButton').disabled=true;
+        document.getElementById('divideButton').disabled = true;
+        solveDivideFlag = true;
         return;
     }
 
-    let noOfPivots = Math.pow(2,level);     
-    let counter=0;
+    let noOfPivots = Math.pow(2, level);
+    let counter = 0;
 
-    while (counter<Math.min(noOfPivots, arrayList.length+1)){       //is +1 necessary?
+    while (counter < Math.min(noOfPivots, arrayList.length + 1)) {       //is +1 necessary?
 
-        if(level==0){
+        if (level == 0) {
 
-            document.getElementById('addButton').disabled= true;
-            document.getElementById('deleteButton').disabled=true;
-            
-            pivots.push({ position: Number(-1), pivot: -1 , level: -1} );         //this is the position of 
-            pivots.push( {position: arrayList.length, pivot: -1, level: -1});    //this is also the position of pivots. 
+            document.getElementById('addButton').disabled = true;
+            document.getElementById('deleteButton').disabled = true;
+
+            pivots.push({ position: Number(-1), pivot: -1, level: -1 });         //this is the position of 
+            pivots.push({ position: arrayList.length, pivot: -1, level: -1 });    //this is also the position of pivots. 
             console.log("I AM HERE!!!");
             console.log(pivots);
 
@@ -138,86 +140,84 @@ function divide2(){
             // console.log(pivots.some(p => p.position===-1 && p.pivot===-2));
             // console.log(pivots.some(p => p.position===-2 && p.pivot===-1));
             // return;
-            
+
             //findPivot retuens the actual pivot for that part of the array
-            let [tempPos, tempPivot] = findPivot(arrayList, pivots[counter].position+1, pivots[counter+1].position-1);
+            let [tempPos, tempPivot] = findPivot(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1);
 
             //call partition
-            tempPos = partition(arrayList, pivots[counter].position+1, pivots[counter+1].position-1, tempPos);
+            tempPos = partition(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1, tempPos);
 
             //store the position of the pivot for next rounds
-            pivots.push({ position: tempPos , pivot: tempPivot, level: level});
+            pivots.push({ position: tempPos, pivot: tempPivot, level: level });
             //pivots.sort();  commenting since have that statement at the end. 
-            
+
             console.log("Currently at level 0");
             console.log("pivot is ", tempPivot);
-            console.log("array after 1 partition is "+arrayList);
+            console.log("array after 1 partition is " + arrayList);
             console.log("the pivots list is (only positions): ", pivots);
-            
+
         }
-        else{
-            if(pivots[counter].position===arrayList.length && pivots[counter].pivot===-1)
-            {       
-                    //this if case it to check if... in this level, is the counter accessing pivots 
-                    //beyond what it needs to access?
-                    //there can be pivots beyond this pivot but its for next level only. 
-                    console.log("wait what happened?");
-                    break;
+        else {
+            if (pivots[counter].position === arrayList.length && pivots[counter].pivot === -1) {
+                //this if case it to check if... in this level, is the counter accessing pivots 
+                //beyond what it needs to access?
+                //there can be pivots beyond this pivot but its for next level only. 
+                console.log("wait what happened?");
+                break;
             }
-            console.log("THE VALUE OF COUNTER IS "+counter);
-            let [tempPos, tempPivot] = findPivot(arrayList, pivots[counter].position+1, pivots[counter+1].position-1);
+            console.log("THE VALUE OF COUNTER IS " + counter);
+            let [tempPos, tempPivot] = findPivot(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1);
 
             //call partition
-            tempPos = partition(arrayList, pivots[counter].position+1, pivots[counter+1].position-1, tempPos);
+            tempPos = partition(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1, tempPos);
 
             //push the pivot position only if is is not present in the array
             //if(!pivots.includes(arrayList.indexOf(tempPivot)))   this is the old code
-            if(!pivots.some(p=> p.position===tempPos && p.pivot===tempPivot))
-            {
-                console.log("Since "+tempPos+" is not present, inserting it.");
-                pivots.push({position: tempPos, pivot: tempPivot, level: level});
+            if (!pivots.some(p => p.position === tempPos && p.pivot === tempPivot)) {
+                console.log("Since " + tempPos + " is not present, inserting it.");
+                pivots.push({ position: tempPos, pivot: tempPivot, level: level });
             }
-            
-            console.log("Currently at level "+level+" iteration "+counter);
+
+            console.log("Currently at level " + level + " iteration " + counter);
             console.log("pivot is ", tempPivot);
             console.log("array after 1 partition is ", arrayList);
             console.log("the pivots list is (only positions): ", pivots);
             console.log("---");
         }
-       counter++;
-        
+        counter++;
+
     }
     console.log("The array is ", arrayList);
     pivots.sort(((a, b) => a.position - b.position));
     console.log("Sorted pivot is ", pivots);
-    
+
     visualise();
     level++;
 
     console.log("----------------------------------------------");
 }
 
-function partition(arr, low, high, pivot_loc){
+function partition(arr, low, high, pivot_loc) {
 
     //in this if case, here there is no i value, hence pivot's position will be same after partition
-    if(low>high)
-        return pivot_loc;   
-    let i=low-1;
+    if (low > high)
+        return pivot_loc;
+    let i = low - 1;
     let pivot_elem = arr[pivot_loc];
     console.log("Incoming pivot's location is", pivot_loc);
     //moving the pivot element to the end to that it is easier to swap it in the end
     [arr[pivot_loc], arr[high]] = [arr[high], arr[pivot_loc]];
-    for(let j=low ; j<high ; ++j){
-        if(arr[j]<=pivot_elem){
+    for (let j = low; j < high; ++j) {
+        if (arr[j] <= pivot_elem) {
             ++i;
             [arr[j], arr[i]] = [arr[i], arr[j]];
         }
     }
-    [ arr[i+1], arr[high] ] = [ arr[high], arr[i+1] ];
-    console.log("Outgoing pivot's location is", i+1);
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    console.log("Outgoing pivot's location is", i + 1);
     console.log(arr);
-    console.log("HERE, I+1 IS ............................................... ", i+1);
-    return Math.min(i+1, arrayList.length);     //returning the pivot's new position after partitioning
+    console.log("HERE, I+1 IS ............................................... ", i + 1);
+    return Math.min(i + 1, arrayList.length);     //returning the pivot's new position after partitioning
 }
 
 
@@ -225,7 +225,7 @@ function partition(arr, low, high, pivot_loc){
 Returns the pivot element (not its position)
 low and high are the actual starting and ending point of the subarray
 */
-function findPivot(arr, low, high){
+function findPivot(arr, low, high) {
 
     console.log("I CAME HERE BROOOOO");
     // if(low>high && high===-1){
@@ -236,68 +236,66 @@ function findPivot(arr, low, high){
     //     return arr[low];
     // }
     // else 
-    
-    
-    if(low>high && low===arrayList.length){
+
+
+    if (low > high && low === arrayList.length) {
         //most probably this will never be reached but verify the same
-        console.log("low>high && high===arrayList.length...so returning high:" );
-        console.log("arr high is "+arr[high]+" and arr low is "+arr[low]);
-        console.log("the value of low is "+low);
-        console.log("the value of high is "+high);
+        console.log("low>high && high===arrayList.length...so returning high:");
+        console.log("arr high is " + arr[high] + " and arr low is " + arr[low]);
+        console.log("the value of low is " + low);
+        console.log("the value of high is " + high);
         //thats because low can be 10 and high can be 9
         return [high, arr[high]];
     }
-    else if(low>high){
-        console.log("low>high ...so returning high: "+arr[low]);
-        console.log("arr high is "+arr[high]+" and arr low is "+arr[low]);
-        console.log("the value of low is "+low);
-        console.log("the value of high is "+high);
+    else if (low > high) {
+        console.log("low>high ...so returning high: " + arr[low]);
+        console.log("arr high is " + arr[high] + " and arr low is " + arr[low]);
+        console.log("the value of low is " + low);
+        console.log("the value of high is " + high);
         //thats because low can be 0 and high can be -1
         return [low, arr[low]];
     }
-    
-    console.log("the value of low is "+low);
-    console.log("the value of high is "+high);
+
+    console.log("the value of low is " + low);
+    console.log("the value of high is " + high);
     let first = arr[low];
     let last = arr[high];
-    let mid = arr[Math.ceil((high-low)/2)+low];
+    let mid = arr[Math.ceil((high - low) / 2) + low];
     // ((((high-low)%2)==0) ? (arr[ ((high-low)/2)+low ]) : (arr[ ((high-low+1)/2)+low ]));
-    
-    console.log("first elem=" + first); 
-    console.log("mid elem=" + mid); 
-    console.log("last elem=" + last); 
+
+    console.log("first elem=" + first);
+    console.log("mid elem=" + mid);
+    console.log("last elem=" + last);
     // console.log(typeof first, typeof mid, typeof last);
     let pivot = -1;
     let pos = -1;
-    if ( ((first > mid) && (first<last)) || 
-    ((first > last) && (first < mid)))
-    {
-        pivot=first;
-        pos=low;
-    }           
-    else if ((mid>=first && mid<=last) || (mid>=last && mid<=first))
-    {
-        pivot=mid;
-        pos=Math.ceil((high-low)/2)+low;
-    }   
-    else{
-        pivot=last;
-        pos=high;
+    if (((first > mid) && (first < last)) ||
+        ((first > last) && (first < mid))) {
+        pivot = first;
+        pos = low;
     }
-    console.log("Pivot="+pivot);
-    return [pos,pivot];
+    else if ((mid >= first && mid <= last) || (mid >= last && mid <= first)) {
+        pivot = mid;
+        pos = Math.ceil((high - low) / 2) + low;
+    }
+    else {
+        pivot = last;
+        pos = high;
+    }
+    console.log("Pivot=" + pivot);
+    return [pos, pivot];
 }
 
 
-function visualiseOld(){
-    for(let i=0 ; i<arrayList.length ; i++){
+function visualiseOld() {
+    for (let i = 0; i < arrayList.length; i++) {
         const bar = document.createElement('div');
         bar.classList.add('bar');
         let barheight = Number(arrayList[i]);
         //bar.style.height = `${Number(item)}px`;
-        bar.style.height = `${barheight*5}px`;
+        bar.style.height = `${barheight * 5}px`;
         bar.textContent = barheight;
-        document.getElementById(`bar-container${level+2}`).appendChild(bar);
+        document.getElementById(`bar-container${level + 2}`).appendChild(bar);
         // if (level==0)
         //     document.getElementById('bar-container2').appendChild(bar);
         // else if(level==1)
@@ -307,38 +305,37 @@ function visualiseOld(){
         // else if(level==3)
         //     document.getElementById('bar-container5').appendChild(bar);
 
-    }      
+    }
 }
 
-function visualise(){
+function visualise() {
     // Clear all containers
     // for (let i = 2; i <= 5; i++) {
     //     document.getElementById(`bar-container${i}`).innerHTML = '';
     // }
-    if(level<0){
+    if (level < 0) {
         return;
     }
 
     let container = document.getElementById(`bar-container${level + 2}`);
 
-    if(level===0 && conquerFlag){
-    {
-        container = document.getElementById('bar-container');
+    if (level === 0 && conquerFlag) {
+        {
+            container = document.getElementById('bar-container');
 
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        bar.style.height = "0px";
+            const bar = document.createElement('div');
+            bar.classList.add('bar');
+            bar.style.height = "0px";
 
-        const bar2 = document.createElement('div');
-        bar2.classList.add('bar');
-        bar2.style.height = "0px";
-        
-        container.appendChild(bar);
-        container.appendChild(bar2);
-    }   
+            const bar2 = document.createElement('div');
+            bar2.classList.add('bar');
+            bar2.style.height = "0px";
+
+            container.appendChild(bar);
+            container.appendChild(bar2);
+        }
     }
-    else if(conquerFlag)
-    {
+    else if (conquerFlag) {
         container = document.getElementById(`bar-container${level + 1}`);
         const bar = document.createElement('div');
         bar.classList.add('bar');
@@ -349,29 +346,29 @@ function visualise(){
         bar2.style.height = "0px";
         container.appendChild(bar);
         container.appendChild(bar2);
-    }   
+    }
     else
         container = document.getElementById(`bar-container${level + 2}`);
 
-    
 
 
 
-    if(!container){
+
+    if (!container) {
         console.log("afnaioenjfavliejaf\naufhnvaliefhvabih\naiufybaieufybavaufha\nawkunerca");
         container = document.createElement('div');
-        container.id = `bar-container${level+2}`;
+        container.id = `bar-container${level + 2}`;
         console.log("Current level is", level, container.id);
         return;
 
     }
-    for(let i = 0; i < arrayList.length; i++){
+    for (let i = 0; i < arrayList.length; i++) {
         const bar = document.createElement('div');
         bar.classList.add('bar');
         let barheight = Number(arrayList[i]);
         bar.style.height = `${barheight * 5}px`;
         bar.textContent = barheight;
-        
+
 
         // Check if this index is a pivot at this level
         const pivotData = pivots.find(p => p.position === i);
@@ -449,69 +446,83 @@ function visualise(){
 // }
 
 
-function resetQuickSort(){
+function resetQuickSort() {
     //this has many debugging statements. clear them
     console.log("reached reset");
-    document.getElementById('addButton').disabled=false;
-    document.getElementById('deleteButton').disabled=false;
-    document.getElementById('divideButton').disabled=false;
-    document.getElementById('conquerButton').disabled=false;
+    document.getElementById('addButton').disabled = false;
+    document.getElementById('deleteButton').disabled = false;
+    document.getElementById('divideButton').disabled = false;
+    document.getElementById('conquerButton').disabled = false;
     console.log("enabled all the buttons");
-    level=0;
-    pivots=[];
-    arrayList=[];
+    level = 0;
+    pivots = [];
+    arrayList = [];
     console.log("reset all the variables");
-    for (let i = 2, flag=true; flag ; i++) {
-        flag=false;
-        
+    for (let i = 2, flag = true; flag; i++) {
+        flag = false;
+
         const container = document.getElementById(`bar-container${i}`);
-        
+
         if (container) {
             container.innerHTML = '';
-            flag=true;
-            
+            flag = true;
+
         }
     }
-    document.getElementById("bar-container").innerHTML='';
+    document.getElementById("bar-container").innerHTML = '';
     //console.clear();
     console.log("Reset the interface. Starting fresh!");
 }
 
-function conquer(){
+function conquer() {
 
     console.log("level is", level);
-    if(level<=0){
+    if (level <= 0) {
         console.log("All partitions conquered. They array is sorted. ");
-        document.getElementById('conquerButton').disabled=true;
+        document.getElementById('conquerButton').disabled = true;
         // return;
     }
-    conquerFlag=true;
+    conquerFlag = true;
 
-    if(level >= 0){
-        
+    if (level >= 0) {
+
         console.log("When I first cae onto conquer, the level is ", level);
         level--;
-        
+
         //remove the maxlevel partitions from 
-        let maxLevel = Math.max(...pivots.map(p=>p.level));
-        console.log("maxlevel deleted",maxLevel);
-        let flag=true;
-        while(flag){
-            flag=false;
-            let delIndex = pivots.findIndex(p=>p.level===maxLevel);
+        let maxLevel = Math.max(...pivots.map(p => p.level));
+        console.log("maxlevel deleted", maxLevel);
+        let flag = true;
+        while (flag) {
+            flag = false;
+            let delIndex = pivots.findIndex(p => p.level === maxLevel);
             console.log("deIndex is", delIndex);
-            if(delIndex>=0){
+            if (delIndex >= 0) {
                 pivots.splice(delIndex, 1);
                 console.log("After deleting, pivots is", pivots);
-                flag=true;
+                flag = true;
             }
         }
 
         visualise();
     }
 }
+
+function solve1() {
+    let calledLevel = level;
+    while (!solveDivideFlag) {
+        console.log("Called divide inside solve");
+        divide2();
+    }
+    while (level > calledLevel) {
+        console.log("Called conquer in solve");
+        conquer();
+    }
+    document.getElementById("solveButton").disabled = true;
+}
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
 document.getElementById('divideButton').addEventListener('click', divide2);
 document.getElementById('conquerButton').addEventListener('click', conquer);
 document.getElementById('resetButton').addEventListener('click', resetQuickSort);
+document.getElementById('solveButton').addEventListener('click', solve1);
