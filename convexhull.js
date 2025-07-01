@@ -12,6 +12,9 @@ let conquerFlag = false;
 let solveDivideFlag = false;
 let solveConquerFlag = false;
 
+document.getElementById("divideButton2").disabled = true;
+document.getElementById("conquerButton2").disabled = true;
+document.getElementById("solveButton2").disabled = true;
 
 function inputCoordinates(inputStr) {
     // @type {HTMLInputElement}
@@ -31,6 +34,9 @@ function inputCoordinates(inputStr) {
         return;
     }
     if (coord) {
+        document.getElementById("divideButton2").disabled = false;
+        document.getElementById("solveButton2").disabled = false;
+
         console.log("Coord is this inside if case:", coord);
         if (coord[0] <= 10 && coord[1] <= 10) {
             if (!coordinates.some(a => a[0] === coord[0] && a[1] === coord[1])) {
@@ -71,6 +77,10 @@ function deleteCoordinates(inputStr) {
             console.log("Found at index", index);
             coordinates.splice(index, 1);
             console.log("This works!", coordinates);
+            if (coordinates.length === 0) {
+                document.getElementById("divideButton2").disabled = true;
+                document.getElementById("solveButton2").disabled = true;
+            }
         }
         else {
             console.log("This doesnt work", coordinates);
@@ -92,6 +102,7 @@ function divideCoordinates() {
         renderTerminalHulls();
         solveDivideFlag = true;
         console.log("Max level is...", level);
+        document.getElementById("conquerButton2").disabled = false;
         return;
     }
     partitionAdded = false;
@@ -325,6 +336,7 @@ function findMedianPartition(coord, low, high) {
 }
 function conquerCoordinates() {
     conquerFlag = true;
+    document.getElementById("solveButton2").disabled = true;
     //access convexHulls array and partitions array
     console.log("The CHs are:", convexHulls);
     console.log("The partitions are:", partitions);

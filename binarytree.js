@@ -12,6 +12,8 @@ let divLevel = 0;
 let vizConcPtr = [];
 const SVGLink = "http://www.w3.org/2000/svg";
 let updateDict = [];
+let inorderIp = false;
+let preorderIp = false;
 
 class treeNode {
   constructor(value, level) {
@@ -24,9 +26,12 @@ class treeNode {
 
 document.getElementById("divideButton3").disabled = true;
 document.getElementById("conquerButton3").disabled = true;
+document.getElementById("solveButton3").disabled = true;
+
 createOverlaySVG();
 
 function addPreorder() {
+  preorderIp = true;
   const w = document.getElementById("preorder").value.trim();
   if (w) {
     let singleNum = Number(w);
@@ -50,12 +55,19 @@ function addPreorder() {
     console.log("added the array ", preorder);
     document.getElementById("preorder").value = "";
     document.getElementById("addButton4").disabled = true;
+
+    if (inorderIp && preorderIp) {
+      document.getElementById("divideButton3").disabled = false;
+      document.getElementById("solveButton3").disabled = false;
+
+    }
   } else {
     alert("Enter the preorder traversal");
   }
 }
 
 function deletePreorder() {
+  preorderIp = false;
   //search for the entered preorder traversal.
   //if present delete it else justan error msg
   const w = document.getElementById("preorder").value.trim();
@@ -99,13 +111,10 @@ function deletePreorder() {
   }
 }
 
-// ---
-function addInorder() {
-  // console.log("The result is...",checkTree(inorder, preorder));
-  // return;
-  document.getElementById("divideButton3").disabled = false;
-  document.getElementById("conquerButton3").disabled = false;
 
+function addInorder() {
+
+  inorderIp = true;
   const w = document.getElementById("inorder").value.trim();
   // console.log("w.includes(space)",w.includes(" "));
   // console.log("w.includes(,)",w.includes(","));
@@ -142,12 +151,20 @@ function addInorder() {
     console.log("added the array ", inorder);
     document.getElementById("inorder").value = "";
     document.getElementById("addButton3").disabled = true;
+
+    if (inorderIp && preorderIp) {
+      document.getElementById("divideButton3").disabled = false;
+      document.getElementById("solveButton3").disabled = false;
+
+    }
+
   } else {
     alert("Enter the inorder traversal");
   }
 }
 
 function deleteInorder() {
+  inorderIp = false;
   //search for the entered inorder traversal.
   //if present delete it else justan error msg
   const w = document.getElementById("inorder").value.trim();
@@ -269,6 +286,10 @@ function divide5() {
     console.log("Vizlevel is", vizLevel);
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
+
+    document.getElementById("conquerButton3").disabled = false;
+
+
     return;
   }
 
@@ -441,6 +462,7 @@ function mergeTree() {
     console.log("no more conquer possible...returning");
     console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
+    document.getElementById("solveButton3").disabled = true;
     return;
   }
   level--;
@@ -489,6 +511,7 @@ function mergeTree() {
     console.log("no more conquer possible...returning");
     console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
+    document.getElementById("solveButton3").disabled = true;
     return;
   }
 }
@@ -519,7 +542,7 @@ async function vizConquerBT() {
   //try if it is possible...to search the left and right of each node and link it to the value present there...
   //how to do it im not sure. 
 
-
+  document.getElementById("solveButton3").disabled = true;
 
   let container = document.getElementById(`RtreeContainer`);
   console.log("Inside the conquer visualiser fn");

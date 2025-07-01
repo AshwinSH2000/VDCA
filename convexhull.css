@@ -25,3 +25,33 @@ button {
   	padding: 5px 10px 5px 10px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+button:hover:enabled {
+	background-color: yellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 5px 5px;
+	cursor: pointer;
+	border-radius: 15px;
+  	padding: 5px 10px 5px 10px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+button:disabled{
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: rgba(0, 100, 0, 0.4);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 5px 5px;
+	cursor: pointer;
+	border-radius: 15px;
+  	padding: 5px 10px 5px 10px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

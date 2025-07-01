@@ -6,7 +6,13 @@ let level = 0;
 let conquerFlag = false;
 let solveDivideFlag = false;
 
+document.getElementById("divideButton").disabled = true;
+document.getElementById("solveButton").disabled = true;
+document.getElementById("conquerButton").disabled = true;
+
 function inputNumbers() {
+    document.getElementById("divideButton").disabled = false;
+    document.getElementById("solveButton").disabled = false;
     const item = document.getElementById('array_number').value.trim();
     //console.log(typeof item);
     //const value = parseInt(item.value);
@@ -56,7 +62,6 @@ function deleteNumbers() {
         if (index !== -1) {
             arrayList.splice(index, 1);
             console.log("Removed:", item, "Array:", arrayList);
-
             const container = document.getElementById('bar-container').children;
             for (let i = 0; i < container.length; i++) {
                 if (container[i].accessKey === item) {
@@ -64,10 +69,18 @@ function deleteNumbers() {
                     break;
                 }
             }
+            if (container.length === 0) {
+                document.getElementById("solveButton").disabled = true;
+                document.getElementById("divideButton").disabled = true;
+            }
         }
         else {
-            console.log("number not found to delete")
+            console.log("number not found to delete");
+            alert("Number not found");
         }
+    }
+    else {
+        alert("Enter a number to delete");
     }
     //item.value = '';
     document.getElementById('array_number').value = '';
@@ -118,6 +131,9 @@ function divide() {
 }
 function divide2() {
 
+    document.getElementById("addButton").disabled = true;
+    document.getElementById("deleteButton").disabled = true;
+
     console.log("----------------------------------------------");
 
     //let i=0;
@@ -125,12 +141,15 @@ function divide2() {
         console.log("reached max levels...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
+        document.getElementById("conquerButton").disabled = false;
         return;
     }
     if (pivots.length > arrayList.length) {
         console.log("array is sorted...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
+        document.getElementById("conquerButton").disabled = false;
+
         return;
     }
 
@@ -490,10 +509,12 @@ function resetQuickSort() {
 
 function conquer() {
 
+    document.getElementById('solveButton').disabled = true;
     console.log("level is", level);
     if (level <= 0) {
         console.log("All partitions conquered. They array is sorted. ");
         document.getElementById('conquerButton').disabled = true;
+        // document.getElementById('solveButton').disabled = true;
         // return;
     }
     conquerFlag = true;
