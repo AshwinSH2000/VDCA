@@ -12,22 +12,36 @@ function inputNumbers() {
     //const value = parseInt(item.value);
 
     if (item) {
-        arrayList.push(Number(item));
-        console.log("Added:", item, "Array:", arrayList);
 
+        let temp = [];
+        if (item.includes(" ")) {
+            temp = item.split(" ").map(Number);
+        }
+        else if (item.includes(",")) {
+            temp = item.split(",").map(Number);
 
-        const bar = document.createElement('div');
-        //bar.classList.add(`level-${level}`);
+        }
+        else {
+            temp = item;
+        }
 
-        //old aprch
-        bar.classList.add('bar');
+        for (let i = 0; i < temp.length; i++) {
+            arrayList.push(Number(temp[i]));
+            console.log("Added:", temp[i], "Array:", arrayList);
 
-        let barheight = Number(item);
-        //bar.style.height = `${Number(item)}px`;
-        bar.style.height = `${barheight * 5}px`;
-        bar.textContent = barheight;
-        bar.accessKey = barheight;
-        document.getElementById('bar-container').append(bar);
+            const bar = document.createElement('div');
+            //bar.classList.add(`level-${level}`);
+
+            //old aprch
+            bar.classList.add('bar');
+
+            let barheight = Number(temp[i]);
+            //bar.style.height = `${Number(item)}px`;
+            bar.style.height = `${barheight * 5}px`;
+            bar.textContent = barheight;
+            bar.accessKey = barheight;
+            document.getElementById('bar-container').append(bar);
+        }
     }
     else {
         alert("Enter a number!");
