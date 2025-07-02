@@ -5,6 +5,7 @@ let pivots = [];
 let level = 0;
 let conquerFlag = false;
 let solveDivideFlag = false;
+let solveMode = false;
 
 document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
@@ -27,11 +28,16 @@ function inputNumbers() {
             temp = item.split(",").map(Number);
 
         }
+        else if (!isNaN(item)) {
+            temp = [item];
+            // console.log("Came in here", "temp is", temp, "and item is", item);
+        }
         else {
-            temp = item;
+            alert("Not a number!");
         }
 
         for (let i = 0; i < temp.length; i++) {
+            console.log("Length of temp is", temp.length);
             arrayList.push(Number(temp[i]));
             console.log("Added:", temp[i], "Array:", arrayList);
 
@@ -86,51 +92,52 @@ function deleteNumbers() {
     document.getElementById('array_number').value = '';
 }
 
-function divide() {
+// function divide() {
 
-    let map = new Map();
-    map.set(3, "ash");
-    map.set(2, "win");
+//     let map = new Map();
+//     map.set(3, "ash");
+//     map.set(2, "win");
 
-    for (let [key, value] of map.entries()) {
-        console.log(`Key: ${key}, Type: ${typeof key}`);
-    }
-    console.log(map);
-    map.
-        console.log(map);
-    //return;
+//     for (let [key, value] of map.entries()) {
+//         console.log(`Key: ${key}, Type: ${typeof key}`);
+//     }
+//     console.log(map);
+//     map.
+//         console.log(map);
+//     //return;
 
-    if (level == 0) {
-        //this is the first "divide" operation. 
-        let pivot = findPivot(arrayList, 0, arrayList.length - 1);
-        // console.log("IN DIVIDE... PIVOT IS "+pivot);
-        pivots.push(pivot);
-        partition(arrayList, 0, arrayList.length - 1, arrayList.indexOf(pivot));
-        visualise();
-        level++;
-    }
-    else if (level == 1) {
-        let pivot1 = findPivot(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1);
-        let pivot2 = findPivot(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1);
-        pivots.push(pivot1);
-        pivots.push(pivot2);
+//     if (level == 0) {
+//         //this is the first "divide" operation. 
+//         let pivot = findPivot(arrayList, 0, arrayList.length - 1);
+//         // console.log("IN DIVIDE... PIVOT IS "+pivot);
+//         pivots.push(pivot);
+//         partition(arrayList, 0, arrayList.length - 1, arrayList.indexOf(pivot));
+//         visualise();
+//         level++;
+//     }
+//     else if (level == 1) {
+//         let pivot1 = findPivot(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1);
+//         let pivot2 = findPivot(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1);
+//         pivots.push(pivot1);
+//         pivots.push(pivot2);
 
-        partition(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1, arrayList.indexOf(pivot1));
-        partition(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1, arrayList.indexOf(pivot2))
+//         partition(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1, arrayList.indexOf(pivot1));
+//         partition(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1, arrayList.indexOf(pivot2))
 
-        visualise();
-        console.log("displayed stuff once");
-        level++;
-    }
-    else if (level == 2) {
+//         visualise();
+//         console.log("displayed stuff once");
+//         level++;
+//     }
+//     else if (level == 2) {
 
-        console.log("going for the third divide");
-        visualise();
-        level++;
-    }
-}
+//         console.log("going for the third divide");
+//         visualise();
+//         level++;
+//     }
+// }
 function divide2() {
 
+    console.log("Level inside divide2 is", level);
     document.getElementById("addButton").disabled = true;
     document.getElementById("deleteButton").disabled = true;
 
@@ -141,14 +148,14 @@ function divide2() {
         console.log("reached max levels...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
-        document.getElementById("conquerButton").disabled = false;
+        // document.getElementById("conquerButton").disabled = true;
         return;
     }
     if (pivots.length > arrayList.length) {
         console.log("array is sorted...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
-        document.getElementById("conquerButton").disabled = false;
+        // document.getElementById("conquerButton").disabled = true;
 
         return;
     }
@@ -159,6 +166,34 @@ function divide2() {
     while (counter < Math.min(noOfPivots, arrayList.length + 1)) {       //is +1 necessary?
 
         if (level == 0) {
+
+            /*
+            temporary code begins...replace this with two separate divs
+            one for the divide phase and one for hte conquer phase. 
+            */
+
+            //adding gap to the first 
+            let container = document.getElementById('bar-container');
+
+            console.log("adding the leftAlignBar in level 0");
+            //add the space only when it is not in conquer mode...it if its conquer, delete the space
+            const leftAlignBar = document.createElement('div');
+            leftAlignBar.setAttribute("id", "leftAlignBar");
+            leftAlignBar.style.width = `${arrayList.length * 35 - 5}px`;
+            leftAlignBar.style.height = "0px";
+            container.appendChild(leftAlignBar);
+
+            const bar2 = document.createElement('div');
+            bar2.setAttribute("id", "bar2space");
+            bar2.style.height = "0px";
+            bar2.style.width = "60px";
+            container.appendChild(bar2);
+
+            /*
+            temporary code ends...replace this with two separate divs
+            one for the divide phase and one for hte conquer phase. 
+            */
+
 
             document.getElementById('addButton').disabled = true;
             document.getElementById('deleteButton').disabled = true;
@@ -224,7 +259,17 @@ function divide2() {
     pivots.sort(((a, b) => a.position - b.position));
     console.log("Sorted pivot is ", pivots);
 
-    visualise();
+    if (solveMode && level >= calledLevel) {
+        console.log("D2...Supposed to call visualise but not calling because of solvemode");
+        console.log("D2...level is", level);
+        console.log("D2...called level is", calledLevel);
+    }
+    else {
+        console.log("D2...level is", level);
+        console.log("D2...called level is", calledLevel);
+        visualise();
+    }
+
     level++;
 
     console.log("----------------------------------------------");
@@ -357,34 +402,37 @@ function visualise() {
             container = document.getElementById('bar-container');
 
             const bar = document.createElement('div');
+            bar.setAttribute("id", "bar1space");
             bar.classList.add('bar');
             bar.style.height = "0px";
-
-            const bar2 = document.createElement('div');
-            bar2.classList.add('bar');
-            bar2.style.height = "0px";
-
-            container.appendChild(bar);
-            container.appendChild(bar2);
+            // container.appendChild(bar);
+            //since i am adding 60px in the divide phase itself I do not think I need this...
+            //anyway this will be removed when i have two separate divs. 
+            container.removeChild(container.querySelector("#leftAlignBar"));
         }
     }
     else if (conquerFlag) {
+        //this is to create some space between the two
         container = document.getElementById(`bar-container${level + 1}`);
+
+        let leftAlignBar = container.querySelector("#leftAlignBar");
+        console.log("container inside visualise is", container);
+        console.log("leftalignbar is", leftAlignBar);
+        if (leftAlignBar)
+            container.removeChild(leftAlignBar);
+        else
+            console.log("Not present in this container");
+
+
         const bar = document.createElement('div');
+        bar.setAttribute("id", "bar1space");
         bar.classList.add('bar');
         bar.style.height = "0px";
 
-        const bar2 = document.createElement('div');
-        bar2.classList.add('bar');
-        bar2.style.height = "0px";
-        container.appendChild(bar);
-        container.appendChild(bar2);
+        // container.appendChild(bar);
     }
     else
         container = document.getElementById(`bar-container${level + 2}`);
-
-
-
 
 
     if (!container) {
@@ -395,12 +443,14 @@ function visualise() {
         return;
 
     }
+    let leftAlignBarWidth = 0;
     for (let i = 0; i < arrayList.length; i++) {
         const bar = document.createElement('div');
         bar.classList.add('bar');
         let barheight = Number(arrayList[i]);
         bar.style.height = `${barheight * 5}px`;
         bar.textContent = barheight;
+        leftAlignBarWidth += 35;
 
 
         // Check if this index is a pivot at this level
@@ -409,8 +459,27 @@ function visualise() {
             bar.classList.add(`pivot-level-${pivotData.level}`);
             bar.style.marginLeft = '15px';
             bar.style.marginRight = '15px';
+            leftAlignBarWidth += 30;
         }
         container.appendChild(bar);
+    }
+
+    //create and append a bar of similar width which needs to be deleted later
+    if (!conquerFlag) {
+        console.log("adding the leftAlignBar");
+        //add the space only when it is not in conquer mode...it if its conquer, delete the space
+        const leftAlignBar = document.createElement('div');
+        leftAlignBar.setAttribute("id", "leftAlignBar");
+        leftAlignBar.style.width = `${leftAlignBarWidth - 5}px`;
+        leftAlignBar.style.height = "0px";
+        container.appendChild(leftAlignBar);
+
+        const bar2 = document.createElement('div');
+        bar2.setAttribute("id", "bar2space");
+        bar2.style.height = "0px";
+        bar2.style.width = "60px";
+        container.appendChild(bar2);
+
     }
 
     // const container = document.getElementById('bar-container');
@@ -521,6 +590,16 @@ function conquer() {
 
     if (level >= 0) {
 
+        if (solveMode && level !== calledLevel) {
+            console.log("Supposed to call visualise but not calling because of solvemode");
+            console.log("C2...level is", level);
+            console.log("C2...called level is", calledLevel);
+        }
+        else {
+            console.log("C2...level is", level);
+            console.log("C2...called level is", calledLevel);
+            visualise();
+        }
         console.log("When I first cae onto conquer, the level is ", level);
         level--;
 
@@ -539,21 +618,25 @@ function conquer() {
             }
         }
 
-        visualise();
     }
 }
 
+
+let calledLevel = -10;
 function solve1() {
-    let calledLevel = level;
+    document.getElementById("conquerButton").disabled = false;
+    solveMode = true;
+    calledLevel = level;
     while (!solveDivideFlag) {
         console.log("Called divide inside solve");
         divide2();
     }
-    while (level > calledLevel) {
+    while (level >= calledLevel) {
         console.log("Called conquer in solve");
         conquer();
     }
     document.getElementById("solveButton").disabled = true;
+    solveMode = false;
 }
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
