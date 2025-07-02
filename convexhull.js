@@ -244,6 +244,19 @@ function divideCoordinates() {
         partitions.sort((a, b) => a - b);
         level++;
     }
+    if (partitionAdded === false) {
+        console.log("All partitions are now terminal convex hulls. No further division needed. ");
+        //convexHulls.sort( (a,b)  =>  a[0][0]-b[0][0] );
+        console.log("The final terminal CHs are", convexHulls);
+        console.log("Partitions for rendering array is", partitionForRendering);
+        document.getElementById("divideButton2").disabled = true;
+        // renderTerminalHulls();
+        // solveDivideFlag = true;
+        console.log("Max level is...", level);
+        document.getElementById("divideButton2").disabled = true;
+
+        return;
+    }
 }
 
 function isHullAlreadyPresent(a, b) {
@@ -971,7 +984,7 @@ function renderPoints() {
     });
 }
 
-function renderPartitionLines() {
+async function renderPartitionLines() {
     //i will invoke thsi function before i increment the level. 
     //hence i can use the same level value
 
@@ -981,28 +994,87 @@ function renderPartitionLines() {
     // level3: yellow partition
     // level4: cyan partition
 
-    //use the values present in partitionForRendering along with level to draw the lines
+    let maxLevel = -1;
     for (let i = 0; i < partitionForRendering.length; i++) {
+        if (partitionForRendering[i].level > maxLevel) {
+            maxLevel = partitionForRendering[i].level;
+        }
+    }
+    console.log("Max level inside renderpartitionLines is", maxLevel);
+    //use the values present in partitionForRendering along with level to draw the lines
+    redLines.innerHTML = "";
+    blueLines.innerHTML = "";
+    yellowLines.innerHTML = "";
+    cyanLines.innerHTML = "";
+    whiteLines.innerHTML = "";
+    for (let i = 0; i < partitionForRendering.length; i++) {
+        await sleep(50);
         if (partitionForRendering[i].level === 0) {
-            redLines.innerHTML = ""; //this doesnt give error here but is it required? probably not
+            //redLines.innerHTML = ""; //this doesnt give error here but is it required? probably not
+            if (partitionForRendering[i].level === maxLevel) {
+                redLines.classList.remove("redlineDull");
+                redLines.classList.add("redline");
+            }
+            else {
+                redLines.classList.remove("redline");
+                redLines.classList.add("redlineDull");
+            }
+
             redLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // <line x1="0" y1="0" x2="0" y2="10" />
         }
         else if (partitionForRendering[i].level === 1) {
-            // blueLines.innerHTML="";
+            if (partitionForRendering[i].level === maxLevel) {
+                blueLines.classList.remove("bluelineDull")
+                blueLines.classList.add("blueline");
+            }
+            else {
+                blueLines.classList.remove("blueline");
+                blueLines.classList.add("bluelineDull");
+            }
+
             blueLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // console.log("Printed blue line.............................");
         }
         else if (partitionForRendering[i].level === 2) {
+            if (partitionForRendering[i].level === maxLevel) {
+                yellowLines.classList.remove("yellowlineDull");
+                yellowLines.classList.add("yellowline");
+            }
+            else {
+                yellowLines.classList.remove("yellowline");
+                yellowLines.classList.add("yellowlineDull");
+            }
+
             yellowLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if (partitionForRendering[i].level === 3) {
+            if (partitionForRendering[i].level === maxLevel) {
+                cyanLines.classList.remove("cyanlineDull");
+                cyanLines.classList.add("cyanline");
+            }
+
+            else {
+                cyanLines.classList.remove("cyanline");
+                cyanLines.classList.add("cyanlineDull");
+            }
+
+
             cyanLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
 
         //not sure if this will get executed as in my set of coordinates, I dont think level 4 will be reached
         else if (partitionForRendering[i].level === 4) {
-            cyanLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            if (partitionForRendering[i].level === maxLevel) {
+                whiteLines.classList.remove("whitelineDull");
+                whiteLines.classList.add("whiteline");
+            }
+            else {
+                whiteLines.classList.remove("whiteline");
+                whiteLines.classList.add("whitelineDull");
+            }
+
+            whiteLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
     }
 }
@@ -1135,6 +1207,8 @@ function renderTerminalHulls() {
             }
         }
         else if (hulls[i].level === 0) {
+            console.log("hang on ash");
+
             if (hulls[i].points.length === 1) {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
@@ -1165,6 +1239,8 @@ function renderTerminalHulls() {
                 let colouredHullPoints = hulls[i].points;
                 colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
                 for (let i = 0, j = colouredHullPoints.length - 1; i < colouredHullPoints.length; j = i++) {
+                    console.log("la la la")
+                    greenLines.classList.add("greenline");
                     greenLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
@@ -1318,13 +1394,19 @@ grid.addEventListener("click", (e) => {
 //////////////////codeforgraph
 
 
-function solveCoordinates() {
+async function solveCoordinates() {
     let calledLevel = level;
+
     while (!solveDivideFlag) {
         divideCoordinates();
         console.log("Called divideCoordinates in solve");
+        // await sleep(500);
     }
+    document.getElementById("conquerButton2").disabled = false;
+    console.log("called level is", calledLevel);
+    console.log("level - 1 is", level - 1);
     while (level - 1 > calledLevel) {
+        // await sleep(500);
         console.log("value of level inside solvedCoord is", level);
         console.log("Called level is", calledLevel);
         if (solveConquerFlag)
@@ -1333,6 +1415,10 @@ function solveCoordinates() {
         console.log("Called conquerCoordinates in solve");
     }
     document.getElementById("solveButton2").disabled = true;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // document.getElementById('addButton2').addEventListener('click', inputCoordinates);

@@ -55,3 +55,53 @@ button:disabled{
   	padding: 5px 10px 5px 10px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+.redline{
+	stroke: red;
+	fill:red;
+}
+.blueline{
+	stroke: rgb(95, 100, 255);
+	fill: rgb(95, 100, 255);
+}
+.greenline{
+	stroke: green;
+	fill: green;
+}
+.yellowline{
+	stroke: yellow;
+	fill: yellow;
+}
+.cyanline{
+	stroke: cyan;
+	fill: cyan;
+}
+.whiteline{
+	stroke: white;
+	fill: white;
+}
+
+.redlineDull{
+	stroke: rgba(255, 0, 0, 0.2);
+	fill:rgba(255, 0, 0, 0.2);
+}
+.bluelineDull{
+	stroke: rgba(95, 100, 255, 0.2);
+	fill: rgba(95, 100, 255, 0.2);
+}
+.greenlineDull{
+	stroke: rgba(0, 128, 0, 0.2);
+	fill: rgba(0, 128, 0, 0.2);
+}
+.yellowlineDull{
+	stroke: rgba(255, 255, 0, 0.2);
+	fill: rgba(255, 255, 0, 0.2);
+}
+.cyanlineDull{
+	stroke: rgb(0, 255, 255, 0.2);
+	fill: rgb(0, 255, 255, 0.2) ;
+}
+.whitelineDull{
+	stroke: rgba(255, 255, 255, 0.2);
+	fill: rgba(255, 255, 255, 0.2);
+}
