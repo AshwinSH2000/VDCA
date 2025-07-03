@@ -14,6 +14,7 @@ const SVGLink = "http://www.w3.org/2000/svg";
 let updateDict = [];
 let inorderIp = false;
 let preorderIp = false;
+let preOrderEntries = [];
 
 class treeNode {
   constructor(value, level) {
@@ -324,6 +325,12 @@ function divide5() {
       let newpreorder = preorder.slice(startpoint, startpoint + newinorder.length);
       console.log("inorder...", newinorder);
       console.log("preorder...", newpreorder);
+      if (newpreorder.length !== 0) {
+        preOrderEntries.push({
+          level: level,
+          entry: newpreorder,
+        })
+      }
 
       for (let i = 0; true; i++) {
         if (!nodes.some(p => p.value === preorder[startpoint + newinorder.length + i])) {
@@ -368,6 +375,8 @@ function divide5() {
     vizDivideBT();
     level++;
   }
+
+  console.log("Divide finally over...the preorder entries include", preOrderEntries);
 }
 
 function findRoot(node, curLevel) {
@@ -562,7 +571,7 @@ async function vizConquerBT() {
     console.log("Inside the conquer forloop");
 
     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
-    console.log("indexOfText is", indexOfText);
+    console.log("indexOfText is in vizConquerBT", indexOfText);
     console.log("The values inside conqurtBT is1", nodes[indexOfText]);
     const SVG = document.createElementNS(SVGLink, "svg");
 
@@ -747,22 +756,23 @@ async function vizDivideBT() {
   console.log("Inside the visualise fn");
   if (level === 0) {
     container = document.getElementById(`treeContainer`);
-    container.innerHTML = '';
+    container.innerHTML = 'Inorder:  ';
   }
   else {
     container = document.getElementById(`treeContainer${level + 1}`);
-    container.innerHTML = '';
+    container.innerHTML = 'InOrder:  ';
   }
-
+  // let indexToGiveSpace = false;
+  // let gapPrinted = -1;
   for (let i = 0; i < inorder.length; i++) {
+    // gapPrinted = -1;
     //output the value of each node based on its level's colour'
-    console.log("Inside the forloop");
 
     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
     //idu yaake andre, in level 0, there will be only the root in the nodes class. 
     //so if an element is found, you put a partition around it and display it.
     //if it is not present, you put it in a blank svg and display it
-    console.log("indexOfText is", indexOfText);
+    console.log("indexOfText is (IN vizDivideBT)", indexOfText);
 
     // if(indexOfText===-1){
     //   //output the number only
@@ -778,29 +788,24 @@ async function vizDivideBT() {
     // NODE.innerHTML+= '<circle cx="10" cy="10" r="5" />'
     // container.appendChild(NODE);
 
+    //THIS IS A MESS...RESOLVE IT...TAKE YOUR IPAD/PEN&PAPER AND WRITE IT OUT OK?
 
     const SVG = document.createElementNS(SVGLink, "svg");
-
     if (indexOfText === -1 || nodes[indexOfText].level > vizLevel) {
+
+      SVG.setAttribute("width", "30");
+      // SVG.setAttribute("width", "50");   //used when there was circle around node
+      SVG.setAttribute("height", "50");
+      SVG.style.display = "flex";
+      SVG.style.justifyContent = "center";
+      SVG.style.alignItems = "center";
+      // SVG.style.border = "0.5px solid";
 
 
       if (indexOfText === -1) {
-        SVG.setAttribute("width", "30");
-        SVG.setAttribute("height", "50");
-        SVG.style.display = "flex";
-        SVG.style.justifyContent = "center";
-        SVG.style.alignItems = "center";
-        // SVG.style.border = "0.5px solid";
         SVG.setAttribute("class", 'partitionLevelBlack');
       }
       else {
-        // SVG.setAttribute("width", "50");   //used when there was circle around node
-        SVG.setAttribute("width", "30");
-        SVG.setAttribute("height", "50");
-        SVG.style.display = "flex";
-        SVG.style.justifyContent = "center";
-        SVG.style.alignItems = "center";
-        // SVG.style.border = "0.5px solid";
         SVG.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
       }
 
@@ -824,6 +829,8 @@ async function vizDivideBT() {
         line1.setAttribute("stroke-width", "4");
         line1.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
         SVG.appendChild(line1);
+        // SVG2.appendChild(line1);
+
         const line2 = document.createElementNS(SVGLink, "line");
         line2.setAttribute("x1", 30);
         line2.setAttribute("y1", 0);
@@ -832,10 +839,10 @@ async function vizDivideBT() {
         line2.setAttribute("stroke-width", "4");
         line2.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
         SVG.appendChild(line2);
+        //SVG2.appendChild(line2);
       }
 
       const text = document.createElementNS(SVGLink, "text");
-
       text.textContent = inorder[i];
       if (indexOfText === -1) {
         text.setAttribute("x", "15");
@@ -843,6 +850,7 @@ async function vizDivideBT() {
         text.setAttribute("text-anchor", "middle"); // center horizontally
         text.setAttribute("font-size", "20");
         text.setAttribute("class", 'textPartitionLevelBlack');
+        gapPrinted = 0;
       } else {
         text.setAttribute("x", "15");
         // text.setAttribute("x", "25");   //used when there was a circle around node
@@ -850,23 +858,125 @@ async function vizDivideBT() {
         text.setAttribute("text-anchor", "middle"); // center horizontally
         text.setAttribute("font-size", "20");
         text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
+        gapPrinted = 0;
       }
-
       SVG.appendChild(text);
     }
     else {
+      //idu yaake?
+      //this is to put a gap in the inorder trav wherever the root is not getting printed..from 2nd level onwards. 
       SVG.setAttribute("width", "60");
       SVG.setAttribute("height", "50");
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
       // SVG.style.border = "0.5px solid";
+      gapPrinted = 1;
     }
     container.appendChild(SVG);
-    // await sleep(50);
-    // }
-    // NODE.classList.add(`partitionLevel${1}`);
-    console.log("appended sth");
+
+  }
+
+
+  let POContainer = document.getElementById('preorderContainer');
+  if (level === 0) {
+    console.log("QWERTY");
+    // simply print the entire preorder with 1st element highlighted
+    POContainer = document.getElementById('preorderContainer');
+    POContainer.innerHTML = 'PreOrder: ';
+
+
+    for (let i = 0; i < preorder.length; i++) {
+      const SVG2 = document.createElementNS(SVGLink, "svg");
+      SVG2.setAttribute("width", "30");
+      SVG2.setAttribute("height", "30");
+      SVG2.style.display = "flex";
+      SVG2.style.justifyContent = "center";
+      SVG2.style.alignItems = "center";
+      // SVG2.style.border = "0.5px solid";
+      const text2 = document.createElementNS(SVGLink, "text");
+      text2.textContent = preorder[i];
+      let indexOfTextPO = nodes.findIndex((p) => p.value === preorder[i]);
+
+      if (indexOfTextPO === -1) {
+        text2.setAttribute("x", "15");
+        text2.setAttribute("y", "25"); // a little below center
+        text2.setAttribute("text-anchor", "middle"); // center horizontally
+        text2.setAttribute("font-size", "20");
+        text2.setAttribute("class", 'textPartitionLevelBlack');
+        console.log("PRINTED BLACK NUMBER");
+        SVG2.setAttribute("class", 'partitionLevelBlack');
+        SVG2.appendChild(text2);
+      } else {
+        text2.setAttribute("x", "15");
+        // text.setAttribute("x", "25");   //used when there was a circle around node
+        text2.setAttribute("y", "25"); // a little below center
+        text2.setAttribute("text-anchor", "middle"); // center horizontally
+        text2.setAttribute("font-size", "20");
+        text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
+        console.log("PRINTED COLOURED NUMBER");
+        SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
+        SVG2.appendChild(text2);
+      }
+      POContainer.appendChild(SVG2);
+    }
+
+  }
+  else {
+    // i terate over the entries of that level . display each and then put a gap
+    console.log("POIUY");
+    POContainer = document.getElementById(`preorderContainer${level + 1}`);
+    POContainer.innerHTML = 'PreOrder: ';
+    let arr = preOrderEntries.filter((p) => p.level === level);
+    for (let j = 0; j < arr.length; j++) {
+      //iterates through all different preorder partitions
+      for (let i = 0; i < arr[j].entry.length; i++) {
+        //iterates through all numbers of a preorder partition to print it
+
+        const SVG2 = document.createElementNS(SVGLink, "svg");
+        SVG2.setAttribute("width", "30");
+        SVG2.setAttribute("height", "30");
+        SVG2.style.display = "flex";
+        SVG2.style.justifyContent = "center";
+        SVG2.style.alignItems = "center";
+        // SVG2.style.border = "0.5px solid";
+        const text2 = document.createElementNS(SVGLink, "text");
+        text2.textContent = arr[j].entry[i];
+        let indexOfTextPO = nodes.findIndex((p) => p.value === arr[j].entry[i]);
+
+        if (indexOfTextPO === -1) {
+          text2.setAttribute("x", "15");
+          text2.setAttribute("y", "25"); // a little below center
+          text2.setAttribute("text-anchor", "middle"); // center horizontally
+          text2.setAttribute("font-size", "20");
+          text2.setAttribute("class", 'textPartitionLevelBlack');
+          console.log("PRINTED BLACK NUMBER");
+          SVG2.setAttribute("class", 'partitionLevelBlack');
+          SVG2.appendChild(text2);
+        } else {
+          text2.setAttribute("x", "15");
+          // text.setAttribute("x", "25");   //used when there was a circle around node
+          text2.setAttribute("y", "25"); // a little below center
+          text2.setAttribute("text-anchor", "middle"); // center horizontally
+          text2.setAttribute("font-size", "20");
+          text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
+          console.log("PRINTED COLOURED NUMBER");
+          SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
+          SVG2.appendChild(text2);
+        }
+        POContainer.appendChild(SVG2);
+      }
+      if ((j + 1) !== arr.length) {
+        const SVG2 = document.createElementNS(SVGLink, "svg");
+        SVG2.setAttribute("width", "60");
+        SVG2.setAttribute("height", "30");
+        SVG2.style.display = "flex";
+        SVG2.style.justifyContent = "center";
+        SVG2.style.alignItems = "center";
+        // SVG2.style.border = "0.5px solid";
+        POContainer.appendChild(SVG2);
+      }
+    }
   }
   vizLevel++;
 }

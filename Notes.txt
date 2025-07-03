@@ -6,3 +6,6 @@ But that means sorting the array and then finding the middle.
 This defeats the purposr because my usecase was to sort it. 
 So I found three methods: 1. Sort and middle as usual 2. Median of median-didnt like it 3. Median of three (pick first, mid and last and find its median) 
 The 3rd option seems to be the ideal for me.  
+
+2. In CH, i have removed the stroke and fill arguments while creating the <g>
+Instead it has to be added manually each time. Hence if some lines or partitions are not getting printed/rendered, it is because of a missing css style entry. 
