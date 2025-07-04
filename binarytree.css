@@ -84,7 +84,7 @@ button:disabled {
 	justify-content: center;
 	/* border: 1px solid black; */
 	margin-bottom: 5px;
-	margin-top: 30px;
+	margin-top: 40px;
 	/* padding: 10 10 10 10; */
 }
 
@@ -96,7 +96,7 @@ button:disabled {
 	justify-content: center;
 	/* border: 1px solid black; */
 	margin-bottom: 10px;
-	margin-top: 5px;
+	margin-top: 0px;
 	/* padding: 10 10 10 10; */
 }
 
@@ -177,7 +177,11 @@ button:disabled {
 	color: black;
 	stroke: black;
 }
-
+.textPartitionBlack{
+	color: black; 
+	stroke: black;
+	fill: black;
+}
 .disparea{
 	display: flex;
 }
@@ -187,4 +191,10 @@ button:disabled {
 .rightHalfDiv{
 	width: 50%;
 	text-align: right;	
+}
+
+.textPartitionGrey{
+	color: gray;
+	stroke: gray;
+	fill: gray;
 }
