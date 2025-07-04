@@ -144,21 +144,20 @@ function divide2() {
     console.log("----------------------------------------------");
 
     //let i=0;
-    if (level === arrayList.length - 1) {
-        console.log("reached max levels...terminating");
-        document.getElementById('divideButton').disabled = true;
-        solveDivideFlag = true;
-        // document.getElementById("conquerButton").disabled = true;
-        return;
-    }
-    if (pivots.length > arrayList.length) {
-        console.log("array is sorted...terminating");
-        document.getElementById('divideButton').disabled = true;
-        solveDivideFlag = true;
-        // document.getElementById("conquerButton").disabled = true;
-
-        return;
-    }
+    // if (level === arrayList.length - 1) {
+    //     console.log("reached max levels...terminating");
+    //     document.getElementById('divideButton').disabled = true;
+    //     solveDivideFlag = true;
+    //     // document.getElementById("conquerButton").disabled = true;
+    //     return;
+    // }
+    // if (pivots.length > arrayList.length) {
+    //     console.log("array is sorted...terminating");
+    //     document.getElementById('divideButton').disabled = true;
+    //     solveDivideFlag = true;
+    //     // document.getElementById("conquerButton").disabled = true;
+    //     return;
+    // }
 
     let noOfPivots = Math.pow(2, level);
     let counter = 0;
@@ -273,6 +272,23 @@ function divide2() {
     level++;
 
     console.log("----------------------------------------------");
+
+    //the below code is to check if divide needs to be called again or not. 
+    //I still have the code at the top... Now I dont think that is necessary anymore. Will remove after some testing. 
+    if (level === arrayList.length - 1) {
+        console.log("reached max levels...terminating");
+        document.getElementById('divideButton').disabled = true;
+        solveDivideFlag = true;
+        // document.getElementById("conquerButton").disabled = true;
+        return;
+    }
+    if (pivots.length > arrayList.length) {
+        console.log("array is sorted...terminating");
+        document.getElementById('divideButton').disabled = true;
+        solveDivideFlag = true;
+        // document.getElementById("conquerButton").disabled = true;
+        return;
+    }
 }
 
 function partition(arr, low, high, pivot_loc) {
