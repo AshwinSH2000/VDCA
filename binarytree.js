@@ -373,7 +373,8 @@ function divide5() {
 
     console.log("At the end of level 0:", nodes);
     console.log("limits is", limits);
-    vizDivideBT();
+    if (!solveMode)
+      vizDivideBT();
     level++;
     return;
   } else {
@@ -434,7 +435,8 @@ function divide5() {
     console.log("The class object is", treeNodes);
     limits.sort((a, b) => a - b);
     console.log("limits is", limits);
-    vizDivideBT();
+    if (!solveMode)
+      vizDivideBT();
     level++;
   }
 
@@ -1294,8 +1296,10 @@ function sleep(ms) {
 }
 
 let solveDivideFlag = false;
-let solveConquerFlag = false;
+let solveMode = false;
+// let solveConquerFlag = false;
 function solve() {
+  solveMode = true;
   //so get the level...then call divide until it is no longer possible to divide. 
   //then call conquer button all the way until the level is reached. 
   let calledLevel = level;
@@ -1305,7 +1309,7 @@ function solve() {
   }
   while (level >= calledLevel) {
     mergeTree();
-    if (level === 0)
+    if (level < 0)
       break;
     console.log("Called mergetree in solve");
   }
