@@ -588,11 +588,11 @@ function mergeTree() {
     console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
     document.getElementById("solveButton3").disabled = true;
-    level = 3;
-    while (level >= 0) {
-      vizConquerBTFinalSoln();
-      level--
-    }
+    // level = 3;
+    // while (level >= 0) {
+    //   vizConquerBTFinalSoln();
+    //   level--
+    // }
 
     return;
   }
@@ -837,25 +837,16 @@ async function vizConquerBTFinalSoln() {
     console.log("appended sth");
     console.log("The values inside conqurtBT is4", nodes[indexOfText]);
     if (nodes[indexOfText].level === level) {
-      //   let belowPoints = getPointInOuterSVG(SVG, 25, 50, outerSVG);
-      //   let abovePoints = getPointInOuterSVG(SVG, 25, 0, outerSVG);
-      //   vizConcPtr.push({
-      //     value: inorder[i],
-      //     topX: abovePoints.x,
-      //     topY: abovePoints.y,
-      //     botX: belowPoints.x,
-      //     botY: belowPoints.y,
-      //   })
-      //   console.log("vizConcPtr is", vizConcPtr);
+
 
       console.log("The values inside conqurtBT is5", nodes[indexOfText]);
-      drawLines(SVG, nodes[indexOfText]);
+      // drawLines(SVG, nodes[indexOfText]);
     }
-    updateLines();
+    // updateLines();
     // await sleep(50);
   }
   console.log("Loop done");
-  // updateLines();
+
 }
 
 function drawLines(topSVG, focusNode) {
