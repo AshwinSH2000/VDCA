@@ -56,9 +56,16 @@ function addPreorder() {
     }
     console.log("added the array ", preorder);
     document.getElementById("preorder").value = "";
-    document.getElementById("addButton4").disabled = true;
-
     if (inorderIp && preorderIp) {
+      if (!checkTree(inorder, preorder)) {
+        alert("Tree cannot be constructed from the inputs given.");
+        let container = document.getElementById("treeContainerIP");
+        container.innerHTML = "";
+        reset();
+        return;
+      }
+
+      document.getElementById("addButton4").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
 
@@ -180,14 +187,23 @@ function addInorder() {
       console.log("The separator must either be comma or space");
       return;
     }
+
     console.log("added the array ", inorder);
     document.getElementById("inorder").value = "";
-    document.getElementById("addButton3").disabled = true;
-
     if (inorderIp && preorderIp) {
+      if (!checkTree(inorder, preorder)) {
+        alert("Tree cannot be constructed from the inputs given.");
+        //rather than having this, you can instead put this code in reset and call that...
+        //both work well but that would be better. 
+        let container = document.getElementById("preorderContainerIP");
+        container.innerHTML = "";
+        reset();
+        return;
+      }
+
+      document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
-
     }
 
 
@@ -337,11 +353,6 @@ function divide5() {
   document.getElementById("deleteButton3").disabled = true;
   document.getElementById("deleteButton4").disabled = true;
 
-  if (!checkTree(inorder, preorder)) {
-    alert("Tree cannot be constructed from the inputs given.");
-    return;
-  }
-
   if (nodes.length === inorder.length) {
     console.log("All nodes have been created. Cannot divide further. ");
     console.log("The max level is", level);
@@ -349,10 +360,7 @@ function divide5() {
     console.log("Vizlevel is", vizLevel);
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
-
-    document.getElementById("conquerButton3").disabled = false;
-
-
+    document.getElementById("conquerButton3").disabled = true;
     return;
   }
 
@@ -441,6 +449,19 @@ function divide5() {
   }
 
   console.log("Divide finally over...the preorder entries include", preOrderEntries);
+
+  //this below code is to check if further rounds are needed or not. 
+  // it is also present in the top but since this is there, I dont think the top code will ever get executed. 
+  if (nodes.length === inorder.length) {
+    console.log("All nodes have been created. Cannot divide further. ");
+    console.log("The max level is", level);
+    maxLevel = level;
+    console.log("Vizlevel is", vizLevel);
+    document.getElementById('divideButton3').disabled = true;
+    solveDivideFlag = true;
+    document.getElementById("conquerButton3").disabled = true;
+    return;
+  }
 }
 
 function findRoot(node, curLevel) {
@@ -1302,6 +1323,7 @@ function solve() {
   solveMode = true;
   //so get the level...then call divide until it is no longer possible to divide. 
   //then call conquer button all the way until the level is reached. 
+  document.getElementById("conquerButton3").disabled = false;
   let calledLevel = level;
   while (!solveDivideFlag) {
     divide5();
