@@ -63,6 +63,32 @@ function addPreorder() {
       document.getElementById("solveButton3").disabled = false;
 
     }
+
+    let container = document.getElementById("preorderContainerIP");
+    container.innerHTML = "PreOrder:  ";
+
+    for (let i = 0; i < preorder.length; i++) {
+      const SVG = document.createElementNS(SVGLink, "svg");
+      SVG.setAttribute("width", "30");
+      SVG.setAttribute("height", "30");
+      SVG.style.display = "flex";
+      SVG.style.justifyContent = "center";
+      SVG.style.alignItems = "center";
+      // SVG.style.border = "0.5px solid";
+      SVG.setAttribute("class", 'textPartitionBlack');
+
+      const text = document.createElementNS(SVGLink, "text");
+      text.textContent = preorder[i];
+      text.setAttribute("x", "17");   //used when there was a circle around node
+      text.setAttribute("y", "25"); // a little below center
+      text.setAttribute("text-anchor", "middle"); // center horizontally
+      text.setAttribute("font-size", "20");
+      text.setAttribute("class", 'textPartitionBlack');
+      SVG.appendChild(text);
+      container.append(SVG);
+      console.log("appended text and scg");
+    }
+
   } else {
     alert("Enter the preorder traversal");
   }
@@ -108,6 +134,10 @@ function deletePreorder() {
     console.log("deleted the entered preorder traversal", preorder);
     document.getElementById("addButton4").disabled = false;
     document.getElementById("preorder").value = "";
+
+    let container = document.getElementById("preorderContainerIP");
+    container.innerHTML = "";
+
   } else {
     alert("Enter a preorder traversal to check and delete");
   }
@@ -160,6 +190,32 @@ function addInorder() {
 
     }
 
+
+    let container = document.getElementById("treeContainerIP");
+    container.innerHTML = "InOrder:  ";
+
+    for (let i = 0; i < inorder.length; i++) {
+      const SVG = document.createElementNS(SVGLink, "svg");
+      SVG.setAttribute("width", "30");
+      SVG.setAttribute("height", "30");
+      SVG.style.display = "flex";
+      SVG.style.justifyContent = "center";
+      SVG.style.alignItems = "center";
+      // SVG.style.border = "0.5px solid";
+      SVG.setAttribute("class", 'textPartitionBlack');
+
+      const text = document.createElementNS(SVGLink, "text");
+      text.textContent = inorder[i];
+      text.setAttribute("x", "17");   //used when there was a circle around node
+      text.setAttribute("y", "25"); // a little below center
+      text.setAttribute("text-anchor", "middle"); // center horizontally
+      text.setAttribute("font-size", "20");
+      text.setAttribute("class", 'textPartitionBlack');
+      SVG.appendChild(text);
+      container.append(SVG);
+      console.log("appended text and scg");
+    }
+
   } else {
     alert("Enter the inorder traversal");
   }
@@ -205,6 +261,10 @@ function deleteInorder() {
     console.log("deleted the entered inorder traversal", inorder);
     document.getElementById("addButton3").disabled = false;
     document.getElementById("inorder").value = "";
+
+    let container = document.getElementById("treeContainerIP");
+    container.innerHTML = "";
+
   } else {
     alert("Enter an inorder traversal to check and delete");
   }
