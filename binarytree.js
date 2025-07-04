@@ -537,9 +537,9 @@ function mergeTree() {
     document.getElementById("solveButton3").disabled = true;
     return;
   }
-  // if (level != maxLevel) {
-  //   vizConquerBTFinalSoln();
-  // }
+  if (level != maxLevel) {
+    vizConquerBTFinalSoln();
+  }
   level--;
   //decreasing the lvel because it was 1+maxLevel while coming out of divide part
   let levelNodes = treeNodes.filter(p => p.level === level);//.map(p => p.value);;
@@ -690,20 +690,20 @@ async function vizConquerBT() {
     }
     else {
       //inserting a black space
-      if (level <= 1)
-        SVG.setAttribute("width", "30");
-      else if (level === 2)
-        SVG.setAttribute("width", "40");
-      else if (level === 3)
-        SVG.setAttribute("width", "50");
-      else if (level === 4)
-        SVG.setAttribute("width", "60");
-      else if (level === 5)
-        SVG.setAttribute("width", "70");
-      else if (level === 6)
-        SVG.setAttribute("width", "80");
-      else
-        SVG.setAttribute("width", "90");
+      // if (level <= 1)
+      SVG.setAttribute("width", "30");
+      // else if (level === 2)
+      //   SVG.setAttribute("width", "40");
+      // else if (level === 3)
+      //   SVG.setAttribute("width", "50");
+      // else if (level === 4)
+      //   SVG.setAttribute("width", "60");
+      // else if (level === 5)
+      //   SVG.setAttribute("width", "70");
+      // else if (level === 6)
+      //   SVG.setAttribute("width", "80");
+      // else
+      //   SVG.setAttribute("width", "90");
 
       SVG.setAttribute("height", "50");
       SVG.style.display = "flex";
@@ -716,17 +716,6 @@ async function vizConquerBT() {
     console.log("appended sth");
     console.log("The values inside conqurtBT is4", nodes[indexOfText]);
     if (nodes[indexOfText].level === level) {
-      //   let belowPoints = getPointInOuterSVG(SVG, 25, 50, outerSVG);
-      //   let abovePoints = getPointInOuterSVG(SVG, 25, 0, outerSVG);
-      //   vizConcPtr.push({
-      //     value: inorder[i],
-      //     topX: abovePoints.x,
-      //     topY: abovePoints.y,
-      //     botX: belowPoints.x,
-      //     botY: belowPoints.y,
-      //   })
-      //   console.log("vizConcPtr is", vizConcPtr);
-
       console.log("The values inside conqurtBT is5", nodes[indexOfText]);
       drawLines(SVG, nodes[indexOfText]);
     }
@@ -737,124 +726,145 @@ async function vizConquerBT() {
   // updateLines();
 }
 
+// async function vizConquerBTFinalSoln() {
+//   document.getElementById("solveButton3").disabled = true;
+
+//   let container = document.getElementById(`RtreeContainer`);
+//   console.log("Inside the conquer visualiser fn");
+//   if (level === 0) {
+//     container = document.getElementById(`RtreeContainer`);
+//     container.innerHTML = '';
+//   }
+//   else {
+//     container = document.getElementById(`RtreeContainer${level + 1}`);
+//     container.innerHTML = '';
+//   }
+
+//   let outerSVG = document.getElementById("linkLayer");
+
+
+//   for (let i = 0; i < inorder.length; i++) {
+//     console.log("Inside the conquer forloop");
+
+//     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
+//     console.log("indexOfText is in vizConquerBT", indexOfText);
+//     console.log("The values inside conqurtBT is1", nodes[indexOfText]);
+//     const SVG = document.createElementNS(SVGLink, "svg");
+
+//     if (nodes[indexOfText].level === level) {
+//       console.log("The values inside conqurtBT is2", nodes[indexOfText]);
+//       //svg for the node
+//       SVG.setAttribute("width", "50");   //used when there was circle around node
+//       // SVG.setAttribute("width", "30"); //used whrn there is no circle around node
+//       SVG.setAttribute("height", "50");
+//       SVG.style.display = "flex";
+//       SVG.style.justifyContent = "center";
+//       SVG.style.alignItems = "center";
+//       // SVG.style.border = "0.5px solid";
+//       SVG.setAttribute("class", `partitionLevelBlack`);
+
+//       //circle for the node
+//       const CIRCLE = document.createElementNS(SVGLink, "circle");
+//       CIRCLE.setAttribute("cx", "25");
+//       CIRCLE.setAttribute("cy", "25");
+//       CIRCLE.setAttribute("r", "24");
+//       CIRCLE.setAttribute("class", `partitionLevelBlack`);
+//       CIRCLE.setAttribute("fill", "none");
+//       // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
+//       // CIRCLE.style.background = "rgba(120,120,120,50)";
+//       // CIRCLE.setAttribute("stroke", "black");     // Border color
+//       CIRCLE.setAttribute("stroke-width", "3");
+//       SVG.appendChild(CIRCLE);
+
+//       // EITHER HARD CODE EVERYTHING
+//       // OR TRY GETTING THE X, Y, TOP, RIGHT, BOTTOM AND LEFT SOMEHOW.THEN TRY SOME.
+
+//       //text for the node
+//       const text = document.createElementNS(SVGLink, "text");
+//       text.textContent = inorder[i];
+//       text.setAttribute("x", "25");   //used when there was a circle around node
+//       text.setAttribute("y", "29"); // a little below center
+//       text.setAttribute("text-anchor", "middle"); // center horizontally
+//       text.setAttribute("font-size", "20");
+//       text.setAttribute("class", `textPartitionLevelBlack`);
+//       SVG.setAttribute("id", `Node${inorder[i]}`);
+//       SVG.appendChild(text);
+//       console.log("The values inside conqurtBT is3", nodes[indexOfText]);
+//     }
+//     else {
+//       //inserting a black space
+//       if (level <= 1)
+//         SVG.setAttribute("width", "30");
+//       else if (level === 2)
+//         SVG.setAttribute("width", "40");
+//       else if (level === 3)
+//         SVG.setAttribute("width", "50");
+//       else if (level === 4)
+//         SVG.setAttribute("width", "60");
+//       else if (level === 5)
+//         SVG.setAttribute("width", "70");
+//       else if (level === 6)
+//         SVG.setAttribute("width", "80");
+//       else
+//         SVG.setAttribute("width", "90");
+
+//       SVG.setAttribute("height", "50");
+//       SVG.style.display = "flex";
+//       SVG.style.justifyContent = "center";
+//       SVG.style.alignItems = "center";
+//       // SVG.style.border = "0.5px solid";
+//     }
+
+//     container.appendChild(SVG);
+//     console.log("appended sth");
+//     console.log("The values inside conqurtBT is4", nodes[indexOfText]);
+//     if (nodes[indexOfText].level === level) {
+
+
+//       console.log("The values inside conqurtBT is5", nodes[indexOfText]);
+//       drawLines(SVG, nodes[indexOfText]);
+//     }
+//     updateLines();
+//     // await sleep(50);
+//   }
+//   console.log("Loop done");
+// }
+
 async function vizConquerBTFinalSoln() {
-  //use the level var to find the nodes to display in this level. 
-  //but have to display the elements found in the order of inorder...so basically the same as divide but in reverse order
-  //one important part is to add link between the root and children
-  //another imp part is to try to have circular nodes. 
-  //try if it is possible...to search the left and right of each node and link it to the value present there...
-  //how to do it im not sure. 
-
   document.getElementById("solveButton3").disabled = true;
+  console.log("Inside conquer final soln (updating to black)");
 
-  let container = document.getElementById(`RtreeContainer`);
-  console.log("Inside the conquer visualiser fn");
-  if (level === 0) {
-    container = document.getElementById(`RtreeContainer`);
-    container.innerHTML = '';
-  }
-  else {
-    container = document.getElementById(`RtreeContainer${level + 1}`);
-    container.innerHTML = '';
-  }
+  // Determine the container for the current level
+  let container = (level === 0)
+    ? document.getElementById('RtreeContainer')
+    : document.getElementById(`RtreeContainer${level + 1}`);
 
-  let outerSVG = document.getElementById("linkLayer");
+  if (!container) return;
 
-
-  for (let i = 0; i < inorder.length; i++) {
-    console.log("Inside the conquer forloop");
-
-    let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
-    console.log("indexOfText is in vizConquerBT", indexOfText);
-    console.log("The values inside conqurtBT is1", nodes[indexOfText]);
-    const SVG = document.createElementNS(SVGLink, "svg");
-
-    if (nodes[indexOfText].level === level) {
-      console.log("The values inside conqurtBT is2", nodes[indexOfText]);
-      //svg for the node
-      SVG.setAttribute("width", "50");   //used when there was circle around node
-      // SVG.setAttribute("width", "30"); //used whrn there is no circle around node
-      SVG.setAttribute("height", "50");
-      SVG.style.display = "flex";
-      SVG.style.justifyContent = "center";
-      SVG.style.alignItems = "center";
-      // SVG.style.border = "0.5px solid";
-      SVG.setAttribute("class", `partitionLevelBlack`);
-
-      //circle for the node
-      const CIRCLE = document.createElementNS(SVGLink, "circle");
-      CIRCLE.setAttribute("cx", "25");
-      CIRCLE.setAttribute("cy", "25");
-      CIRCLE.setAttribute("r", "24");
-      CIRCLE.setAttribute("class", `partitionLevelBlack`);
-      CIRCLE.setAttribute("fill", "none");
-      // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
-      // CIRCLE.style.background = "rgba(120,120,120,50)";
-      // CIRCLE.setAttribute("stroke", "black");     // Border color
-      CIRCLE.setAttribute("stroke-width", "3");
-      SVG.appendChild(CIRCLE);
-
-      // EITHER HARD CODE EVERYTHING
-      // OR TRY GETTING THE X, Y, TOP, RIGHT, BOTTOM AND LEFT SOMEHOW.THEN TRY SOME.
-
-      //text for the node
-      const text = document.createElementNS(SVGLink, "text");
-      text.textContent = inorder[i];
-      text.setAttribute("x", "25");   //used when there was a circle around node
-      text.setAttribute("y", "29"); // a little below center
-      text.setAttribute("text-anchor", "middle"); // center horizontally
-      text.setAttribute("font-size", "20");
-      text.setAttribute("class", `textPartitionLevelBlack`);
-      SVG.setAttribute("id", `Node${inorder[i]}`);
-      SVG.appendChild(text);
-      console.log("The values inside conqurtBT is3", nodes[indexOfText]);
+  // Update existing nodes to black
+  const levelNodes = container.querySelectorAll('svg > circle, svg > text');
+  levelNodes.forEach(node => {
+    if (node.tagName === 'circle') {
+      node.classList.replace(`partitionLevel${level}`, 'partitionLevelBlack');
+      node.setAttribute('stroke', 'black');
     }
-    else {
-      //inserting a black space
-      if (level <= 1)
-        SVG.setAttribute("width", "30");
-      else if (level === 2)
-        SVG.setAttribute("width", "40");
-      else if (level === 3)
-        SVG.setAttribute("width", "50");
-      else if (level === 4)
-        SVG.setAttribute("width", "60");
-      else if (level === 5)
-        SVG.setAttribute("width", "70");
-      else if (level === 6)
-        SVG.setAttribute("width", "80");
-      else
-        SVG.setAttribute("width", "90");
-
-      SVG.setAttribute("height", "50");
-      SVG.style.display = "flex";
-      SVG.style.justifyContent = "center";
-      SVG.style.alignItems = "center";
-      // SVG.style.border = "0.5px solid";
+    if (node.tagName === 'text') {
+      node.classList.replace(`textPartitionLevel${level}`, 'textPartitionBlack');
+      node.setAttribute('fill', 'black');
     }
+  });
 
-    container.appendChild(SVG);
-    console.log("appended sth");
-    console.log("The values inside conqurtBT is4", nodes[indexOfText]);
-    if (nodes[indexOfText].level === level) {
-
-
-      console.log("The values inside conqurtBT is5", nodes[indexOfText]);
-      // drawLines(SVG, nodes[indexOfText]);
-    }
-    // updateLines();
-    // await sleep(50);
-  }
-  console.log("Loop done");
-
+  // Update existing lines to black
+  const lines = document.getElementById('linkLayer').querySelectorAll('line');
+  lines.forEach(line => {
+    line.classList.replace(`partitionLevel${level}`, 'partitionLevelBlack');
+    line.setAttribute('stroke', 'black');
+  });
 }
 
 function drawLines(topSVG, focusNode) {
-
   console.log("Focus node is", focusNode);
-
   let outerSVG = document.getElementById("linkLayer");
-
   //need to draw the lines...
   if (focusNode.left !== null) {
     console.log("Printing the left path now");
@@ -877,6 +887,7 @@ function drawLines(topSVG, focusNode) {
 
     let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
+    console.log("LEFT: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
 
 
     line1.setAttribute("x1", RootPtr.x);
@@ -890,6 +901,7 @@ function drawLines(topSVG, focusNode) {
       top: topSVG,
       bot: botSVG,
     });
+    //no need i think as i m calling updatelines in vizConquerBT
     // updateLines();
 
   }
@@ -900,8 +912,6 @@ function drawLines(topSVG, focusNode) {
     console.log("Printing the right path now");
     //no need to create an svg, this marking will come in linkLayer
     //but need to find the x and y coords... how
-
-
     const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
     let bottomContainer = document.getElementById('RtreeContainer');
@@ -915,7 +925,7 @@ function drawLines(topSVG, focusNode) {
     let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
 
-
+    console.log("RIGHT: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
     line2.setAttribute("x1", RootPtr.x);
     line2.setAttribute("y1", RootPtr.y);
     line2.setAttribute("x2", ChildPtr.x);
@@ -932,6 +942,7 @@ function drawLines(topSVG, focusNode) {
   else {
     console.log("Null needs to be attached to right child of", focusNode);
   }
+  //THIS IS MOstly not required as i am calling updateLines inside both the if cases. 
   // updateLines();
 }
 
@@ -1252,15 +1263,21 @@ function createOverlaySVG() {
   document.body.appendChild(svg);
 }
 
-function updateLines() {
+async function updateLines() {
 
   console.log("Im in updateLines");
   let outerSVG = document.getElementById("linkLayer");
   outerSVG.innerHTML = "";
   for (let i = 0; i < updateDict.length; i++) {
+    // await sleep(1000);
     const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
     let RootPtr = getPointInOuterSVG(updateDict[i].top, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(updateDict[i].bot, 25, 0, outerSVG);
+    if (RootPtr.x < 0 || RootPtr.y < 0 || ChildPtr.x < 0 || ChildPtr.y < 0) {
+      console.log("Gotcha")
+    }
+    console.log("level is", level, "and updatedicts are", updateDict[i].top, updateDict[i].bot);
+    console.log("UPDATELINES: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
     line1.setAttribute("x1", RootPtr.x);
     line1.setAttribute("y1", RootPtr.y);
     line1.setAttribute("x2", ChildPtr.x);
