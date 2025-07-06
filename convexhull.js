@@ -253,7 +253,6 @@ function divideCoordinates() {
             console.log("The final terminal CHs are", convexHulls);
             console.log("Partitions for rendering array is", partitionForRendering);
             console.log("Max level is...", level);
-
             return;
         }
         else {
