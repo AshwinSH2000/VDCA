@@ -244,19 +244,77 @@ function divideCoordinates() {
         partitions.sort((a, b) => a - b);
         level++;
     }
-    if (partitionAdded === false) {
-        console.log("All partitions are now terminal convex hulls. No further division needed. ");
-        //convexHulls.sort( (a,b)  =>  a[0][0]-b[0][0] );
-        console.log("The final terminal CHs are", convexHulls);
-        console.log("Partitions for rendering array is", partitionForRendering);
-        document.getElementById("divideButton2").disabled = true;
-        // renderTerminalHulls();
-        // solveDivideFlag = true;
-        console.log("Max level is...", level);
-        document.getElementById("divideButton2").disabled = true;
+    // console.log("ACHU, partitions is ", partitions);
+    console.log("At this level, checkforending is", checkForEnding());
+    if (checkForEnding()) {
+        console.log("ITS TRUE YOU MFS!");
+        if (partitionAdded === false) {
+            console.log("All partitions are now terminal convex hulls. No further division needed. ");
+            console.log("The final terminal CHs are", convexHulls);
+            console.log("Partitions for rendering array is", partitionForRendering);
+            console.log("Max level is...", level);
 
-        return;
+            return;
+        }
+        else {
+            document.getElementById("divideButton2").disabled = true;
+            divideCoordinates();
+        }
+
+
     }
+
+    // if (partitionAdded === false) {
+    //     console.log("All partitions are now terminal convex hulls. No further division needed. ");
+    //     //convexHulls.sort( (a,b)  =>  a[0][0]-b[0][0] );
+    //     console.log("The final terminal CHs are", convexHulls);
+    //     console.log("Partitions for rendering array is", partitionForRendering);
+    //     document.getElementById("divideButton2").disabled = true;
+    //     // renderTerminalHulls();
+    //     // solveDivideFlag = true;
+    //     console.log("Max level is...", level);
+    //     document.getElementById("divideButton2").disabled = true;
+
+    //     return;
+    // }
+}
+
+function checkForEnding() {
+    //use coordinates, partitions to make a check. 
+    let i = 1;
+    let prevPartition = -1;
+    for (; i < partitions.length - 1; i++) {
+        let partitionPoints = coordinates.filter(p => p[0] < partitions[i] && p[0] > prevPartition);
+        console.log("The partition is", partitions[i]);
+        console.log("The partition points are", partitionPoints);
+        prevPartition = partitions[i];
+        if (partitionPoints.length === 1 || partitionPoints.length === 2)
+            continue;
+        else if (partitionPoints.length > 2) {
+            //check for collinearity here. 
+            let resultCollinearity = checkCollinear(partitionPoints, 0, partitionPoints.length - 1)
+            if (resultCollinearity == false) {
+                console.log("Non collinear points before the last partition");
+                return false
+            }
+        }
+    }
+
+    //until now all the elements to the left of the partition points were checked. 
+    //but the points to the right of the last partition could not be checked and the below code is just for that. 
+    i--;
+    let partitionPoints = coordinates.filter(p => p[0] > partitions[i]);
+    console.log("The partition is (outside)", partitions[i]);
+    console.log("The partition points are (outside)", partitionPoints);
+    if (partitionPoints.length > 2) {
+        //check for collinearity here. 
+        let resultCollinearity = checkCollinear(partitionPoints, 0, partitionPoints.length - 1)
+        if (resultCollinearity == false) {
+            console.log("Non collinear points after the last partition");
+            return false
+        }
+    }
+    return true;
 }
 
 function isHullAlreadyPresent(a, b) {
