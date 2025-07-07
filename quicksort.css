@@ -36,17 +36,8 @@ h4{
 /* prefix fullstop . means class level  */
 /* prefix hashtag # means id level  */
 /* no prefix means component level  */
-.bar-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 5px;
-  margin-top: 10px;
-  height: 100px;
-  /* border: 1px solid #ccc; */
-  /* border: 1px solid #21a86b; */
-}
 
+/* 
 .bar {
   width: 30px;
   background-color: rgb(66, 66, 66);
@@ -55,9 +46,36 @@ h4{
   font-size: 12px;
   font-family: monospace;
   align-items: center;
-  /* margin: 1px; */
   border-radius: 5px;
+} */
+
+.bar-container {
+  display: flex;
+  align-items: flex-end;    /* center = in each container, the bars will be center aligned wrt their height (y axis) */
+  /* so we prefer flex-end where each bar will be resting on its bottom. they wont be dangling like center */
+  gap: 5px;
+  margin-top: 10px;
+  height: 100px;
+  overflow-x: auto;       /* Enables horizontal scrolling */
+  white-space: nowrap;    /* Prevents bars from wrapping */
+  justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
 }
+
+.bar {
+  width: 30px;
+  min-width: 30px;        /* Prevents bars from shrinking */
+  max-width: 30px;        /* Prevents bars from growing */
+  background-color: rgb(66, 66, 66);
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-family: monospace;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center; /* x axis alignment */
+  align-items: flex-end; /* y axis alignment */
+}
+
 
 .pivot-level-0 {
   background-color: #5d4fff;
