@@ -11,7 +11,9 @@ document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
 document.getElementById("conquerButton").disabled = true;
 
+
 function inputNumbers() {
+    document.getElementById("tooltip").classList.add("hidden");
     document.getElementById("divideButton").disabled = false;
     document.getElementById("solveButton").disabled = false;
     const item = document.getElementById('array_number').value.trim();
@@ -59,6 +61,8 @@ function inputNumbers() {
         alert("Enter a number!");
     }
     document.getElementById('array_number').value = '';
+    showTooltip(document.getElementById("my-button"), "You can enter more numbers or click on Divide");
+
 }
 
 function deleteNumbers() {
@@ -654,6 +658,57 @@ function solve1() {
     document.getElementById("solveButton").disabled = true;
     solveMode = false;
 }
+
+
+const closeBtn = document.getElementById("tooltip-close");
+let tooltipTimeout = null;  // this si global reference to the tool tip timer
+
+// Show tooltip near button
+function showTooltip(targetElement, message, arrowDirection) {
+
+    const tooltip = document.getElementById("tooltip");
+    const target = document.getElementById("array_number");
+    const tooltipText = document.getElementById("tooltip-text");
+    const arrow = tooltip.querySelector(".tooltip-arrow");
+    const rect = target.getBoundingClientRect();
+
+    if (tooltipTimeout) {
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = null;
+    }
+
+    tooltipText.textContent = message;
+    // tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
+    // tooltip.style.left = `${rect.left + window.scrollX + 90}px`;
+    tooltip.style.top = `${rect.bottom - 40}px`;
+    tooltip.style.left = `${rect.right + 30}px`;
+    tooltip.classList.remove("hidden");
+    if (arrowDirection === "left") {
+        // arrow.style.top = "20px";
+        // arrow.style.left = "-10px";
+        // arrow.style.borderTop = "10px solid transparent";
+        // arrow.style.borderBottom = "10px solid transparent";
+        // arrow.style.borderRight = "10px solid #fefefe";
+        // arrow.style.borderLeft = "";
+    } else if (arrowDirection === "top") {
+        // Update styling for top arrow (you can add more directions)
+    }
+    // Auto-dismiss after 10 seconds
+    tooltipTimeout = setTimeout(() => {
+        tooltip.classList.add("hidden");
+        tooltipTimeout = null;
+    }, 10000);  // 10 seconds
+}
+
+// Close manually
+closeBtn.addEventListener("click", () => {
+    tooltip.classList.add("hidden");
+});
+
+// Show tooltip on page load
+window.addEventListener("load", showTooltip(document.getElementById("my-button"), "Enter comma or space separated numbers and click Insert."));
+
+
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
 document.getElementById('divideButton').addEventListener('click', divide2);
