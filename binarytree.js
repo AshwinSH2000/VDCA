@@ -16,6 +16,9 @@ let inorderIp = false;
 let preorderIp = false;
 let preOrderEntries = [];
 let maxLevel = -10;
+let conquerFlag = false;
+resizeRightHalfDiv();
+
 
 class treeNode {
   constructor(value, level) {
@@ -78,6 +81,8 @@ function addPreorder() {
       const SVG = document.createElementNS(SVGLink, "svg");
       SVG.setAttribute("width", "30");
       SVG.setAttribute("height", "30");
+      SVG.setAttribute("max-width", "30");
+      SVG.setAttribute("min-width", "30");
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
@@ -87,9 +92,9 @@ function addPreorder() {
       const text = document.createElementNS(SVGLink, "text");
       text.textContent = preorder[i];
       text.setAttribute("x", "17");   //used when there was a circle around node
-      text.setAttribute("y", "25"); // a little below center
+      text.setAttribute("y", "21"); // a little below center
       text.setAttribute("text-anchor", "middle"); // center horizontally
-      text.setAttribute("font-size", "20");
+      // text.setAttribute("font-size", "20");
       text.setAttribute("class", 'textPartitionBlack');
       SVG.appendChild(text);
       container.append(SVG);
@@ -214,6 +219,8 @@ function addInorder() {
       const SVG = document.createElementNS(SVGLink, "svg");
       SVG.setAttribute("width", "30");
       SVG.setAttribute("height", "30");
+      SVG.setAttribute("max-width", "30");
+      SVG.setAttribute("min-width", "30");
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
@@ -223,9 +230,9 @@ function addInorder() {
       const text = document.createElementNS(SVGLink, "text");
       text.textContent = inorder[i];
       text.setAttribute("x", "17");   //used when there was a circle around node
-      text.setAttribute("y", "25"); // a little below center
+      text.setAttribute("y", "21"); // a little below center
       text.setAttribute("text-anchor", "middle"); // center horizontally
-      text.setAttribute("font-size", "20");
+      // text.setAttribute("font-size", "20");
       text.setAttribute("class", 'textPartitionBlack');
       SVG.appendChild(text);
       container.append(SVG);
@@ -547,6 +554,7 @@ function doVirtualLevel0(inorder, preorder, givelLevel) {
 }
 
 function mergeTree() {
+  conquerFlag = true;
   //ok so i have the nodes array which has complete info about the tree... how to join?
   //got a plannn
 
@@ -687,7 +695,7 @@ async function vizConquerBT() {
       const CIRCLE = document.createElementNS(SVGLink, "circle");
       CIRCLE.setAttribute("cx", "25");
       CIRCLE.setAttribute("cy", "25");
-      CIRCLE.setAttribute("r", "24");
+      CIRCLE.setAttribute("r", "23.5");
       CIRCLE.setAttribute("class", `partitionLevel${nodes[indexOfText].level}`);
       CIRCLE.setAttribute("fill", "none");
       // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
@@ -703,18 +711,30 @@ async function vizConquerBT() {
       const text = document.createElementNS(SVGLink, "text");
       text.textContent = inorder[i];
       text.setAttribute("x", "25");   //used when there was a circle around node
-      text.setAttribute("y", "29"); // a little below center
+      text.setAttribute("y", "30"); // a little below center
       text.setAttribute("text-anchor", "middle"); // center horizontally
-      text.setAttribute("font-size", "20");
+      // text.setAttribute("font-size", "20");
       text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
       SVG.setAttribute("id", `Node${inorder[i]}`);
       SVG.appendChild(text);
       console.log("The values inside conqurtBT is3", nodes[indexOfText]);
+      gapPrintedViz = 0;
     }
     else {
       //inserting a black space
       // if (level <= 1)
-      SVG.setAttribute("width", "30");
+      if (gapPrintedViz) {
+        SVG.setAttribute("width", "0");
+        SVG.setAttribute("max-width", "0");
+        SVG.setAttribute("min-width", "0");
+      }
+      else {
+        SVG.setAttribute("width", "30");
+        SVG.setAttribute("max-width", "30");
+        SVG.setAttribute("min-width", "30");
+        gapPrintedViz = 0;
+      }
+
       // else if (level === 2)
       //   SVG.setAttribute("width", "40");
       // else if (level === 3)
@@ -732,6 +752,7 @@ async function vizConquerBT() {
       SVG.style.display = "flex";
       SVG.style.justifyContent = "center";
       SVG.style.alignItems = "center";
+
       // SVG.style.border = "0.5px solid";
     }
 
@@ -982,9 +1003,7 @@ async function vizDivideBT() {
     container.innerHTML = 'InOrder:  ';
   }
   // let indexToGiveSpace = false;
-  // let gapPrinted = -1;
   for (let i = 0; i < inorder.length; i++) {
-    // gapPrinted = -1;
     //output the value of each node based on its level's colour'
 
     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
@@ -1065,32 +1084,45 @@ async function vizDivideBT() {
       text.textContent = inorder[i];
       if (indexOfText === -1) {
         text.setAttribute("x", "15");
-        text.setAttribute("y", "29"); // a little below center
+        text.setAttribute("y", "30"); // a little below center
+
         text.setAttribute("text-anchor", "middle"); // center horizontally
-        text.setAttribute("font-size", "20");
+        // text.setAttribute("font-size", "20");
         text.setAttribute("class", 'textPartitionLevelBlack');
-        gapPrinted = 0;
+        gapPrintedDivide = 0;
       } else {
         text.setAttribute("x", "15");
         // text.setAttribute("x", "25");   //used when there was a circle around node
-        text.setAttribute("y", "29"); // a little below center
+        text.setAttribute("y", "30"); // a little below center
         text.setAttribute("text-anchor", "middle"); // center horizontally
-        text.setAttribute("font-size", "20");
+        // text.setAttribute("font-size", "20");
         text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
-        gapPrinted = 0;
+        gapPrintedDivide = 0;
       }
       SVG.appendChild(text);
     }
     else {
       //idu yaake?
       //this is to put a gap in the inorder trav wherever the root is not getting printed..from 2nd level onwards. 
-      SVG.setAttribute("width", "60");
-      SVG.setAttribute("height", "50");
-      SVG.style.display = "flex";
-      SVG.style.justifyContent = "center";
-      SVG.style.alignItems = "center";
-      // SVG.style.border = "0.5px solid";
-      gapPrinted = 1;
+
+      if (gapPrintedDivide) {
+        //if i have previously printed a gap then insert a 0px svg this time and DO NOT UPDATE the gapPrintedDivide
+        SVG.setAttribute("width", "0");
+        SVG.setAttribute("height", "50");
+        SVG.style.display = "flex";
+        SVG.style.justifyContent = "center";
+        SVG.style.alignItems = "center";
+        // SVG.style.border = "0.5px solid";
+      }
+      else {
+        SVG.setAttribute("width", "30");
+        SVG.setAttribute("height", "50");
+        SVG.style.display = "flex";
+        SVG.style.justifyContent = "center";
+        SVG.style.alignItems = "center";
+        // SVG.style.border = "0.5px solid";
+        gapPrintedDivide = 1;
+      }
     }
     container.appendChild(SVG);
 
@@ -1099,7 +1131,6 @@ async function vizDivideBT() {
 
   let POContainer = document.getElementById('preorderContainer');
   if (level === 0) {
-    console.log("QWERTY");
     // simply print the entire preorder with 1st element highlighted
     POContainer = document.getElementById('preorderContainer');
     POContainer.innerHTML = 'PreOrder: ';
@@ -1109,6 +1140,8 @@ async function vizDivideBT() {
       const SVG2 = document.createElementNS(SVGLink, "svg");
       SVG2.setAttribute("width", "30");
       SVG2.setAttribute("height", "30");
+      SVG2.setAttribute("max-width", "30");
+      SVG2.setAttribute("min-width", "30");
       SVG2.style.display = "flex";
       SVG2.style.justifyContent = "center";
       SVG2.style.alignItems = "center";
@@ -1119,9 +1152,9 @@ async function vizDivideBT() {
 
       if (indexOfTextPO === -1) {
         text2.setAttribute("x", "15");
-        text2.setAttribute("y", "25"); // a little below center
+        text2.setAttribute("y", "21"); // a little below center
         text2.setAttribute("text-anchor", "middle"); // center horizontally
-        text2.setAttribute("font-size", "20");
+        // text2.setAttribute("font-size", "20");
         text2.setAttribute("class", 'textPartitionLevelBlack');
         console.log("PRINTED BLACK NUMBER");
         SVG2.setAttribute("class", 'partitionLevelBlack');
@@ -1129,9 +1162,9 @@ async function vizDivideBT() {
       } else {
         text2.setAttribute("x", "15");
         // text.setAttribute("x", "25");   //used when there was a circle around node
-        text2.setAttribute("y", "25"); // a little below center
+        text2.setAttribute("y", "21"); // a little below center
         text2.setAttribute("text-anchor", "middle"); // center horizontally
-        text2.setAttribute("font-size", "20");
+        // text2.setAttribute("font-size", "20");
         text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
         console.log("PRINTED COLOURED NUMBER");
         SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
@@ -1155,6 +1188,8 @@ async function vizDivideBT() {
         const SVG2 = document.createElementNS(SVGLink, "svg");
         SVG2.setAttribute("width", "30");
         SVG2.setAttribute("height", "30");
+        SVG2.setAttribute("max-width", "30");
+        SVG2.setAttribute("min-width", "30");
         SVG2.style.display = "flex";
         SVG2.style.justifyContent = "center";
         SVG2.style.alignItems = "center";
@@ -1165,9 +1200,9 @@ async function vizDivideBT() {
 
         if (indexOfTextPO === -1) {
           text2.setAttribute("x", "15");
-          text2.setAttribute("y", "25"); // a little below center
+          text2.setAttribute("y", "21"); // a little below center
           text2.setAttribute("text-anchor", "middle"); // center horizontally
-          text2.setAttribute("font-size", "20");
+          // text2.setAttribute("font-size", "20");
           text2.setAttribute("class", 'textPartitionLevelBlack');
           console.log("PRINTED BLACK NUMBER");
           SVG2.setAttribute("class", 'partitionLevelBlack');
@@ -1175,9 +1210,9 @@ async function vizDivideBT() {
         } else {
           text2.setAttribute("x", "15");
           // text.setAttribute("x", "25");   //used when there was a circle around node
-          text2.setAttribute("y", "25"); // a little below center
+          text2.setAttribute("y", "21"); // a little below center
           text2.setAttribute("text-anchor", "middle"); // center horizontally
-          text2.setAttribute("font-size", "20");
+          // text2.setAttribute("font-size", "20");
           text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
           console.log("PRINTED COLOURED NUMBER");
           SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
@@ -1187,12 +1222,12 @@ async function vizDivideBT() {
       }
       if ((j + 1) !== arr.length) {
         const SVG2 = document.createElementNS(SVGLink, "svg");
-        SVG2.setAttribute("width", "60");
+        SVG2.setAttribute("width", "30");
         SVG2.setAttribute("height", "30");
         SVG2.style.display = "flex";
         SVG2.style.justifyContent = "center";
         SVG2.style.alignItems = "center";
-        // SVG2.style.border = "0.5px solid";
+        // SVG2.style.border = "0.5px solid black";
         POContainer.appendChild(SVG2);
       }
     }
@@ -1287,7 +1322,7 @@ function createOverlaySVG() {
 }
 
 async function updateLines() {
-
+  resizeRightHalfDiv();
   console.log("Im in updateLines");
   let outerSVG = document.getElementById("linkLayer");
   outerSVG.innerHTML = "";
@@ -1338,6 +1373,13 @@ function solve() {
   document.getElementById("solveButton3").disabled = true;
 }
 
+function resizeRightHalfDiv() {
+  console.log("TINTANTUN");
+  const canvas = document.getElementById('rightHalfDiv');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
 document.getElementById("addButton3").addEventListener("click", addInorder);
@@ -1346,3 +1388,7 @@ document.getElementById("divideButton3").addEventListener("click", divide5);
 document.getElementById("conquerButton3").addEventListener("click", mergeTree);
 document.getElementById("resetButton3").addEventListener('click', reset);
 document.getElementById("solveButton3").addEventListener('click', solve);
+window.addEventListener('resize', () => {
+  if (conquerFlag === true)
+    updateLines(); // or whatever function you use to draw lines
+});
