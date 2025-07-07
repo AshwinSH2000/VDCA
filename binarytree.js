@@ -42,7 +42,7 @@ function addPreorder() {
     let singleNum = Number(w);
     if (w.includes(" ") || !isNaN(singleNum)) {
       //split with comma as the separator.
-      let temp = w.split(" ").map(Number);
+      let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         preorder.push(temp[i]);
       }
@@ -69,6 +69,7 @@ function addPreorder() {
       }
 
       document.getElementById("addButton4").disabled = true;
+      document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
 
@@ -115,7 +116,7 @@ function deletePreorder() {
     let singleNum = Number(w);
     if (w.includes(" ") || !isNaN(singleNum)) {
       //split with comma as the separator.
-      let temp = w.split(" ").map(Number);
+      let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         if (preorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
@@ -160,9 +161,6 @@ function addInorder() {
 
   inorderIp = true;
   const w = document.getElementById("inorder").value.trim();
-  // console.log("w.includes(space)",w.includes(" "));
-  // console.log("w.includes(,)",w.includes(","));
-  //  return;
 
   if (w) {
     let singleNum = Number(w);
@@ -181,7 +179,7 @@ function addInorder() {
       }
       console.log("temp is (,)", temp);
     } else if (w.includes(" ") || !isNaN(singleNum)) {
-      let temp = w.split(" ").map(Number);
+      let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         inorder.push(temp[i]);
       }
@@ -206,6 +204,7 @@ function addInorder() {
         return;
       }
 
+      document.getElementById("addButton4").disabled = true;
       document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
@@ -253,7 +252,7 @@ function deleteInorder() {
     let singleNum = Number(w);
     if (w.includes(" ") || !isNaN(singleNum)) {
       //split with comma as the separator.
-      let temp = w.split(" ").map(Number);
+      let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         if (inorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
@@ -646,8 +645,11 @@ function reset() {
   console.clear();
   console.log("cleared the console. starting fresh");
 }
-
+let gapPrintedViz = 0;
 async function vizConquerBT() {
+  if (level < 0) {
+    return;
+  }
   //use the level var to find the nodes to display in this level. 
   //but have to display the elements found in the order of inorder...so basically the same as divide but in reverse order
   //one important part is to add link between the root and children
@@ -664,7 +666,9 @@ async function vizConquerBT() {
     container.innerHTML = '';
   }
   else {
+    console.log("Level + 1 is", level + 1);
     container = document.getElementById(`RtreeContainer${level + 1}`);
+
     container.innerHTML = '';
   }
 
@@ -769,110 +773,6 @@ async function vizConquerBT() {
   console.log("Loop done");
   // updateLines();
 }
-
-// async function vizConquerBTFinalSoln() {
-//   document.getElementById("solveButton3").disabled = true;
-
-//   let container = document.getElementById(`RtreeContainer`);
-//   console.log("Inside the conquer visualiser fn");
-//   if (level === 0) {
-//     container = document.getElementById(`RtreeContainer`);
-//     container.innerHTML = '';
-//   }
-//   else {
-//     container = document.getElementById(`RtreeContainer${level + 1}`);
-//     container.innerHTML = '';
-//   }
-
-//   let outerSVG = document.getElementById("linkLayer");
-
-
-//   for (let i = 0; i < inorder.length; i++) {
-//     console.log("Inside the conquer forloop");
-
-//     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
-//     console.log("indexOfText is in vizConquerBT", indexOfText);
-//     console.log("The values inside conqurtBT is1", nodes[indexOfText]);
-//     const SVG = document.createElementNS(SVGLink, "svg");
-
-//     if (nodes[indexOfText].level === level) {
-//       console.log("The values inside conqurtBT is2", nodes[indexOfText]);
-//       //svg for the node
-//       SVG.setAttribute("width", "50");   //used when there was circle around node
-//       // SVG.setAttribute("width", "30"); //used whrn there is no circle around node
-//       SVG.setAttribute("height", "50");
-//       SVG.style.display = "flex";
-//       SVG.style.justifyContent = "center";
-//       SVG.style.alignItems = "center";
-//       // SVG.style.border = "0.5px solid";
-//       SVG.setAttribute("class", `partitionLevelBlack`);
-
-//       //circle for the node
-//       const CIRCLE = document.createElementNS(SVGLink, "circle");
-//       CIRCLE.setAttribute("cx", "25");
-//       CIRCLE.setAttribute("cy", "25");
-//       CIRCLE.setAttribute("r", "24");
-//       CIRCLE.setAttribute("class", `partitionLevelBlack`);
-//       CIRCLE.setAttribute("fill", "none");
-//       // CIRCLE.setAttribute("fill", "solid rgba(248, 248, 248, 0.55)");        // Diff border but black background 
-//       // CIRCLE.style.background = "rgba(120,120,120,50)";
-//       // CIRCLE.setAttribute("stroke", "black");     // Border color
-//       CIRCLE.setAttribute("stroke-width", "3");
-//       SVG.appendChild(CIRCLE);
-
-//       // EITHER HARD CODE EVERYTHING
-//       // OR TRY GETTING THE X, Y, TOP, RIGHT, BOTTOM AND LEFT SOMEHOW.THEN TRY SOME.
-
-//       //text for the node
-//       const text = document.createElementNS(SVGLink, "text");
-//       text.textContent = inorder[i];
-//       text.setAttribute("x", "25");   //used when there was a circle around node
-//       text.setAttribute("y", "29"); // a little below center
-//       text.setAttribute("text-anchor", "middle"); // center horizontally
-//       text.setAttribute("font-size", "20");
-//       text.setAttribute("class", `textPartitionLevelBlack`);
-//       SVG.setAttribute("id", `Node${inorder[i]}`);
-//       SVG.appendChild(text);
-//       console.log("The values inside conqurtBT is3", nodes[indexOfText]);
-//     }
-//     else {
-//       //inserting a black space
-//       if (level <= 1)
-//         SVG.setAttribute("width", "30");
-//       else if (level === 2)
-//         SVG.setAttribute("width", "40");
-//       else if (level === 3)
-//         SVG.setAttribute("width", "50");
-//       else if (level === 4)
-//         SVG.setAttribute("width", "60");
-//       else if (level === 5)
-//         SVG.setAttribute("width", "70");
-//       else if (level === 6)
-//         SVG.setAttribute("width", "80");
-//       else
-//         SVG.setAttribute("width", "90");
-
-//       SVG.setAttribute("height", "50");
-//       SVG.style.display = "flex";
-//       SVG.style.justifyContent = "center";
-//       SVG.style.alignItems = "center";
-//       // SVG.style.border = "0.5px solid";
-//     }
-
-//     container.appendChild(SVG);
-//     console.log("appended sth");
-//     console.log("The values inside conqurtBT is4", nodes[indexOfText]);
-//     if (nodes[indexOfText].level === level) {
-
-
-//       console.log("The values inside conqurtBT is5", nodes[indexOfText]);
-//       drawLines(SVG, nodes[indexOfText]);
-//     }
-//     updateLines();
-//     // await sleep(50);
-//   }
-//   console.log("Loop done");
-// }
 
 async function vizConquerBTFinalSoln() {
   document.getElementById("solveButton3").disabled = true;

@@ -22,7 +22,7 @@ function inputNumbers() {
 
         let temp = [];
         if (item.includes(" ")) {
-            temp = item.split(" ").map(Number);
+            temp = item.split(/\s+/).map(Number);
         }
         else if (item.includes(",")) {
             temp = item.split(",").map(Number);
