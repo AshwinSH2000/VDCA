@@ -11,7 +11,9 @@ let divideFlag = false;
 let conquerFlag = false;
 let solveDivideFlag = false;
 let solveConquerFlag = false;
-
+let activeTooltips = new Map();
+let inputToolTipFlag = true;
+let solveMode = false;
 document.getElementById("divideButton2").disabled = true;
 document.getElementById("conquerButton2").disabled = true;
 document.getElementById("solveButton2").disabled = true;
@@ -56,6 +58,13 @@ function inputCoordinates(inputStr) {
         alert('Enter a number');
     }
     //document.getElementById('coordinates2').value='';
+    if (inputToolTipFlag) {
+        showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
+        showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve before Divide displays the convex hull of all the selected points", "top-right");
+        inputToolTipFlag = false;
+    }
+
+
 }
 
 function deleteCoordinates(inputStr) {
@@ -88,8 +97,15 @@ function deleteCoordinates(inputStr) {
     }
     //document.getElementById("coordinates2").value='';
 }
-
+let firstDivideFlag = true;
 function divideCoordinates() {
+    if (firstDivideFlag && !solveMode) {
+        showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve at any point will display the convex hulls of the current partition(s)", "top-right");
+        showDynamicTooltip(document.getElementById("divideButton2"), "Divide will continue splitting the points into smaller partitions", "top-left");
+        firstDivideFlag = false;
+    }
+
+
 
     divideFlag = true;
 
@@ -858,25 +874,6 @@ function mergeConvexHulls(leftHulls, rightHulls) {
 
 }
 
-function testingForPolygon() {
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,3]));    //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [2,2]));    //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,0]));        //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,5]));     //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,5]));        //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,0]));        //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,3]));        //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,0]));        //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,3]));    //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [3,5]));        //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [0,1]));    //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [1,0]));        //true
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [1,5]));    //false
-    // console.log("Result is", checkInPolygon([0,5], [0,0], [5,5], [5,0], [5,1])); //false
-    console.log("Result is", checkInPolygon([0, 5], [0, 0], [5, 5], [5, 0], [4, 4]));
-
-}
-
 function checkInPolygon(LT, LB, RT, RB, pointToCheck) {
     //function call will be checkInPolygon(leftHullPointUpper, leftHullPointLower, rightHullPointUpper, rightHullPointLower, left/rightHulls[i]);
     // point: [x, y]
@@ -1396,17 +1393,6 @@ function renderTerminalHulls() {
     }
 }
 
-function renderMergedHulls() {
-    //so ...what do i need to do?
-    //i have the hulls array. ok
-    //take convexHulls..it will most probably contain the latest hull information. 
-    //combine that with the level info and use appropriate colors ... 
-    //most imp ly, merge/draw the hull only belonging to that level, 
-    // tasks...
-    // 1. go through all the code quickly (maybe before meeting on friday)
-    // 2. read about DISS page on opencourse
-    // 3. write all the rough details before friday as to what you have done
-}
 
 grid.addEventListener("click", (e) => {
 
@@ -1453,7 +1439,7 @@ grid.addEventListener("click", (e) => {
 
 async function solveCoordinates() {
     let calledLevel = level;
-
+    solveMode = true;
     while (!solveDivideFlag) {
         divideCoordinates();
         console.log("Called divideCoordinates in solve");
@@ -1472,24 +1458,137 @@ async function solveCoordinates() {
         console.log("Called conquerCoordinates in solve");
     }
     document.getElementById("solveButton2").disabled = true;
+    if (level - 1 <= calledLevel) {
+        showDynamicTooltip(document.getElementById('conquerButton2'), "Clicking on conquer merges the hulls together", "top-right", 10000);
+    }
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
+
+    if (activeTooltips.has(targetElement)) {
+        const old = activeTooltips.get(targetElement);
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(targetElement);
+    }
+
+    const tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+
+    const tooltipText = document.createElement("div");
+    tooltipText.textContent = message;
+    tooltip.appendChild(tooltipText);
+
+    const closeBtn = document.createElement("span");
+    closeBtn.textContent = "✕";
+    closeBtn.classList.add("close-btn");
+    tooltip.appendChild(closeBtn);
+
+    const arrow = document.createElement("div");
+    arrow.classList.add("tooltip-arrow");
+    tooltip.appendChild(arrow);
+
+    document.body.appendChild(tooltip);
+
+    // Positioning
+    const rect = targetElement.getBoundingClientRect();
+    const scrollTop = window.scrollY;
+    const scrollLeft = window.scrollX;
+
+
+
+    // Adjust based on direction
+    if (arrowDirection === "left") {
+        tooltip.style.top = `${rect.top + scrollTop + 60}px`;
+        tooltip.style.left = `${rect.left + scrollLeft + 1000}px`;
+
+        arrow.style.top = "10px";
+        arrow.style.left = "-10px";
+        arrow.style.borderTop = "10px solid transparent";
+        arrow.style.borderBottom = "10px solid transparent";
+        arrow.style.borderRight = "10px solid #fefefe";
+    }
+    if (arrowDirection === "top-right") {
+        tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 20}px`;
+
+        arrow.style.top = "-10px";
+        arrow.style.left = "30px";
+
+        arrow.style.borderBottom = "10px solid #fefefe";
+        arrow.style.borderLeft = "10px solid transparent";
+        arrow.style.borderRight = "10px solid transparent";
+    }
+    if (arrowDirection === "top-left") {
+        tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 100}px`;
+
+        arrow.style.top = "-10px";
+        arrow.style.left = "120px";
+
+        arrow.style.borderBottom = "10px solid #fefefe";
+        arrow.style.borderLeft = "10px solid transparent";
+        arrow.style.borderRight = "10px solid transparent";
+    }
+    if (arrowDirection === "bottom") {
+        tooltip.style.top = `${rect.top + scrollTop + 0}px`;
+        tooltip.style.left = `${rect.left + scrollLeft + 100}px`;
+
+        arrow.style.top = "68px";
+        arrow.style.left = "40px";
+
+        arrow.style.borderTop = "10px solid #fefefe";
+        arrow.style.borderLeft = "10px solid transparent";
+        arrow.style.borderRight = "10px solid transparent";
+    }
+    // More directions can be added here...
+
+    // Auto remove
+    const timeout = setTimeout(() => {
+        tooltip.remove();
+    }, duration);
+
+    // Manual close
+    closeBtn.addEventListener("click", () => {
+        clearTimeout(timeout);
+        tooltip.remove();
+    });
+
+    activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+    console.log(activeTooltips);
+}
+
+window.addEventListener("load", () => {
+    showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
+});
+
+
+function removeAllToolTips() {
+    if (activeTooltips.has(document.getElementById('solveButton2'))) {
+        const old = activeTooltips.get(document.getElementById('solveButton2'));
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(document.getElementById('solveButton2'));
+    }
+    if (activeTooltips.has(document.getElementById('divideButton2'))) {
+        const old = activeTooltips.get(document.getElementById('divideButton2'));
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(document.getElementById('divideButton2'));
+    }
+}
 // document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 // document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
 document.getElementById('resetButton2').addEventListener('click', resetConvexHull);
 document.getElementById('conquerButton2').addEventListener('click', conquerCoordinates);
-document.getElementById('solveButton2').addEventListener('click', solveCoordinates);
+document.getElementById('solveButton2').addEventListener('click', () => {
+    removeAllToolTips();
+    solveCoordinates();
+});
 // document.getElementById('conquerButton2').addEventListener('click', compareEndPoints);
 
-
-/*
-
-
-
-
-*/

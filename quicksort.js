@@ -772,10 +772,7 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 }
 
 window.addEventListener("load", () => {
-
     showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers and click Insert.", "left");
-
-
 });
 
 function removeAllToolTips() {

@@ -1,6 +1,7 @@
 body {
     background-color: rgba(233, 157, 157, 0.949);
 	text-align: center;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 h1 {
     color: black;
@@ -105,3 +106,38 @@ button:disabled{
 	stroke: rgba(255, 255, 255, 0.2);
 	fill: rgba(255, 255, 255, 0.2);
 }
+
+/* for dynamic prompts... in main there is static prompts.  */
+.tooltip {
+	position: absolute;
+	background: rgba(254, 254, 254, 0.8);
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 10px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	z-index: 1000;
+	max-width: 200px;
+	font-size: 14px;
+	animation: fadeIn 0.5s ease-out;
+  }
+  
+  .tooltip-arrow {
+	opacity: 80%;
+	position: absolute;
+	width: 0;
+	height: 0;
+  }
+  
+  .tooltip .close-btn {
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #666;
+  }
+
+  @keyframes fadeIn {
+	from { opacity: 0; transform: translateY(-15px); }
+	to   { opacity: 1; transform: translateY(0); }
+  }
