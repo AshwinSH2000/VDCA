@@ -17,7 +17,9 @@ let preorderIp = false;
 let preOrderEntries = [];
 let maxLevel = -10;
 let conquerFlag = false;
+let activeTooltips = new Map();
 resizeRightHalfDiv();
+
 
 
 class treeNode {
@@ -78,6 +80,8 @@ function addPreorder() {
       document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
+      showDynamicTooltip(document.getElementById("divideButton3"), "Clicking on Divide performs level-wise divisions.", "top-left");
+      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
 
     }
 
@@ -218,6 +222,9 @@ function addInorder() {
       document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
+      showDynamicTooltip(document.getElementById("divideButton3"), "Clicking on Divide performs level-wise divisions.", "top-left");
+      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
+
     }
 
 
@@ -377,6 +384,8 @@ function divide5() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
+    if (solveMode === false)
+      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve generates the leaf nodes", "top-right");
     return;
   }
 
@@ -476,6 +485,8 @@ function divide5() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
+    if (solveMode === false)
+      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve generates the leaf nodes", "top-right", "10000");
     return;
   }
 }
@@ -1281,14 +1292,129 @@ function solve() {
     console.log("Called mergetree in solve");
   }
   document.getElementById("solveButton3").disabled = true;
+  if (level >= 0) {
+    //this means it was not called at the very beginning...called after some levels of divide() was done
+    showDynamicTooltip(document.getElementById('conquerButton3'), "Clicking on conquer continues building the tree from this point", "top-right", 5000);
+    document.getElementById("conquerButton3").disabled = false;
+  }
 }
 
 function resizeRightHalfDiv() {
-  console.log("TINTANTUN");
   const canvas = document.getElementById('rightHalfDiv');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
+
+
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
+
+  if (activeTooltips.has(targetElement)) {
+    const old = activeTooltips.get(targetElement);
+    clearTimeout(old.timer); // if you store timer too
+    old.element.remove();
+    activeTooltips.delete(targetElement);
+  }
+
+  const tooltip = document.createElement("div");
+  tooltip.classList.add("tooltip");
+
+  const tooltipText = document.createElement("div");
+  tooltipText.textContent = message;
+  tooltip.appendChild(tooltipText);
+
+  const closeBtn = document.createElement("span");
+  closeBtn.textContent = "✕";
+  closeBtn.classList.add("close-btn");
+  tooltip.appendChild(closeBtn);
+
+  const arrow = document.createElement("div");
+  arrow.classList.add("tooltip-arrow");
+  tooltip.appendChild(arrow);
+
+  document.body.appendChild(tooltip);
+
+  // Positioning
+  const rect = targetElement.getBoundingClientRect();
+  const scrollTop = window.scrollY;
+  const scrollLeft = window.scrollX;
+
+
+
+  // Adjust based on direction
+  if (arrowDirection === "left") {
+    tooltip.style.top = `${rect.top + scrollTop - 40}px`;
+    tooltip.style.left = `${rect.right + scrollLeft + 300}px`;
+
+    arrow.style.top = "10px";
+    arrow.style.left = "-10px";
+    arrow.style.borderTop = "10px solid transparent";
+    arrow.style.borderBottom = "10px solid transparent";
+    arrow.style.borderRight = "10px solid #fefefe";
+  }
+  if (arrowDirection === "left-close") {
+    tooltip.style.top = `${rect.top + scrollTop}px`;
+    tooltip.style.left = `${rect.right + scrollLeft + 90}px`;
+
+    arrow.style.top = "10px";
+    arrow.style.left = "-100px";
+    arrow.style.borderTop = "10px solid transparent";
+    arrow.style.borderBottom = "10px solid transparent";
+    arrow.style.borderRight = "100px solid #fefefe";
+  }
+  if (arrowDirection === "top-right") {
+    tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+    tooltip.style.left = `${rect.left + scrollLeft - 20}px`;
+
+    arrow.style.top = "-10px";
+    arrow.style.left = "30px";
+
+    arrow.style.borderBottom = "10px solid #fefefe";
+    arrow.style.borderLeft = "10px solid transparent";
+    arrow.style.borderRight = "10px solid transparent";
+  }
+  if (arrowDirection === "top-left") {
+    tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+    tooltip.style.left = `${rect.left + scrollLeft - 100}px`;
+
+    arrow.style.top = "-10px";
+    arrow.style.left = "120px";
+
+    arrow.style.borderBottom = "10px solid #fefefe";
+    arrow.style.borderLeft = "10px solid transparent";
+    arrow.style.borderRight = "10px solid transparent";
+  }
+  if (arrowDirection === "right") {
+    tooltip.style.top = `${rect.top + scrollTop - 10}px`;
+    tooltip.style.left = `${rect.left + scrollLeft - 250}px`;
+
+    arrow.style.top = "18px";
+    arrow.style.left = "220px";
+
+    arrow.style.borderBottom = "10px solid transparent";
+    arrow.style.borderLeft = "10px solid #fefefe";
+    arrow.style.borderTop = "10px solid transparent";
+  }
+  // More directions can be added here...
+
+  // Auto remove
+  const timeout = setTimeout(() => {
+    tooltip.remove();
+  }, duration);
+
+  // Manual close
+  closeBtn.addEventListener("click", () => {
+    clearTimeout(timeout);
+    tooltip.remove();
+  });
+
+  activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+
+}
+
+window.addEventListener("load", () => {
+  showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
+});
+
 
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);

@@ -1,6 +1,7 @@
 body{
 	text-align: center;
     background-color: darkkhaki;
+	font-family: sans-serif;
 }
 h1 {
     color: black;
@@ -236,3 +237,32 @@ button:disabled {
 	stroke: gray;
 	fill: gray;
 }
+
+/* for dynamic prompts... in main there is static prompts.  */
+.tooltip {
+	position: absolute;
+	background: rgba(254, 254, 254, 0.8);
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 10px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	z-index: 1000;
+	max-width: 200px;
+	font-size: 14px;
+  }
+  
+  .tooltip-arrow {
+	opacity: 80%;
+	position: absolute;
+	width: 0;
+	height: 0;
+  }
+  
+  .tooltip .close-btn {
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #666;
+  }
