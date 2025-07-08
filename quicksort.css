@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(255, 160, 65);
+  background-color: rgb(255, 184, 113);
   text-align: center;
 }
 button {
@@ -28,7 +28,7 @@ h6 {
   color: blue;
 }
 
-h4{
+h3{
   color: darkslategray;
   /* margin-top: 1%; */
 }
@@ -151,4 +151,33 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-15px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #333;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 15px;
+  position: absolute;
+  top: 40px;  /* or left/right etc. */
+  left: 150%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 1.5s;
 }

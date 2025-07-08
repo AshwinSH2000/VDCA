@@ -7,15 +7,15 @@ let conquerFlag = false;
 let solveDivideFlag = false;
 let solveMode = false;
 const activeTooltips = new Map();
+let inputCounter = 0;
 
 document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
 document.getElementById("conquerButton").disabled = true;
 
 
-function inputNumbers() {
-    document.getElementById("divideButton").disabled = false;
-    document.getElementById("solveButton").disabled = false;
+async function inputNumbers() {
+
     const item = document.getElementById('array_number').value.trim();
     //console.log(typeof item);
     //const value = parseInt(item.value);
@@ -25,6 +25,7 @@ function inputNumbers() {
         let temp = [];
         if (item.includes(" ") && item.includes(",")) {
             alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+            return;
         }
         else if (item.includes(" ")) {
             temp = item.split(/\s+/).map(Number);
@@ -39,6 +40,7 @@ function inputNumbers() {
         }
         else {
             alert("Not a number!");
+            return;
         }
 
         for (let i = 0; i < temp.length; i++) {
@@ -62,16 +64,28 @@ function inputNumbers() {
     }
     else {
         alert("Enter a number!");
+        return;
     }
+    document.getElementById("divideButton").disabled = false;
+    document.getElementById("solveButton").disabled = false;
     document.getElementById('array_number').value = '';
 
-    showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 5000);
-
-    showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 5000);
-    showDynamicTooltip(document.getElementById('solveButton'), "Solve displays final sorted solution for the current array", "top-right", 5000);
+    if (inputCounter === 0) {
+        showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 10000);
+        await sleep(2000);
+    }
+    if (inputCounter <= 2) {
+        showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 10000);
+        await sleep(1000);
+        showDynamicTooltip(document.getElementById('solveButton'), "Clicking Solve before Divide displays the final sorted array", "top-right", 10000);
+    }
+    inputCounter++;
 
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 function deleteNumbers() {
     const item = document.getElementById('array_number').value.trim();
     if (item) {
@@ -289,7 +303,7 @@ function divide2() {
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
         if (solveMode === false)
-            showDynamicTooltip(document.getElementById('solveButton'), "Clicking on Solve shows the solution for the last partition created", "top-right", 5000);
+            showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
 
         // document.getElementById("conquerButton").disabled = true;
         return;
@@ -299,7 +313,7 @@ function divide2() {
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
         if (solveMode === false)
-            showDynamicTooltip(document.getElementById('solveButton'), "Clicking on Solve shows the solution for the last partition created", "top-right", 5000);
+            showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
         // document.getElementById("conquerButton").disabled = true;
         return;
     }
@@ -668,12 +682,12 @@ function solve1() {
     document.getElementById("solveButton").disabled = true;
     solveMode = false;
     if (level >= 0) {
-        showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 5000);
+        showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 10000);
     }
 
 }
 
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
 
     if (activeTooltips.has(targetElement)) {
         const old = activeTooltips.get(targetElement);
@@ -759,11 +773,33 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 
 window.addEventListener("load", () => {
 
-    showDynamicTooltip(document.getElementById("array_number"), "Enter comma or space separated numbers and click Insert.", "left");
+    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers and click Insert.", "left");
 
 
 });
 
+function removeAllToolTips() {
+    if (activeTooltips.has(document.getElementById('solveButton'))) {
+        const old = activeTooltips.get(document.getElementById('solveButton'));
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(document.getElementById('solveButton'));
+    }
+
+    if (activeTooltips.has(document.getElementById('array_number'))) {
+        const old = activeTooltips.get(document.getElementById('array_number'));
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(document.getElementById('array_number'));
+    }
+
+    if (activeTooltips.has(document.getElementById('divideButton'))) {
+        const old = activeTooltips.get(document.getElementById('divideButton'));
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(document.getElementById('divideButton'));
+    }
+}
 
 
 document.getElementById('addButton').addEventListener('click', inputNumbers);
@@ -771,4 +807,9 @@ document.getElementById('deleteButton').addEventListener('click', deleteNumbers)
 document.getElementById('divideButton').addEventListener('click', divide2);
 document.getElementById('conquerButton').addEventListener('click', conquer);
 document.getElementById('resetButton').addEventListener('click', resetQuickSort);
-document.getElementById('solveButton').addEventListener('click', solve1);
+document.getElementById('solveButton').addEventListener('click', () => {
+    //empty the entire activetooltips
+    removeAllToolTips();
+    console.log("Activetooltips", activeTooltips);
+    solve1();
+});

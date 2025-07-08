@@ -10,9 +10,9 @@
 </head>
 
 <body>
-  <h1><u>Visualising Divide and Conquer Algorithms</u></h1>
-  <br>
-  <h4>QuickSort</h4>
+  <h1>Visualising Divide and Conquer Algorithms </h1>
+  <!-- <br> -->
+  <h3>QuickSort</h3>
   <!-- <h6>Coming soon! Stay tuned :)</h6> -->
   <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
   <button onclick="window.location.href='binarytree.html';" id="useCase2Button">Binary Tree</button>
@@ -23,14 +23,21 @@
     <label for="array_number" id="inputLabel">Enter Number: </label>
     <input type="string" id="array_number" name="array_number" min="0" max="1000">
     <br>
-    <button type="button" id="addButton">Insert</button>
+    <button type="button" id="addButton" title="To input the numbers entered in the textbox">Insert</button>
     <button type="button" id="deleteButton">Delete</button>
     <br>
     <button type="button" id="divideButton">Divide</button>
     <button type="button" id="conquerButton">Conquer</button>
     <!-- <br> -->
     <button type="button" id="solveButton">Solve</button>
-    <button type="button" id="resetButton">Reset</button>
+
+    <div class="tooltip-wrapper">
+      <button type="button" id="resetButton">Reset</button>
+      <div class="tooltip-text">This will reset everything</div>
+    </div>
+
+    <br>
+    <br>
 
     <!-- old approach -->
     <div id="bar-container" class="bar-container"></div>
