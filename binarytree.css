@@ -249,6 +249,7 @@ button:disabled {
 	z-index: 1000;
 	max-width: 200px;
 	font-size: 14px;
+	animation: fadeIn 0.5s ease-out;
   }
   
   .tooltip-arrow {
@@ -265,4 +266,9 @@ button:disabled {
 	cursor: pointer;
 	font-size: 14px;
 	color: #666;
+  }
+
+  @keyframes fadeIn {
+	from { opacity: 0; transform: translateY(-15px); }
+	to   { opacity: 1; transform: translateY(0); }
   }

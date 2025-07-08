@@ -124,6 +124,8 @@ body {
   z-index: 1000;
   max-width: 200px;
   font-size: 14px;
+  animation: fadeIn 0.5s ease-out;
+
 }
 
 .tooltip-arrow {
@@ -146,3 +148,7 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
