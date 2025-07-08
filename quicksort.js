@@ -6,6 +6,7 @@ let level = 0;
 let conquerFlag = false;
 let solveDivideFlag = false;
 let solveMode = false;
+const activeTooltips = new Map();
 
 document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
@@ -668,12 +669,19 @@ function solve1() {
     solveMode = false;
     if (level >= 0) {
         showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 5000);
-        console.log("Level is kikkilalakii", level);
     }
 
 }
 
 function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
+
+    if (activeTooltips.has(targetElement)) {
+        const old = activeTooltips.get(targetElement);
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(targetElement);
+    }
+
     const tooltip = document.createElement("div");
     tooltip.classList.add("tooltip");
 
@@ -744,6 +752,9 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         clearTimeout(timeout);
         tooltip.remove();
     });
+
+    activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+
 }
 
 window.addEventListener("load", () => {
