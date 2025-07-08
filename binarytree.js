@@ -1294,7 +1294,7 @@ function solve() {
   document.getElementById("solveButton3").disabled = true;
   if (level >= 0) {
     //this means it was not called at the very beginning...called after some levels of divide() was done
-    showDynamicTooltip(document.getElementById('conquerButton3'), "Clicking on conquer continues building the tree from this point", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('conquerButton3'), "Clicking on conquer continues building the tree from this point", "top-right", 10000);
     document.getElementById("conquerButton3").disabled = false;
   }
 }
@@ -1306,7 +1306,7 @@ function resizeRightHalfDiv() {
 }
 
 
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
 
   if (activeTooltips.has(targetElement)) {
     const old = activeTooltips.get(targetElement);
