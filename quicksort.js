@@ -22,7 +22,10 @@ function inputNumbers() {
     if (item) {
 
         let temp = [];
-        if (item.includes(" ")) {
+        if (item.includes(" ") && item.includes(",")) {
+            alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+        }
+        else if (item.includes(" ")) {
             temp = item.split(/\s+/).map(Number);
         }
         else if (item.includes(",")) {

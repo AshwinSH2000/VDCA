@@ -36,18 +36,24 @@ document.getElementById("solveButton3").disabled = true;
 createOverlaySVG();
 
 function addPreorder() {
-  preorderIp = true;
+
   const w = document.getElementById("preorder").value.trim();
   if (w) {
     let singleNum = Number(w);
-    if (w.includes(" ") || !isNaN(singleNum)) {
+    if (w.includes(" ") && w.includes(",")) {
+      alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      return;
+    }
+    else if (w.includes(" ") || !isNaN(singleNum)) {
+      preorderIp = true;
       //split with comma as the separator.
       let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         preorder.push(temp[i]);
       }
     } else if (w.includes(",") || !isNaN(singleNum)) {
-      let temp = w.split(",").map(Number);
+      preorderIp = true;
+      let temp = w.split(/\,+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         preorder.push(temp[i]);
       }
@@ -126,7 +132,7 @@ function deletePreorder() {
         }
       }
     } else if (w.includes(",") || !isNaN(singleNum)) {
-      let temp = w.split(",").map(Number);
+      let temp = w.split(/\,+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         if (preorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
@@ -159,7 +165,6 @@ function deletePreorder() {
 
 function addInorder() {
 
-  inorderIp = true;
   const w = document.getElementById("inorder").value.trim();
 
   if (w) {
@@ -170,19 +175,24 @@ function addInorder() {
     //     alert("it is nan");
     //     console.log(singleNum, "is singlenum");
     // }
-
-    if (w.includes(",") || !isNaN(singleNum)) {
+    if (w.includes(" ") && w.includes(",")) {
+      alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      return;
+    }
+    else if (w.includes(",") || !isNaN(singleNum)) {
       //split with comma as the separator.
-      let temp = w.split(",").map(Number);
+      let temp = w.split(/\,+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         inorder.push(temp[i]);
       }
       console.log("temp is (,)", temp);
+      inorderIp = true;
     } else if (w.includes(" ") || !isNaN(singleNum)) {
       let temp = w.split(/\s+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         inorder.push(temp[i]);
       }
+      inorderIp = true;
       //   console.log("temp is (space)", temp);
     } else {
       //nonsense input
@@ -262,7 +272,7 @@ function deleteInorder() {
         }
       }
     } else if (w.includes(",") || !isNaN(singleNum)) {
-      let temp = w.split(",").map(Number);
+      let temp = w.split(/\,+/).map(Number);
       for (let i = 0; i < temp.length; i++) {
         if (inorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
