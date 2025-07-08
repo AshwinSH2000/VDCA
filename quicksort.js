@@ -13,7 +13,6 @@ document.getElementById("conquerButton").disabled = true;
 
 
 function inputNumbers() {
-    document.getElementById("tooltip").classList.add("hidden");
     document.getElementById("divideButton").disabled = false;
     document.getElementById("solveButton").disabled = false;
     const item = document.getElementById('array_number').value.trim();
@@ -61,7 +60,11 @@ function inputNumbers() {
         alert("Enter a number!");
     }
     document.getElementById('array_number').value = '';
-    showTooltip(document.getElementById("my-button"), "You can enter more numbers or click on Divide");
+
+    showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 5000);
+
+    showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 5000);
+    showDynamicTooltip(document.getElementById('solveButton'), "Solve displays final sorted solution for the current array", "top-right", 5000);
 
 }
 
@@ -275,14 +278,15 @@ function divide2() {
 
     level++;
 
-    console.log("----------------------------------------------");
-
     //the below code is to check if divide needs to be called again or not. 
     //I still have the code at the top... Now I dont think that is necessary anymore. Will remove after some testing. 
     if (level === arrayList.length - 1) {
         console.log("reached max levels...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
+        if (solveMode === false)
+            showDynamicTooltip(document.getElementById('solveButton'), "Clicking on Solve shows the solution for the last partition created", "top-right", 5000);
+
         // document.getElementById("conquerButton").disabled = true;
         return;
     }
@@ -290,6 +294,8 @@ function divide2() {
         console.log("array is sorted...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
+        if (solveMode === false)
+            showDynamicTooltip(document.getElementById('solveButton'), "Clicking on Solve shows the solution for the last partition created", "top-right", 5000);
         // document.getElementById("conquerButton").disabled = true;
         return;
     }
@@ -657,56 +663,93 @@ function solve1() {
     }
     document.getElementById("solveButton").disabled = true;
     solveMode = false;
-}
-
-
-const closeBtn = document.getElementById("tooltip-close");
-let tooltipTimeout = null;  // this si global reference to the tool tip timer
-
-// Show tooltip near button
-function showTooltip(targetElement, message, arrowDirection) {
-
-    const tooltip = document.getElementById("tooltip");
-    const target = document.getElementById("array_number");
-    const tooltipText = document.getElementById("tooltip-text");
-    const arrow = tooltip.querySelector(".tooltip-arrow");
-    const rect = target.getBoundingClientRect();
-
-    if (tooltipTimeout) {
-        clearTimeout(tooltipTimeout);
-        tooltipTimeout = null;
+    if (level >= 0) {
+        showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 5000);
+        console.log("Level is kikkilalakii", level);
     }
 
+}
+
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
+    const tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+
+    const tooltipText = document.createElement("div");
     tooltipText.textContent = message;
-    // tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
-    // tooltip.style.left = `${rect.left + window.scrollX + 90}px`;
-    tooltip.style.top = `${rect.bottom - 40}px`;
-    tooltip.style.left = `${rect.right + 30}px`;
-    tooltip.classList.remove("hidden");
+    tooltip.appendChild(tooltipText);
+
+    const closeBtn = document.createElement("span");
+    closeBtn.textContent = "✕";
+    closeBtn.classList.add("close-btn");
+    tooltip.appendChild(closeBtn);
+
+    const arrow = document.createElement("div");
+    arrow.classList.add("tooltip-arrow");
+    tooltip.appendChild(arrow);
+
+    document.body.appendChild(tooltip);
+
+    // Positioning
+    const rect = targetElement.getBoundingClientRect();
+    const scrollTop = window.scrollY;
+    const scrollLeft = window.scrollX;
+
+
+
+    // Adjust based on direction
     if (arrowDirection === "left") {
-        // arrow.style.top = "20px";
-        // arrow.style.left = "-10px";
-        // arrow.style.borderTop = "10px solid transparent";
-        // arrow.style.borderBottom = "10px solid transparent";
-        // arrow.style.borderRight = "10px solid #fefefe";
-        // arrow.style.borderLeft = "";
-    } else if (arrowDirection === "top") {
-        // Update styling for top arrow (you can add more directions)
+        tooltip.style.top = `${rect.top + scrollTop - 10}px`;
+        tooltip.style.left = `${rect.right + scrollLeft + 10}px`;
+
+        arrow.style.top = "10px";
+        arrow.style.left = "-10px";
+        arrow.style.borderTop = "10px solid transparent";
+        arrow.style.borderBottom = "10px solid transparent";
+        arrow.style.borderRight = "10px solid #fefefe";
     }
-    // Auto-dismiss after 10 seconds
-    tooltipTimeout = setTimeout(() => {
-        tooltip.classList.add("hidden");
-        tooltipTimeout = null;
-    }, 10000);  // 10 seconds
+    if (arrowDirection === "top-right") {
+        tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 20}px`;
+
+        arrow.style.top = "-10px";
+        arrow.style.left = "30px";
+
+        arrow.style.borderBottom = "10px solid #fefefe";
+        arrow.style.borderLeft = "10px solid transparent";
+        arrow.style.borderRight = "10px solid transparent";
+    }
+    if (arrowDirection === "top-left") {
+        tooltip.style.top = `${rect.top + scrollTop + 40}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 100}px`;
+
+        arrow.style.top = "-10px";
+        arrow.style.left = "120px";
+
+        arrow.style.borderBottom = "10px solid #fefefe";
+        arrow.style.borderLeft = "10px solid transparent";
+        arrow.style.borderRight = "10px solid transparent";
+    }
+    // More directions can be added here...
+
+    // Auto remove
+    const timeout = setTimeout(() => {
+        tooltip.remove();
+    }, duration);
+
+    // Manual close
+    closeBtn.addEventListener("click", () => {
+        clearTimeout(timeout);
+        tooltip.remove();
+    });
 }
 
-// Close manually
-closeBtn.addEventListener("click", () => {
-    tooltip.classList.add("hidden");
+window.addEventListener("load", () => {
+
+    showDynamicTooltip(document.getElementById("array_number"), "Enter comma or space separated numbers and click Insert.", "left");
+
+
 });
 
-// Show tooltip on page load
-window.addEventListener("load", showTooltip(document.getElementById("my-button"), "Enter comma or space separated numbers and click Insert."));
 
 
 document.getElementById('addButton').addEventListener('click', inputNumbers);
