@@ -1294,6 +1294,9 @@ function solve() {
   document.getElementById("solveButton3").disabled = true;
   if (level >= 0) {
     //this means it was not called at the very beginning...called after some levels of divide() was done
+
+    //befpre this i need to remove the old solvebutton that is causing two tooltips to be displayed simultaneously. 
+    removeToolTip(document.getElementById("solveButton3"));
     showDynamicTooltip(document.getElementById('conquerButton3'), "Clicking on conquer continues building the tree from this point", "top-right", 10000);
     document.getElementById("conquerButton3").disabled = false;
   }
@@ -1305,15 +1308,24 @@ function resizeRightHalfDiv() {
   canvas.height = window.innerHeight;
 }
 
-
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
-
+function removeToolTip(targetElement) {
   if (activeTooltips.has(targetElement)) {
     const old = activeTooltips.get(targetElement);
     clearTimeout(old.timer); // if you store timer too
     old.element.remove();
     activeTooltips.delete(targetElement);
   }
+}
+
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
+
+  // if (activeTooltips.has(targetElement)) {
+  //   const old = activeTooltips.get(targetElement);
+  //   clearTimeout(old.timer); // if you store timer too
+  //   old.element.remove();
+  //   activeTooltips.delete(targetElement);
+  // }
+  removeToolTip(targetElement);
 
   const tooltip = document.createElement("div");
   tooltip.classList.add("tooltip");
@@ -1415,13 +1427,26 @@ window.addEventListener("load", () => {
   showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
 });
 
-
+document.getElementById("togglePanelBtn").addEventListener("click", () => {
+  document.getElementById("sidePanel").classList.toggle("open");
+});
 document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
 document.getElementById("addButton3").addEventListener("click", addInorder);
 document.getElementById("deleteButton3").addEventListener("click", deleteInorder);
 document.getElementById("divideButton3").addEventListener("click", divide5);
-document.getElementById("conquerButton3").addEventListener("click", mergeTree);
+document.getElementById("conquerButton3").addEventListener("click", () => {
+  //i need to remove solve's tooltips
+  console.log("NOKIA PRE");
+  if (activeTooltips.has(document.getElementById("solveButton3"))) {
+    console.log("NOKIA");
+    const old = activeTooltips.get(document.getElementById('solveButton3'));
+    clearTimeout(old.timer); // if you store timer too
+    old.element.remove();
+    activeTooltips.delete(document.getElementById('solveButton3'));
+  }
+  mergeTree();
+});
 document.getElementById("resetButton3").addEventListener('click', reset);
 document.getElementById("solveButton3").addEventListener('click', solve);
 window.addEventListener('resize', () => {

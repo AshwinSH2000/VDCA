@@ -10,12 +10,17 @@
 </head>
 
 <body>
+    <div id="sidePanel" class="side-panel closed">
+        <button id="togglePanelBtn">☰</button>
+        <div class="panel-content">
+            <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
+            <button onclick="window.location.href='quicksort.html';">Quick Sort</button>
+            <button onclick="window.location.href='convexhull.html';">Convex Hull</button>
+            <!-- Add more navigation buttons here -->
+        </div>
+    </div>
     <h1>Visualising Divide and Conquer Algorithms</h1>
     <h4>Binary Tree</h4>
-    <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
-    <button onclick="window.location.href='quicksort.html';">Quick Sort</button>
-    <button onclick="window.location.href='convexhull.html';">Convex Hull</button>
-    <br>
     <form id="form_for_array_input" action="#">
         <br>
         <label for="inorder" id="inorderLabel">Inorder :</label>

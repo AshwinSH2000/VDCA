@@ -1,4 +1,246 @@
-//alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
+body {
+  background-color: rgb(255, 184, 113);
+  text-align: center;
+}
+button {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+	margin: 5px 5px 5px 5px;
+	cursor: pointer;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+}
+h1 {
+  /* margin-top: 5%; */
+  color: darkblue;
+  /* margin-bottom: 1%; */
+}
+h6 {
+  color: blue;
+}
+
+h3{
+  color: darkslategray;
+  /* margin-top: 1%; */
+}
+
+/* prefix fullstop . means class level  */
+/* prefix hashtag # means id level  */
+/* no prefix means component level  */
+
+/* 
+.bar {
+  width: 30px;
+  background-color: rgb(66, 66, 66);
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-family: monospace;
+  align-items: center;
+  border-radius: 5px;
+} */
+
+.bar-container {
+  display: flex;
+  align-items: flex-end;    /* center = in each container, the bars will be center aligned wrt their height (y axis) */
+  /* so we prefer flex-end where each bar will be resting on its bottom. they wont be dangling like center */
+  gap: 5px;
+  margin-top: 10px;
+  height: 100px;
+  overflow-x: auto;       /* Enables horizontal scrolling */
+  white-space: nowrap;    /* Prevents bars from wrapping */
+  justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
+}
+
+.bar {
+  width: 30px;
+  min-width: 30px;        /* Prevents bars from shrinking */
+  max-width: 30px;        /* Prevents bars from growing */
+  background-color: rgb(66, 66, 66);
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-family: monospace;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center; /* x axis alignment */
+  align-items: flex-end; /* y axis alignment */
+}
+
+
+.pivot-level-0 {
+  background-color: #5d4fff;
+}
+
+.pivot-level-1 {
+  background-color: #a64b00;
+}
+
+.pivot-level-2 {
+  background-color: #ff0000;
+}
+
+.pivot-level-3 {
+  background-color: #007c1d;
+}
+
+.pivot-level-4 {
+  background-color: #92a200;
+}
+
+.pivot-level-5 {
+  background-color: #9300b1;
+}
+.pivot-level-6 {
+  background-color: #ff7402;
+}
+
+.gap-div {
+  width: 40px;
+}
+
+/* Base styles */
+body {
+  font-family: sans-serif;
+}
+
+/* for dynamic prompts... in main there is static prompts.  */
+.tooltip {
+  position: absolute;
+  background: rgba(254, 254, 254, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 1000;
+  max-width: 200px;
+  font-size: 14px;
+  animation: fadeIn 0.5s ease-out;
+
+}
+
+.tooltip-arrow {
+  opacity: 80%;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tooltip .close-btn {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+}
+
+#inputLabel{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #333;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 15px;
+  position: absolute;
+  top: 40px;  /* or left/right etc. */
+  left: 150%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 1.5s;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="quicksort.css">
+  <link rel="icon" href="vdca_icon.webp">
+  <title>Quick Sort</title>
+</head>
+
+<body>
+  <h1>Visualising Divide and Conquer Algorithms </h1>
+  <!-- <br> -->
+  <h3>QuickSort</h3>
+  <!-- <h6>Coming soon! Stay tuned :)</h6> -->
+  <button onclick="window.location.href='main.html';" id="homePageButton">Home Page</button>
+  <button onclick="window.location.href='binarytree.html';" id="useCase2Button">Binary Tree</button>
+  <button onclick="window.location.href='convexhull.html';" id="useCase3Button">Convex Hull</button>
+  <br>
+  <br>
+  <form id="form_for_input" action="#">
+    <label for="array_number" id="inputLabel">Enter Number: </label>
+    <input type="string" id="array_number" name="array_number" min="0" max="1000">
+    <br>
+    <button type="button" id="addButton" title="To input the numbers entered in the textbox">Insert</button>
+    <button type="button" id="deleteButton">Delete</button>
+    <br>
+    <button type="button" id="divideButton">Divide</button>
+    <button type="button" id="conquerButton">Conquer</button>
+    <!-- <br> -->
+    <button type="button" id="solveButton">Solve</button>
+
+    <div class="tooltip-wrapper">
+      <button type="button" id="resetButton">Reset</button>
+      <div class="tooltip-text">This will reset everything</div>
+    </div>
+
+    <br>
+    <br>
+
+    <!-- old approach -->
+    <div id="bar-container" class="bar-container"></div>
+    <div id="bar-container2" class="bar-container"></div>
+    <div id="bar-container3" class="bar-container"></div>
+    <div id="bar-container4" class="bar-container"></div>
+    <div id="bar-container5" class="bar-container"></div>
+    <div id="bar-container6" class="bar-container"></div>
+    <div id="bar-container7" class="bar-container"></div>
+    <div id="bar-container8" class="bar-container"></div>
+
+
+
+  </form>
+  <script src="quicksort.js"></script>
+</body>
+
+</html>
+
+<!--  -->//alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
 
 let arrayList = [];
 let pivots = [];
@@ -798,9 +1040,7 @@ function removeAllToolTips() {
     }
 }
 
-document.getElementById("togglePanelBtn").addEventListener("click", () => {
-    document.getElementById("sidePanel").classList.toggle("open");
-});
+
 document.getElementById('addButton').addEventListener('click', inputNumbers);
 document.getElementById('deleteButton').addEventListener('click', deleteNumbers);
 document.getElementById('divideButton').addEventListener('click', divide2);

@@ -272,3 +272,41 @@ button:disabled {
 	from { opacity: 0; transform: translateY(-15px); }
 	to   { opacity: 1; transform: translateY(0); }
   }
+
+  #sidePanel {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 180px;
+	background-color: #f8f8f8;
+	border-right: 1px solid #ccc;
+	transform: translateX(-180px);
+	transition: transform 0.3s ease-in-out;
+	z-index: 2000;
+	padding-top: 10px;
+  }
+  #sidePanel.open {
+	transform: translateX(0);
+  }
+  
+  #sidePanel .panel-content {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+  }
+  
+  #togglePanelBtn {
+	position: absolute;
+	top: 10px;
+	right: -40px;
+	background-color: darkblue;
+	color: white;
+	border: none;
+	border-radius: 0 5px 5px 0;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: 18px;
+	z-index: 2001;
+  }

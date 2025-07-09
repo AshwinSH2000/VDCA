@@ -1591,4 +1591,6 @@ document.getElementById('solveButton2').addEventListener('click', () => {
     solveCoordinates();
 });
 // document.getElementById('conquerButton2').addEventListener('click', compareEndPoints);
-
+document.getElementById("togglePanelBtn").addEventListener("click", () => {
+    document.getElementById("sidePanel").classList.toggle("open");
+});
