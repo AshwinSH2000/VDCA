@@ -306,6 +306,7 @@ function divide2() {
             showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
 
         // document.getElementById("conquerButton").disabled = true;
+        showToast("Divide phase complete", "info");
         return;
     }
     if (pivots.length > arrayList.length) {
@@ -315,6 +316,7 @@ function divide2() {
         if (solveMode === false)
             showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
         // document.getElementById("conquerButton").disabled = true;
+        showToast("Divide phase complete", "info");
         return;
     }
 }
@@ -620,13 +622,18 @@ function resetQuickSort() {
     console.log("Reset the interface. Starting fresh!");
 }
 
-function conquer() {
+async function conquer() {
 
     document.getElementById('solveButton').disabled = true;
     console.log("level is", level);
     if (level <= 0) {
         console.log("All partitions conquered. They array is sorted. ");
         document.getElementById('conquerButton').disabled = true;
+        showToast("Sorted successfully!", "success");
+        // await sleep(1000);
+        // showToast("Please enter numbers!", "error");
+        // await sleep(1000);   //this cased some async issues when testing. it made the normal solve mode go into infinite loop.
+
         // document.getElementById('solveButton').disabled = true;
         // return;
     }
@@ -797,6 +804,73 @@ function removeAllToolTips() {
         activeTooltips.delete(document.getElementById('divideButton'));
     }
 }
+
+const toast = document.getElementById("toast");
+const toastLogModal = document.getElementById("toastLogModal");
+const toastLogList = document.getElementById("toastLogList");
+let toastTimer = null;
+let currentToastType = "info";
+let currentToastMessage = "";
+
+// Show a toast and log it
+function showToast(message, type = "info") {
+    currentToastType = type;
+    currentToastMessage = message;
+    toast.textContent = message;
+    toast.className = `toast ${type}`;
+    toast.classList.remove("hidden");
+
+    //reset peek stack after it has been expanded and colsed
+    toast.innerHTML = `<div>${message}</div>`;
+    const peeks = toastLogList.querySelectorAll("li");
+    const maxPeeks = 2;
+    for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
+        const peek = document.createElement("div");
+        peek.className = "toast-peek";
+        peek.textContent = peeks[i].textContent;
+        toast.appendChild(peek);
+    }
+
+    // Add to log
+    const entry = document.createElement("li");
+    entry.textContent = `[${type.toUpperCase()}] ${message}`;
+    toastLogList.prepend(entry);
+
+    // Auto-dismiss after 10s
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 10000);
+}
+
+// Expand log on toast click
+toast.addEventListener("click", () => {
+    toast.classList.add("hidden");
+    toastLogModal.classList.remove("hidden");
+});
+
+//close log from the main view but then still keep it until the timer ends
+function closeToastLog() {
+    toastLogModal.classList.add("hidden");
+
+
+    toast.textContent = currentToastMessage;
+    toast.className = `toast ${currentToastType}`;
+    toast.classList.remove("hidden");
+
+    // rebuild peek stack. since the function just calls for each toast build, it needs to be rebuilt again!
+    toast.innerHTML = `<div>${currentToastMessage}</div>`;
+    const peeks = toastLogList.querySelectorAll("li");
+    const maxPeeks = 2;
+    for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
+        const peek = document.createElement("div");
+        peek.className = "toast-peek";
+        peek.textContent = peeks[i].textContent;
+        toast.appendChild(peek);
+    }
+}
+
+
 
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
     document.getElementById("sidePanel").classList.toggle("open");
