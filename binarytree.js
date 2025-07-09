@@ -389,6 +389,7 @@ function divide5() {
     return;
   }
 
+  let rootsForToast = [];
   if (level === 0) {
     limits = [-1, inorder.length];
     //in this level, I need to find 2^0 = 1 root
@@ -406,8 +407,11 @@ function divide5() {
 
     console.log("At the end of level 0:", nodes);
     console.log("limits is", limits);
-    if (!solveMode)
+    if (!solveMode) {
+      showToast(`${preorder[0]} is the root of the tree`, "info");
       vizDivideBT();
+
+    }
     level++;
     return;
   } else {
@@ -440,7 +444,6 @@ function divide5() {
 
       }
 
-      //did you get it?.....yassss thisis working
 
       let returnedRoot = doVirtualLevel0(newinorder, newpreorder, level);
       console.log("returned root is", returnedRoot);
@@ -452,7 +455,7 @@ function divide5() {
           nodes.push(returnedRoot);
           const newNode = new treeNode(returnedRoot.value, returnedRoot.level);
           treeNodes.push(newNode);
-
+          rootsForToast.push(returnedRoot.value);
         }
         else
           console.log("repetitive root. hence not pushing");
@@ -468,8 +471,11 @@ function divide5() {
     console.log("The class object is", treeNodes);
     limits.sort((a, b) => a - b);
     console.log("limits is", limits);
-    if (!solveMode)
+    if (!solveMode) {
+      showToast(`${rootsForToast} are the roots in level ${level}`);
       vizDivideBT();
+    }
+
     level++;
   }
 
@@ -1426,6 +1432,77 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 window.addEventListener("load", () => {
   showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
 });
+
+
+
+
+const toast = document.getElementById("toast");
+const toastLogModal = document.getElementById("toastLogModal");
+const toastLogList = document.getElementById("toastLogList");
+let toastTimer = null;
+let currentToastType = "info";
+let currentToastMessage = "";
+const bell = document.getElementById("notificationBell");
+
+
+// Open log when bell is clicked
+bell.addEventListener("click", () => {
+  toastLogModal.classList.remove("hidden");
+  bell.classList.remove("new"); // remove red dot
+
+});
+
+// Show a toast and log it
+function showToast(message, type = "info") {
+  console.log("blackberry");
+  currentToastType = type;
+  currentToastMessage = message;
+  toast.textContent = message;
+  toast.className = `toast ${type}`;
+  toast.classList.remove("hidden");
+
+  //reset peek stack after it has been expanded and colsed
+  toast.innerHTML = `<div>${message}</div>`;
+  const peeks = toastLogList.querySelectorAll("li");
+  const maxPeeks = 0;
+  for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
+    const peek = document.createElement("div");
+    peek.className = "toast-peek";
+    peek.textContent = peeks[i].textContent;
+    toast.appendChild(peek);
+  }
+
+  // Add to log
+  const entry = document.createElement("li");
+  entry.textContent = `[${type.toUpperCase()}] ${message}`;
+  toastLogList.prepend(entry);
+
+  // Auto-dismiss after 10s
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.add("hidden");
+    bell.classList.add("new");
+
+  }, 2000);
+}
+
+// Expand log on toast click
+toast.addEventListener("click", () => {
+  toast.classList.add("hidden");
+  toastLogModal.classList.remove("hidden");
+  bell.classList.remove("new");
+});
+
+
+
+//close log from the main view but then still keep it until the timer ends
+function closeToastLog() {
+  toastLogModal.classList.add("hidden");
+}
+
+
+
+
 
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
   document.getElementById("sidePanel").classList.toggle("open");

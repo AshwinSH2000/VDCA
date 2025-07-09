@@ -26,11 +26,8 @@
   <!-- <br> -->
   <form id="form_for_input2" action="#">
 
-    <br>
-
     <!-- <label for="coordinates2">Enter the coordinates (between 0 and 10) :</label> -->
     <!-- <input type="string" id="coordinates2" name="coordinates2" min="0" max="20"> -->
-    <br>
     <label for="finalans" id="finalans"></label>
     <!-- <label for="finalans2" id="finalans2"></label> -->
 
@@ -155,6 +152,26 @@
         Points</button>
     </div> -->
   <h1 id="finalans2">The convex hull is...</h1>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- this one is for the modal type logs..something i had seen on apple devices. -->
+  <div id="toastLogModal" class="toast-log-modal hidden">
+    <div class="toast-log-content">
+      <h3>Notification Log</h3>
+      <ul id="toastLogList"></ul>
+      <button onclick="closeToastLog()">Close</button>
+    </div>
+  </div>
+
+  <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
+  <div id="notificationBell" title="View notifications"
+    style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; top: 120px; right: 20px;">
+    <button type="button" id="logsButton" class="logsButton">Logs</button>
+  </div>
+  <!--🔔-->
+
+
 
   <script src="convexhull.js"></script>
 </body>

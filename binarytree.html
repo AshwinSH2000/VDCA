@@ -20,9 +20,8 @@
         </div>
     </div>
     <h1>Visualising Divide and Conquer Algorithms</h1>
-    <h4>Binary Tree</h4>
+    <h3>Binary Tree</h3>
     <form id="form_for_array_input" action="#">
-        <br>
         <label for="inorder" id="inorderLabel">Inorder :</label>
         <input type="string" id="inorder" min="-1000" max="1000">
         <!-- <br> -->
@@ -104,6 +103,23 @@
 
         </div>
     </div>
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- this one is for the modal type logs..something i had seen on apple devices. -->
+    <div id="toastLogModal" class="toast-log-modal hidden">
+        <div class="toast-log-content">
+            <h3>Notification Log</h3>
+            <ul id="toastLogList"></ul>
+            <button onclick="closeToastLog()">Close</button>
+        </div>
+    </div>
+
+    <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
+    <div id="notificationBell" title="View notifications"
+        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; top: 120px; right: 20px;">
+        <button type="button" id="logsButton" class="logsButton">Logs</button>
+    </div>
+    <!--🔔-->
     <script src="binarytree.js"></script>
 </body>
 

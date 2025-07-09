@@ -279,3 +279,46 @@ body {
   color: #f1f1f1;
   z-index: 1;
 }
+
+#notificationBell {
+  position: fixed;
+  top: 12px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 3001;
+}
+
+#notificationBell::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  display: none;
+}
+
+#notificationBell.new::after {
+  display: block;
+}
+
+#logsButton {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	margin: 5px 5px 5px 5px;
+	cursor: pointer;
+  border-radius: 15px;
+  padding: 5px 20px 5px 20px;
+}
+
+

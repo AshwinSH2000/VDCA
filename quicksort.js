@@ -72,7 +72,7 @@ async function inputNumbers() {
 
     if (inputCounter === 0) {
         showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 10000);
-        await sleep(2000);
+        await sleep(1000);
     }
     if (inputCounter <= 2) {
         showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 10000);
@@ -187,6 +187,7 @@ function divide2() {
     let noOfPivots = Math.pow(2, level);
     let counter = 0;
 
+    let pivotsForToast = [];
     while (counter < Math.min(noOfPivots, arrayList.length + 1)) {       //is +1 necessary?
 
         if (level == 0) {
@@ -238,6 +239,7 @@ function divide2() {
 
             //call partition
             tempPos = partition(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1, tempPos);
+            pivotsForToast.push(tempPivot);
 
             //store the position of the pivot for next rounds
             pivots.push({ position: tempPos, pivot: tempPivot, level: level });
@@ -248,13 +250,13 @@ function divide2() {
             console.log("array after 1 partition is " + arrayList);
             console.log("the pivots list is (only positions): ", pivots);
 
+
         }
         else {
             if (pivots[counter].position === arrayList.length && pivots[counter].pivot === -1) {
                 //this if case it to check if... in this level, is the counter accessing pivots 
                 //beyond what it needs to access?
                 //there can be pivots beyond this pivot but its for next level only. 
-                console.log("wait what happened?");
                 break;
             }
             console.log("THE VALUE OF COUNTER IS " + counter);
@@ -275,11 +277,21 @@ function divide2() {
             console.log("array after 1 partition is ", arrayList);
             console.log("the pivots list is (only positions): ", pivots);
             console.log("---");
+            pivotsForToast.push(tempPivot);
+            console.log("NOKIA pushed", tempPivot);
+
         }
         counter++;
 
     }
+    console.log("NOKIA -----------------");
     console.log("The array is ", arrayList);
+    if (pivotsForToast.length === 1) {
+        showToast(`${pivotsForToast} is the pivot chosen at level ${level}`);
+    } else {
+        showToast(`${pivotsForToast} are the pivots chosen at level ${level}`, "info");
+    }
+
     pivots.sort(((a, b) => a.position - b.position));
     console.log("Sorted pivot is ", pivots);
 
@@ -811,9 +823,19 @@ const toastLogList = document.getElementById("toastLogList");
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
+const bell = document.getElementById("notificationBell");
+
+
+// Open log when bell is clicked
+bell.addEventListener("click", () => {
+    toastLogModal.classList.remove("hidden");
+    bell.classList.remove("new"); // remove red dot
+
+});
 
 // Show a toast and log it
 function showToast(message, type = "info") {
+
     currentToastType = type;
     currentToastMessage = message;
     toast.textContent = message;
@@ -823,7 +845,7 @@ function showToast(message, type = "info") {
     //reset peek stack after it has been expanded and colsed
     toast.innerHTML = `<div>${message}</div>`;
     const peeks = toastLogList.querySelectorAll("li");
-    const maxPeeks = 2;
+    const maxPeeks = 0;
     for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
         const peek = document.createElement("div");
         peek.className = "toast-peek";
@@ -840,35 +862,41 @@ function showToast(message, type = "info") {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
         toast.classList.add("hidden");
-    }, 10000);
+        bell.classList.add("new");
+
+    }, 2000);
 }
 
 // Expand log on toast click
 toast.addEventListener("click", () => {
     toast.classList.add("hidden");
     toastLogModal.classList.remove("hidden");
+    bell.classList.remove("new");
 });
+
+
 
 //close log from the main view but then still keep it until the timer ends
 function closeToastLog() {
     toastLogModal.classList.add("hidden");
 
 
-    toast.textContent = currentToastMessage;
-    toast.className = `toast ${currentToastType}`;
-    toast.classList.remove("hidden");
+    // toast.textContent = currentToastMessage;
+    // toast.className = `toast ${currentToastType}`;
+    // toast.classList.remove("hidden");
 
     // rebuild peek stack. since the function just calls for each toast build, it needs to be rebuilt again!
-    toast.innerHTML = `<div>${currentToastMessage}</div>`;
-    const peeks = toastLogList.querySelectorAll("li");
-    const maxPeeks = 2;
-    for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
-        const peek = document.createElement("div");
-        peek.className = "toast-peek";
-        peek.textContent = peeks[i].textContent;
-        toast.appendChild(peek);
-    }
+    // toast.innerHTML = `<div>${currentToastMessage}</div>`;
+    // const peeks = toastLogList.querySelectorAll("li");
+    // const maxPeeks = 0; //0 means no peeks possible;it will just display the current log and nothing else. 
+    // for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
+    //     const peek = document.createElement("div");
+    //     peek.className = "toast-peek";
+    //     peek.textContent = peeks[i].textContent;
+    //     toast.appendChild(peek);
+    // }
 }
+
 
 
 

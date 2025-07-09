@@ -549,7 +549,7 @@ function conquerCoordinates() {
         // document.getElementById('finalans').value=Array(hulls[0].points);
         document.getElementById('finalans2').textContent = string_ans;
         document.getElementById("conquerButton2").disabled = true;
-
+        showToast("Final Convex Hull found!", "success");
     }
 
 }
@@ -1581,6 +1581,71 @@ function removeAllToolTips() {
         activeTooltips.delete(document.getElementById('divideButton2'));
     }
 }
+
+
+const toast = document.getElementById("toast");
+const toastLogModal = document.getElementById("toastLogModal");
+const toastLogList = document.getElementById("toastLogList");
+let toastTimer = null;
+let currentToastType = "info";
+let currentToastMessage = "";
+const bell = document.getElementById("notificationBell");
+
+
+// Open log when bell is clicked
+bell.addEventListener("click", () => {
+    toastLogModal.classList.remove("hidden");
+    bell.classList.remove("new"); // remove red dot
+
+});
+
+// Show a toast and log it
+function showToast(message, type = "info") {
+
+    currentToastType = type;
+    currentToastMessage = message;
+    toast.textContent = message;
+    toast.className = `toast ${type}`;
+    toast.classList.remove("hidden");
+
+    //reset peek stack after it has been expanded and colsed
+    toast.innerHTML = `<div>${message}</div>`;
+    const peeks = toastLogList.querySelectorAll("li");
+    const maxPeeks = 0;
+    for (let i = 0; i < Math.min(maxPeeks, peeks.length); i++) {
+        const peek = document.createElement("div");
+        peek.className = "toast-peek";
+        peek.textContent = peeks[i].textContent;
+        toast.appendChild(peek);
+    }
+
+    // Add to log
+    const entry = document.createElement("li");
+    entry.textContent = `[${type.toUpperCase()}] ${message}`;
+    toastLogList.prepend(entry);
+
+    // Auto-dismiss after 10s
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+        bell.classList.add("new");
+
+    }, 2000);
+}
+
+// Expand log on toast click
+toast.addEventListener("click", () => {
+    toast.classList.add("hidden");
+    toastLogModal.classList.remove("hidden");
+    bell.classList.remove("new");
+});
+
+//close log from the main view but then still keep it until the timer ends
+function closeToastLog() {
+    toastLogModal.classList.add("hidden");
+}
+
+
 // document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 // document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
 document.getElementById('divideButton2').addEventListener('click', divideCoordinates);
