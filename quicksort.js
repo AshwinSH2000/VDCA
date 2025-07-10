@@ -70,15 +70,15 @@ async function inputNumbers() {
     document.getElementById("solveButton").disabled = false;
     document.getElementById('array_number').value = '';
 
-    if (inputCounter === 0) {
-        showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 10000);
-        await sleep(1000);
-    }
-    if (inputCounter <= 2) {
-        showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 10000);
-        await sleep(1000);
-        showDynamicTooltip(document.getElementById('solveButton'), "Clicking Solve before Divide displays the final sorted array", "top-right", 10000);
-    }
+    // if (inputCounter === 0) {
+    //     showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 10000);
+    //     await sleep(1000);
+    // }
+    // if (inputCounter <= 2) {
+    //     showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 10000);
+    //     await sleep(1000);
+    //     showDynamicTooltip(document.getElementById('solveButton'), "Clicking Solve before Divide displays the final sorted array", "top-right", 10000);
+    // }
     inputCounter++;
 
 }
@@ -314,8 +314,8 @@ function divide2() {
         console.log("reached max levels...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
-        if (solveMode === false)
-            showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
+        // if (solveMode === false)
+        //     showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
 
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "info");
@@ -325,8 +325,8 @@ function divide2() {
         console.log("array is sorted...terminating");
         document.getElementById('divideButton').disabled = true;
         solveDivideFlag = true;
-        if (solveMode === false)
-            showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
+        // if (solveMode === false)
+        //     showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "info");
         return;
@@ -700,13 +700,13 @@ function solve1() {
     }
     document.getElementById("solveButton").disabled = true;
     solveMode = false;
-    if (level >= 0) {
-        showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 10000);
-    }
+    // if (level >= 0) {
+    //     showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 10000);
+    // }
 
 }
 
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
 
     if (activeTooltips.has(targetElement)) {
         const old = activeTooltips.get(targetElement);
@@ -778,22 +778,32 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     // Auto remove
     const timeout = setTimeout(() => {
         tooltip.remove();
+        removeToolTip(targetElement);
     }, duration);
 
     // Manual close
     closeBtn.addEventListener("click", () => {
         clearTimeout(timeout);
         tooltip.remove();
+        removeToolTip(targetElement);
+        console.log('i have clicked to close but am primting the active tool tips', activeTooltips);
     });
-
     activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
-
 }
 
-window.addEventListener("load", () => {
-    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers and click Insert.", "left");
-});
 
+// window.addEventListener("load", () => {
+//     showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers and click Insert.", "left");
+// });
+
+function removeToolTip(targetElement) {
+    if (activeTooltips.has(targetElement)) {
+        const old = activeTooltips.get(targetElement);
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(targetElement);
+    }
+}
 function removeAllToolTips() {
     if (activeTooltips.has(document.getElementById('solveButton'))) {
         const old = activeTooltips.get(document.getElementById('solveButton'));
@@ -823,7 +833,7 @@ const toastLogList = document.getElementById("toastLogList");
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
-const bell = document.getElementById("notificationBell");
+const bell = document.getElementById("logsButton");
 
 
 // Open log when bell is clicked
@@ -898,6 +908,73 @@ function closeToastLog() {
 }
 
 
+async function showTutorial() {
+    /*
+    logic: 
+    if activetool tips still has the above thing, then wait for 1 more secind. do it until 5 secinds are over. 
+    if active tool tips does not have it then end the sleep timer and move forward. 
+    */
+    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers here and click \'Insert\'", "left");
+    let sleepTimer = 0;
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("array_number"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("divideButton"), "\'Divide\' performs level-wise partitions", "top-left", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("divideButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \"Divide\" displays the final sorted array instantly", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \"Divide\" reveals solution for partitions processed so far", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('conquerButton'), "\"Conquer\" performs level-wise merge of the array", "top-right", 5000);
+    console.log("at hre end of tutorial, tool tips is", activeTooltips);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("conquerButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+}
 
 
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
@@ -914,3 +991,4 @@ document.getElementById('solveButton').addEventListener('click', () => {
     console.log("Activetooltips", activeTooltips);
     solve1();
 });
+document.getElementById('tutorialButton').addEventListener('click', showTutorial);
