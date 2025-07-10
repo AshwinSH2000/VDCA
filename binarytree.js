@@ -45,6 +45,8 @@ function addPreorder() {
     let singleNum = Number(w);
     if (w.includes(" ") && w.includes(",")) {
       alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      showToast("Separate the numbers with all space or all commas. Do not mix them.", "error");
+
       return;
     }
     else if (w.includes(" ") || !isNaN(singleNum)) {
@@ -62,7 +64,8 @@ function addPreorder() {
       }
     } else {
       //nonsense input
-      alert("Something fishy!");
+      alert("Separator must be either comma or space");
+      showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
     }
@@ -114,6 +117,7 @@ function addPreorder() {
 
   } else {
     alert("Enter the preorder traversal");
+    showToast("Enter the preorder traversal", "error");
   }
 }
 
@@ -131,7 +135,9 @@ function deletePreorder() {
         if (preorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present. Hence nothing to delete");
+          alert("Entered item not present.");
+          showToast("Entered item not present.", "error");
+
           return;
         }
       }
@@ -141,13 +147,15 @@ function deletePreorder() {
         if (preorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present. Hence nothing to delete");
+          alert("Entered item not present.");
+          showToast("Entered item not present.", "error");
           return;
         }
       }
     } else {
       //nonsense input
-      alert("Something fishy!");
+      alert("Separator must be either comma or space");
+      showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
     }
@@ -163,6 +171,7 @@ function deletePreorder() {
 
   } else {
     alert("Enter a preorder traversal to check and delete");
+    showToast("Enter a preorder traversal to check and delete", "error");
   }
 }
 
@@ -181,6 +190,7 @@ function addInorder() {
     // }
     if (w.includes(" ") && w.includes(",")) {
       alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      showToast("Separate the numbers with all space or all commas. Do not mix them.", "error");
       return;
     }
     else if (w.includes(",") || !isNaN(singleNum)) {
@@ -200,7 +210,8 @@ function addInorder() {
       //   console.log("temp is (space)", temp);
     } else {
       //nonsense input
-      alert("Something fishy!");
+      alert("Separator must be either comma or space");
+      showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
     }
@@ -210,6 +221,7 @@ function addInorder() {
     if (inorderIp && preorderIp) {
       if (!checkTree(inorder, preorder)) {
         alert("Tree cannot be constructed from the inputs given.");
+        showToast("Tree cannot be constructed from the inputs given.", "error");
         //rather than having this, you can instead put this code in reset and call that...
         //both work well but that would be better. 
         let container = document.getElementById("preorderContainerIP");
@@ -256,6 +268,7 @@ function addInorder() {
 
   } else {
     alert("Enter the inorder traversal");
+    showToast("Enter the inorder traversal", "error");
   }
 }
 
@@ -273,7 +286,8 @@ function deleteInorder() {
         if (inorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present. Hence nothing to delete");
+          alert("Entered item not present.");
+          showToast("Entered item not present.", "error");
           return;
         }
       }
@@ -283,13 +297,15 @@ function deleteInorder() {
         if (inorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present. Hence nothing to delete");
+          alert("Entered item not present.");
+          showToast("Entered item not present.", "error");
           return;
         }
       }
     } else {
       //nonsense input
-      alert("Something fishy!");
+      alert("Separator must be either comma or space");
+      showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
     }
@@ -305,6 +321,8 @@ function deleteInorder() {
 
   } else {
     alert("Enter an inorder traversal to check and delete");
+    showToast("Enter a inorder traversal to check and delete", "error");
+
   }
 }
 
