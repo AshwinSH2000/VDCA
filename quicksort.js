@@ -287,9 +287,9 @@ function divide2() {
     console.log("NOKIA -----------------");
     console.log("The array is ", arrayList);
     if (pivotsForToast.length === 1) {
-        showToast(`${pivotsForToast} is the pivot chosen at level ${level}`);
+        showToast(`${pivotsForToast} is the pivot chosen`);// at level ${level}`);
     } else {
-        showToast(`${pivotsForToast} are the pivots chosen at level ${level}`, "info");
+        showToast(`${pivotsForToast} are the pivots chosen`);// at level ${level}`, "info");
     }
 
     pivots.sort(((a, b) => a.position - b.position));
@@ -773,6 +773,17 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         arrow.style.borderLeft = "10px solid transparent";
         arrow.style.borderRight = "10px solid transparent";
     }
+    if (arrowDirection === "right") {
+        tooltip.style.top = `${rect.top + scrollTop - 20}px`;
+        tooltip.style.left = `${rect.left + scrollLeft - 240}px`;
+
+        arrow.style.top = "20px";
+        arrow.style.left = "220px";
+
+        arrow.style.borderTop = "10px solid transparent";
+        arrow.style.borderLeft = "10px solid #fefefe";
+        arrow.style.borderBottom = "10px solid transparent";
+    }
     // More directions can be added here...
 
     // Auto remove
@@ -786,7 +797,6 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         clearTimeout(timeout);
         tooltip.remove();
         removeToolTip(targetElement);
-        console.log('i have clicked to close but am primting the active tool tips', activeTooltips);
     });
     activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
 }
@@ -914,8 +924,12 @@ async function showTutorial() {
     if activetool tips still has the above thing, then wait for 1 more secind. do it until 5 secinds are over. 
     if active tool tips does not have it then end the sleep timer and move forward. 
     */
-    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers here and click \'Insert\'", "left");
     let sleepTimer = 0;
+
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers here and click \'Insert\'", "left");
+
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("array_number"))) {
             sleepTimer += 100;
@@ -925,6 +939,34 @@ async function showTutorial() {
             break;
         }
     }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("addButton"), "Inputs the numbers entered in above textbox", "right");
+
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("addButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("deleteButton"), "Searches and deletes the numbers entered in textbox above", "left");
+
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("deleteButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+
 
     sleepTimer = 0;
     showDynamicTooltip(document.getElementById("divideButton"), "\'Divide\' performs level-wise partitions", "top-left", 5000);
@@ -939,32 +981,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \"Divide\" displays the final sorted array instantly", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("solveButton"))) {
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \"Divide\" reveals solution for partitions processed so far", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("solveButton"))) {
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('conquerButton'), "\"Conquer\" performs level-wise merge of the array", "top-right", 5000);
-    console.log("at hre end of tutorial, tool tips is", activeTooltips);
+    showDynamicTooltip(document.getElementById('conquerButton'), "\'Conquer\' performs level-wise merge of the array", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton"))) {
             sleepTimer += 100;
@@ -974,6 +991,43 @@ async function showTutorial() {
             break;
         }
     }
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' displays the final sorted array instantly", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' reveals solution for partitions processed so far", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('resetButton'), "Resets the interface", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("resetButton"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+
 }
 
 
