@@ -81,8 +81,7 @@ function addPreorder() {
       document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
-      showDynamicTooltip(document.getElementById("divideButton3"), "Clicking on Divide performs level-wise divisions.", "top-left");
-      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
+
 
     }
 
@@ -223,8 +222,7 @@ function addInorder() {
       document.getElementById("addButton3").disabled = true;
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
-      showDynamicTooltip(document.getElementById("divideButton3"), "Clicking on Divide performs level-wise divisions.", "top-left");
-      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
+
 
     }
 
@@ -364,9 +362,9 @@ function checkTree(inorder, preorder) {
   }
 }
 
-////////////////////////////divide5////////////////////////////
+////////////////////////////divideTree////////////////////////////
 
-function divide5() {
+function divideTree() {
 
   //test code
   // let textttt = document.getElementById("treeContainer");
@@ -385,9 +383,8 @@ function divide5() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
-    if (solveMode === false)
-      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve generates the leaf nodes", "top-right");
-    return;
+    showToast("Divide phase complete", "info");
+
   }
 
   let rootsForToast = [];
@@ -492,8 +489,7 @@ function divide5() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
-    if (solveMode === false)
-      showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve generates the leaf nodes", "top-right", "10000");
+    showToast("Divide phase complete", "info");
     return;
   }
 }
@@ -593,6 +589,7 @@ function mergeTree() {
     console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
     document.getElementById("solveButton3").disabled = true;
+    showToast("Final tree constructed", "success");
     return;
   }
   if (level != maxLevel) {
@@ -601,10 +598,11 @@ function mergeTree() {
   level--;
   //decreasing the lvel because it was 1+maxLevel while coming out of divide part
   let levelNodes = treeNodes.filter(p => p.level === level);//.map(p => p.value);;
-  let posToDelete = 0;
+  let nodesForToast = [];
   for (let i = 0; i < levelNodes.length; i++) {
     console.log("------begin------")
     console.log("The nodes in this level are", levelNodes);
+    // nodesForToast.push()
 
     //find the corresponding treeNodes[i];
     let nodePos = treeNodes.findIndex(p => p.value === levelNodes[i].value);
@@ -614,31 +612,30 @@ function mergeTree() {
       //find and attach the actual node
       treeNodes[nodePos].left = treeNodes.filter(p => p.value === levelNodes[i].left);
 
-      //code to delete
-      // console.log("levelNodes[i].left...2",levelNodes[i].left);
-      // posToDelete = treeNodes.findIndex(p=>p.value===levelNodes[i].left);
-      // console.log("posToDelete is", posToDelete);
-      // if(posToDelete!==-1){
-      //   console.log("Delete happening...", posToDelete);
-      //   treeNodes.splice(posToDelete,1);
-      // }
-
     }
     if (levelNodes[i].right !== null) {
       //find and attach the actual node
       treeNodes[nodePos].right = treeNodes.filter(p => p.value === levelNodes[i].right);
 
-      //code to delete
-      // posToDelete = treeNodes.findIndex(p=>p.value === levelNodes[i].right);
-      // console.log("posToDelete is", posToDelete);
-      // if(posToDelete!==-1){
-      //   console.log("Delete happening...", posToDelete);
-      //   treeNodes.splice(posToDelete,1);
-      // }
     }
     console.log("the levelnodes afer updating are:", levelNodes);
     console.log("------end------")
   }
+  if (levelNodes[0].level === maxLevel - 1) {
+    if ([...levelNodes.map(p => p.value)].length === 1)
+      showToast(`${[...levelNodes.map(p => p.value)]} is the leaf node`, "info");
+    else
+      showToast(`${[...levelNodes.map(p => p.value)]} are the leaf nodes`, "info");
+  }
+  else {
+    console.log("GIONEE maxlvel is", maxLevel, "levelnode's level is", levelNodes[0].level);
+    if ([...levelNodes.map(p => p.value)].length === 1)
+      showToast(`${[...levelNodes.map(p => p.value)]} is connected to its child node(s)`, "info");
+    else
+      showToast(`${[...levelNodes.map(p => p.value)]} are connected to their child node(s)`, "info");
+  }
+
+
   vizConquerBT();
   if (level < 0) {
     console.log("The level value is", level);
@@ -646,6 +643,7 @@ function mergeTree() {
     console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
     document.getElementById("solveButton3").disabled = true;
+    showToast("Final tree constructed", "success");
     // level = 3;
     // while (level >= 0) {
     //   vizConquerBTFinalSoln();
@@ -1289,8 +1287,8 @@ function solve() {
   document.getElementById("conquerButton3").disabled = false;
   let calledLevel = level;
   while (!solveDivideFlag) {
-    divide5();
-    console.log("Called divide5 in solve");
+    divideTree();
+    console.log("Called divideTree in solve");
   }
   while (level >= calledLevel) {
     mergeTree();
@@ -1303,8 +1301,6 @@ function solve() {
     //this means it was not called at the very beginning...called after some levels of divide() was done
 
     //befpre this i need to remove the old solvebutton that is causing two tooltips to be displayed simultaneously. 
-    removeToolTip(document.getElementById("solveButton3"));
-    showDynamicTooltip(document.getElementById('conquerButton3'), "Clicking on conquer continues building the tree from this point", "top-right", 10000);
     document.getElementById("conquerButton3").disabled = false;
   }
 }
@@ -1324,7 +1320,7 @@ function removeToolTip(targetElement) {
   }
 }
 
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
 
   // if (activeTooltips.has(targetElement)) {
   //   const old = activeTooltips.get(targetElement);
@@ -1418,11 +1414,13 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   // Auto remove
   const timeout = setTimeout(() => {
     tooltip.remove();
+    removeToolTip(targetElement);
   }, duration);
 
   // Manual close
   closeBtn.addEventListener("click", () => {
     clearTimeout(timeout);
+    removeToolTip(targetElement);
     tooltip.remove();
   });
 
@@ -1430,9 +1428,9 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 
 }
 
-window.addEventListener("load", () => {
-  showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
-});
+// window.addEventListener("load", () => {
+//   showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
+// });
 
 
 
@@ -1443,7 +1441,8 @@ const toastLogList = document.getElementById("toastLogList");
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
-const bell = document.getElementById("notificationBell");
+const bell = document.getElementById("logsButton");
+
 
 
 // Open log when bell is clicked
@@ -1502,7 +1501,93 @@ function closeToastLog() {
 }
 
 
+async function showTutorial() {
+  let sleepTimer = 0;
 
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("addButton4"), "Inputs the traversals entered in respective text boxes", "top-left");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("addButton4"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("deleteButton4"), "Searches and deletes the numbers entered in the respective textboxes", "top-right");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("deleteButton4"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("divideButton3"), "Divide performs level-wise divisions.", "top-left");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("divideButton3"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById('conquerButton3'), "Conquer builds the tree level-wise from the partitions created", "top-right", 5000);
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("conquerButton3"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("solveButton3"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve at any other point generates the partial tree from already processed partitions", "top-right");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("solveButton3"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+
+  sleepTimer = 0;
+  showDynamicTooltip(document.getElementById("resetButton3"), "Resets the interface", "top-right", "5000");
+  while (sleepTimer <= 5000) {
+    if (activeTooltips.has(document.getElementById("resetButton3"))) {
+      sleepTimer += 100;
+      await sleep(100);
+    }
+    else {
+      break;
+    }
+  }
+}
 
 
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
@@ -1512,7 +1597,7 @@ document.getElementById("addButton4").addEventListener("click", addPreorder);
 document.getElementById("deleteButton4").addEventListener("click", deletePreorder);
 document.getElementById("addButton3").addEventListener("click", addInorder);
 document.getElementById("deleteButton3").addEventListener("click", deleteInorder);
-document.getElementById("divideButton3").addEventListener("click", divide5);
+document.getElementById("divideButton3").addEventListener("click", divideTree);
 document.getElementById("conquerButton3").addEventListener("click", () => {
   //i need to remove solve's tooltips
   console.log("NOKIA PRE");
@@ -1531,3 +1616,4 @@ window.addEventListener('resize', () => {
   if (conquerFlag === true)
     updateLines(); // or whatever function you use to draw lines
 });
+document.getElementById("tutorialButton").addEventListener('click', showTutorial);
