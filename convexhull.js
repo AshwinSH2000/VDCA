@@ -58,11 +58,11 @@ function inputCoordinates(inputStr) {
         alert('Enter a number');
     }
     //document.getElementById('coordinates2').value='';
-    if (inputToolTipFlag) {
-        showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
-        showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve before Divide displays the convex hull of all the selected points", "top-right");
-        inputToolTipFlag = false;
-    }
+    // if (inputToolTipFlag) {
+    //     showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
+    //     showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve before Divide displays the convex hull of all the selected points", "top-right");
+    //     inputToolTipFlag = false;
+    // }
 
 
 }
@@ -99,11 +99,11 @@ function deleteCoordinates(inputStr) {
 }
 let firstDivideFlag = true;
 function divideCoordinates() {
-    if (firstDivideFlag && !solveMode) {
-        showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve at any point will display the convex hulls of the current partition(s)", "top-right");
-        showDynamicTooltip(document.getElementById("divideButton2"), "Divide will continue splitting the points into smaller partitions", "top-left");
-        firstDivideFlag = false;
-    }
+    // if (firstDivideFlag && !solveMode) {
+    //     showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on Solve at any point will display the convex hulls of the current partition(s)", "top-right");
+    //     showDynamicTooltip(document.getElementById("divideButton2"), "Divide will continue splitting the points into smaller partitions", "top-left");
+    //     firstDivideFlag = false;
+    // }
 
 
 
@@ -1458,16 +1458,16 @@ async function solveCoordinates() {
         console.log("Called conquerCoordinates in solve");
     }
     document.getElementById("solveButton2").disabled = true;
-    if (level - 1 <= calledLevel) {
-        showDynamicTooltip(document.getElementById('conquerButton2'), "Clicking on conquer merges the hulls together", "top-right", 10000);
-    }
+    // if (level - 1 <= calledLevel) {
+    //     showDynamicTooltip(document.getElementById('conquerButton2'), "Clicking on conquer merges the hulls together", "top-right", 5000);
+    // }
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 10000) {
+function showDynamicTooltip(targetElement, message, arrowDirection = "left", duration = 5000) {
 
     if (activeTooltips.has(targetElement)) {
         const old = activeTooltips.get(targetElement);
@@ -1550,11 +1550,13 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     // Auto remove
     const timeout = setTimeout(() => {
         tooltip.remove();
+        removeToolTip(targetElement);
     }, duration);
 
     // Manual close
     closeBtn.addEventListener("click", () => {
         clearTimeout(timeout);
+        removeToolTip(targetElement);
         tooltip.remove();
     });
 
@@ -1562,9 +1564,97 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     console.log(activeTooltips);
 }
 
-window.addEventListener("load", () => {
+// window.addEventListener("load", () => {
+//     // showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
+//     showTutorial();
+// });
+
+function removeToolTip(targetElement) {
+    if (activeTooltips.has(targetElement)) {
+        const old = activeTooltips.get(targetElement);
+        clearTimeout(old.timer); // if you store timer too
+        old.element.remove();
+        activeTooltips.delete(targetElement);
+    }
+}
+
+async function showTutorial() {
+    let sleepTimer = 0;
+
+
+    sleepTimer = 0;
     showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
-});
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("chgrid"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("divideButton2"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('conquerButton2'), "\'Conquer\' calculates and merges the hulls of adjacent partitions together", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("conquerButton2"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' before \'Divide\' displays the final convex hull of all points", "top-right");
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton2"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' at any point later will display the convex hulls of the partition(s) created so far", "top-right");
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("solveButton2"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('resetButton2'), "Resets the interface", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+        if (activeTooltips.has(document.getElementById("resetButton2"))) {
+            sleepTimer += 100;
+            await sleep(100);
+        }
+        else {
+            break;
+        }
+    }
+
+}
 
 
 function removeAllToolTips() {
@@ -1589,7 +1679,7 @@ const toastLogList = document.getElementById("toastLogList");
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
-const bell = document.getElementById("notificationBell");
+const bell = document.getElementById("logsButton");
 
 
 // Open log when bell is clicked
@@ -1659,3 +1749,5 @@ document.getElementById('solveButton2').addEventListener('click', () => {
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
     document.getElementById("sidePanel").classList.toggle("open");
 });
+document.getElementById('tutorialButton').addEventListener('click', showTutorial);
+
