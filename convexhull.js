@@ -121,6 +121,7 @@ function divideCoordinates() {
         document.getElementById("conquerButton2").disabled = false;
         return;
     }
+    let partitionForToast = [];
     partitionAdded = false;
     if (level == 0) {
         // document.getElementById('addButton2').disabled=true;
@@ -169,6 +170,7 @@ function divideCoordinates() {
                 value: median,
                 level: level,
             });
+            partitionForToast.push(median);
             renderPartitionLines();
             partitionAdded = true;
             partitions.sort((a, b) => a - b);
@@ -249,6 +251,7 @@ function divideCoordinates() {
                     value: median,
                     level: level,
                 });
+                partitionForToast.push(median);
                 renderPartitionLines();
                 partitionAdded = true;
                 console.log("New partitions is", partitions);
@@ -261,9 +264,9 @@ function divideCoordinates() {
         level++;
     }
     // console.log("ACHU, partitions is ", partitions);
+
     console.log("At this level, checkforending is", checkForEnding());
     if (checkForEnding()) {
-        console.log("ITS TRUE YOU MFS!");
         if (partitionAdded === false) {
             console.log("All partitions are now terminal convex hulls. No further division needed. ");
             console.log("The final terminal CHs are", convexHulls);
@@ -273,10 +276,22 @@ function divideCoordinates() {
         }
         else {
             document.getElementById("divideButton2").disabled = true;
+            if (partitionForToast.length === 1)
+                showToast(`${partitionForToast} is the highlighted partition`);
+            else {
+                showToast(`${partitionForToast} are the highlighted partitions`);
+                console.log("this is just after toasting", partitionForToast);
+            }
             divideCoordinates();
         }
-
-
+    }
+    else {
+        if (partitionForToast.length === 1)
+            showToast(`${partitionForToast} is the highlighted partition`);
+        else {
+            showToast(`${partitionForToast} are the highlighted partitions`);
+            console.log("this is just after toasting", partitionForToast);
+        }
     }
 
     // if (partitionAdded === false) {
@@ -421,6 +436,7 @@ function findMedianPartition(coord, low, high) {
     return median;
 }
 function conquerCoordinates() {
+    let conquerForToast = [];
     conquerFlag = true;
     document.getElementById("solveButton2").disabled = true;
     //access convexHulls array and partitions array
@@ -527,12 +543,15 @@ function conquerCoordinates() {
     //   can i remove all the elements in partitionForRendering whose level=maxlevel? mostly yes
     let tempPos = 0;
     while (tempPos !== -1) {
+
         tempPos = partitionForRendering.findIndex((p) => p.level === maxLevel - 1);
         if (tempPos > -1) {
+            conquerForToast.push(partitionForRendering[tempPos].value);
             partitionForRendering.splice(tempPos, 1);
         }
     }
     renderTerminalHulls();
+    showToast(`Hulls across partitions ${conquerForToast} merged`, "info");
 
     // If only one hull left at level 0, done!
     if (hulls.length === 1 && hulls[0].level === 0) {
@@ -1445,6 +1464,7 @@ async function solveCoordinates() {
         console.log("Called divideCoordinates in solve");
         // await sleep(500);
     }
+    showToast("All the base-case convex hulls solved", "info");
     document.getElementById("conquerButton2").disabled = false;
     console.log("called level is", calledLevel);
     console.log("level - 1 is", level - 1);
