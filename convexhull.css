@@ -1,3 +1,4 @@
+/* convexhull.css */
 body {
     background-color: rgba(233, 157, 157, 0.949);
 	text-align: center;
@@ -5,6 +6,7 @@ body {
 }
 h1 {
     color: black;
+	padding-bottom: 0;
 }
 h4 {
     color: darkslateblue
@@ -189,11 +191,13 @@ button:disabled{
 	font-size: 24px;
 	cursor: pointer;
 	z-index: 3001;
+	display: flex;
+  	flex-direction: column;
   }
   
   #notificationBell::after {
 	content: "";
-	position: absolute;
+	position: relative;
 	top: 15px;
 	right: 52px;
 	width: 8px;
@@ -225,7 +229,7 @@ button:disabled{
 
   .toast {
 	position: fixed;
-	top: 10px;
+	top: 75px;
 	right: 20px;
 	padding: 12px 18px;
 	border-radius: 8px;

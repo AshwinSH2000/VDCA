@@ -1,3 +1,4 @@
+/* binarytree.css */
 body{
 	text-align: center;
     background-color: darkkhaki;
@@ -319,6 +320,8 @@ button:disabled {
 	font-size: 24px;
 	cursor: pointer;
 	z-index: 3001;
+	display: flex;
+  	flex-direction: column;
   }
   
   #notificationBell::after {
@@ -331,6 +334,7 @@ button:disabled {
 	background: red;
 	border-radius: 50%;
 	display: none;
+	
   }
   
   #notificationBell.new::after {
@@ -413,3 +417,18 @@ button:disabled {
 	z-index: 1;
   }
 	
+  #logsButton {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	margin: 5px 5px 5px 5px;
+	cursor: pointer;
+  border-radius: 15px;
+  padding: 5px 20px 5px 20px;
+}
