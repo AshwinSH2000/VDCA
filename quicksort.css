@@ -1,3 +1,4 @@
+/* quicksort.css */
 body {
   background-color: rgb(255, 184, 113);
   text-align: center;
@@ -299,8 +300,8 @@ body {
   width: 8px;
   height: 8px;
   background: red;
-  border-radius: 50%;
   display: none;
+  border-radius: 50%;
 }
 
 #notificationBell.new::after {

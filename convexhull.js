@@ -1,3 +1,4 @@
+//convexhull.js
 let coordinates = [];
 let partitions = [];
 let convexHulls = [];

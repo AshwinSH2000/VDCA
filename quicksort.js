@@ -1,4 +1,4 @@
-//alert("JavaScript is loaded!"); //this generates a popup as soon as the page is loaded
+// quicksort.js
 
 let arrayList = [];
 let pivots = [];
