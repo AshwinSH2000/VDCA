@@ -988,6 +988,8 @@ function resetConvexHull() {
     greenLines.innerHTML = "";
     yellowLines.innerHTML = "";
     cyanLines.innerHTML = "";
+
+    location.reload();
 }
 
 function reorderPolygonVertices(points) {
@@ -1292,6 +1294,7 @@ function renderTerminalHulls() {
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
+                greenLines.classList.add("greenline");
                 greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 

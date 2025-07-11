@@ -633,6 +633,7 @@ function resetQuickSort() {
     document.getElementById("bar-container").innerHTML = '';
     //console.clear();
     console.log("Reset the interface. Starting fresh!");
+    location.reload();
 }
 
 async function conquer() {

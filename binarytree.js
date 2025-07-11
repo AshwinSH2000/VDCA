@@ -689,6 +689,7 @@ function reset() {
   limits = [];
   console.clear();
   console.log("cleared the console. starting fresh");
+  location.reload();
 }
 let gapPrintedViz = 0;
 async function vizConquerBT() {
