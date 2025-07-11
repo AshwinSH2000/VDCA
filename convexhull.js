@@ -326,9 +326,23 @@ function checkForEnding() {
             //check for collinearity here. 
             let resultCollinearity = checkCollinear(partitionPoints, 0, partitionPoints.length - 1)
             if (resultCollinearity == false) {
+                //i am not sure why i added this line. 
+                //it doesnt matter if the points are collinear or not right? if there are more than 2, just return false. 
                 console.log("Non collinear points before the last partition");
                 return false
             }
+            else if (partitionPoints.every(p => p[0] === partitionPoints[0][0])) {
+                //this means they are collinear and are placed on the same x coordinate
+                //eat 5star, do nothing! 
+                console.log("collinear points but are on same x coord");
+
+            }
+            else {
+                //it means they are collinear but points are having different x coord values. 
+                console.log("collinear points but are on different x coord");
+                return false;
+            }
+            // return false;   //added this line after observing divide calls itself when there are >2 pts but are collinear. 
         }
     }
 
@@ -342,8 +356,21 @@ function checkForEnding() {
         //check for collinearity here. 
         let resultCollinearity = checkCollinear(partitionPoints, 0, partitionPoints.length - 1)
         if (resultCollinearity == false) {
+            //same as above, not sure why i added this if case. 
             console.log("Non collinear points after the last partition");
             return false
+        }
+        else if (partitionPoints.every(p => p[0] === partitionPoints[0][0])) {
+            //i was checking of resultcollinearity was true but that was not at all needed as id the result of that function was true, then it would not return true, instrad it would retuen the collinear points..so that checkinf of resultCollinearity===true was wrongly placed. After removing it both here and in the upper if case it is working fine.. 
+            //the pts are collinear and are on same x-coord value
+            //do nothing
+            console.log("collinear points after last partition but are on same x coord");
+            ;
+        }
+        else {
+            //the pts are on collinear but different x-coord values
+            console.log("collinear points after last partition but on differnet x coord")
+            return false;
         }
     }
     return true;
