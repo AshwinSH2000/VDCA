@@ -19,6 +19,7 @@ let preOrderEntries = [];
 let maxLevel = -10;
 let conquerFlag = false;
 let activeTooltips = new Map();
+let tutorialState = false;
 resizeRightHalfDiv();
 
 
@@ -1526,6 +1527,10 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("addButton4"), "Inputs the traversals entered in respective text boxes", "top-left");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("addButton4"))) {
+      if (!tutorialState) {
+        removeToolTip(document.getElementById("addButton4"));
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1538,6 +1543,10 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("deleteButton4"), "Searches and deletes the numbers entered in the respective textboxes", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("deleteButton4"))) {
+      if (!tutorialState) {
+        removeToolTip(document.getElementById("deleteButton4"));
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1634,4 +1643,7 @@ window.addEventListener('resize', () => {
   if (conquerFlag === true)
     updateLines(); // or whatever function you use to draw lines
 });
-document.getElementById("tutorialButton").addEventListener('click', showTutorial);
+document.getElementById("tutorialButton").addEventListener('click', () => {
+  tutorialState = !tutorialState;
+  showTutorial();
+});

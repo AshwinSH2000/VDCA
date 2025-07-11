@@ -8,6 +8,7 @@ let solveDivideFlag = false;
 let solveMode = false;
 const activeTooltips = new Map();
 let inputCounter = 0;
+let tutorialState = false;
 
 document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
@@ -919,6 +920,7 @@ function closeToastLog() {
 
 
 async function showTutorial() {
+
     /*
     logic: 
     if activetool tips still has the above thing, then wait for 1 more secind. do it until 5 secinds are over. 
@@ -932,6 +934,11 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("array_number"))) {
+            if (!tutorialState) {
+                removeToolTip(document.getElementById("array_number"));
+                return;
+            }
+
             sleepTimer += 100;
             await sleep(100);
         }
@@ -945,6 +952,11 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("addButton"))) {
+            if (!tutorialState) {
+                removeToolTip(document.getElementById("addButton"));
+                return;
+            }
+
             sleepTimer += 100;
             await sleep(100);
         }
@@ -958,6 +970,8 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("deleteButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -972,6 +986,8 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("divideButton"), "\'Divide\' performs level-wise partitions", "top-left", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -984,6 +1000,8 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('conquerButton'), "\'Conquer\' performs level-wise merge of the array", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -995,6 +1013,8 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' displays the final sorted array instantly", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1007,6 +1027,8 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' reveals solution for partitions processed so far", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1019,6 +1041,8 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('resetButton'), "Resets the interface", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("resetButton"))) {
+            if (!tutorialState)
+                return;
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1045,4 +1069,7 @@ document.getElementById('solveButton').addEventListener('click', () => {
     console.log("Activetooltips", activeTooltips);
     solve1();
 });
-document.getElementById('tutorialButton').addEventListener('click', showTutorial);
+document.getElementById('tutorialButton').addEventListener('click', () => {
+    tutorialState = !tutorialState;
+    showTutorial();
+});

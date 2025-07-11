@@ -15,6 +15,7 @@ let solveConquerFlag = false;
 let activeTooltips = new Map();
 let inputToolTipFlag = true;
 let solveMode = false;
+let tutorialState = false;
 document.getElementById("divideButton2").disabled = true;
 document.getElementById("conquerButton2").disabled = true;
 document.getElementById("solveButton2").disabled = true;
@@ -1607,6 +1608,10 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("chgrid"))) {
+            if (!tutorialState) {
+                removeToolTip(document.getElementById("chgrid"));
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1619,6 +1624,10 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton2"))) {
+            if (!tutorialState) {
+                removeToolTip(document.getElementById("divideButton2"));
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1770,5 +1779,8 @@ document.getElementById('solveButton2').addEventListener('click', () => {
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
     document.getElementById("sidePanel").classList.toggle("open");
 });
-document.getElementById('tutorialButton').addEventListener('click', showTutorial);
+document.getElementById('tutorialButton').addEventListener('click', () => {
+    tutorialState = !tutorialState;
+    showTutorial();
+});
 
