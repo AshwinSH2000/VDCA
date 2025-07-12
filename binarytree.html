@@ -20,32 +20,36 @@
             <!-- Add more navigation buttons here -->
         </div>
     </div>
-    <h1>Visualising Divide and Conquer Algorithms</h1>
-    <h3>Binary Tree</h3>
-    <form id="form_for_array_input" action="#">
-        <label for="inorder" id="inorderLabel">Inorder :</label>
-        <input type="string" id="inorder" min="-1000" max="1000">
-        <!-- <br> -->
-        <button type="button" id="addButton3">Insert</button>
-        <button type="button" id="deleteButton3">Delete</button>
-        <br>
-        <!-- <br> -->
-        <label for="preorder" id="preorderLabel">Preorder :</label>
-        <input type="string" id="preorder" min="-1000" max="1000">
-        <!-- <br> -->
-        <button type="button" id="addButton4">Insert</button>
-        <button type="button" id="deleteButton4">Delete</button>
-        <br>
-        <label id="binTreeRes"></label>
-        <!-- not going to help for this usecase -->
-        <br>
-        <button type="button" id="divideButton3">Divide</button>
-        <button type="button" id="conquerButton3">Conquer</button>
-        <!-- <br><br> -->
-        <button type="button" id="solveButton3">Solve</button>
-        <button type="button" id="resetButton3">Reset</button>
 
-    </form>
+    <div id="mainContent" class="noMovementInScroll">
+
+        <h1>Visualising Divide and Conquer Algorithms</h1>
+        <h3>Binary Tree Construction</h3>
+        <form id="form_for_array_input" action="#">
+            <label for="inorder" id="inorderLabel">Inorder :</label>
+            <input type="string" id="inorder" min="-1000" max="1000">
+            <!-- <br> -->
+            <button type="button" id="addButton3">Insert</button>
+            <button type="button" id="deleteButton3">Delete</button>
+            <br>
+            <!-- <br> -->
+            <label for="preorder" id="preorderLabel">Preorder :</label>
+            <input type="string" id="preorder" min="-1000" max="1000">
+            <!-- <br> -->
+            <button type="button" id="addButton4">Insert</button>
+            <button type="button" id="deleteButton4">Delete</button>
+            <br>
+            <label id="binTreeRes"></label>
+            <!-- not going to help for this usecase -->
+            <br>
+            <button type="button" id="divideButton3">Divide</button>
+            <button type="button" id="conquerButton3">Conquer</button>
+            <!-- <br><br> -->
+            <button type="button" id="solveButton3">Solve</button>
+            <button type="button" id="resetButton3">Reset</button>
+
+        </form>
+    </div>
     <br>
     <br><br>
     <div class="disparea">
@@ -117,7 +121,7 @@
 
     <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
     <div id="notificationBell" title="View notifications"
-        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; top: 120px; right: 20px;">
+        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
         <button type="button" id="tutorialButton" class="logsButton">Tutorial</button>
         <button type="button" id="logsButton" class="logsButton">Logs</button>
     </div>
