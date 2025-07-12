@@ -56,10 +56,11 @@ h3{
   /* so we prefer flex-end where each bar will be resting on its bottom. they wont be dangling like center */
   gap: 5px;
   margin-top: 10px;
-  height: 100px;
+  /* height: 100px; */
   overflow-x: auto;       /* Enables horizontal scrolling */
   white-space: nowrap;    /* Prevents bars from wrapping */
   justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
+  border: 1px solid black;
 }
 
 .bar {
@@ -75,6 +76,8 @@ h3{
   display: flex;
   justify-content: center; /* x axis alignment */
   align-items: flex-end; /* y axis alignment */
+  border: 1px solid black;
+
 }
 
 
