@@ -13,3 +13,6 @@ Instead it has to be added manually each time. Hence if some lines or partitions
 Experienced this..today! The final greenline for collinear terminal hull wasnt getting printed. Just added a CSS style and its fine now. I had removed stroke and fill argument to solve a problem and I dont seem to remember what it was!
 
 Got it. it is to add the dull lines when the partitionlines and its partitions are not in focus. Having a fixed stroke and fill always had the same intensity always. By moving the property to a css styling, I can render bright lines when that partition is in focus and render dull lines when it goes out of focus. 
+
+3. One div can only be appendChild() to one other div. 
+If you need to add it to different divs, you need to clone it. REMEMBERRRRRR

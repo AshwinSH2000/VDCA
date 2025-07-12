@@ -278,6 +278,19 @@ function divide2() {
 
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "info");
+        let maxLevel = Math.max(...pivots.map(p => p.level));
+        console.log("vacusteel", maxLevel);
+        let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
+
+        const bar2 = document.createElement('div');
+        bar2.setAttribute("id", "uturnspace");
+        bar2.classList.add("u-turn");
+        bar2.style.height = "0px";
+        bar2.style.width = "30px";
+        bar2.style.backgroundColor = "red";
+
+        uTurnArrow.appendChild(bar2);
+
         return;
     }
     if (pivots.length > arrayList.length) {
@@ -288,6 +301,17 @@ function divide2() {
         //     showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "info");
+        let maxLevel = Math.max(...pivots.map(p => p.level));
+        console.log("vacusteel", maxLevel);
+        let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
+        const bar2 = document.createElement('div');
+        bar2.setAttribute("id", "uturnspace");
+        bar2.classList.add("u-turn");
+        bar2.style.height = "0px";
+        bar2.style.width = "30px";
+        bar2.style.backgroundColor = "red";
+
+        uTurnArrow.appendChild(bar2);
         return;
     }
 }
@@ -496,14 +520,15 @@ function visualise() {
         leftAlignBar.setAttribute("id", "leftAlignBar");
         leftAlignBar.style.width = `${leftAlignBarWidth - 5}px`;
         leftAlignBar.style.height = "0px";
-        leftAlignBar.style.border = "1px solid black";
+        // leftAlignBar.style.border = "1px solid black";
         container.appendChild(leftAlignBar);
 
         const bar2 = document.createElement('div');
         bar2.setAttribute("id", "bar2space");
-        bar2.style.height = "0px";
+        bar2.style.height = "15px";
         bar2.style.width = "60px";
-        bar2.style.border = "1px solid black";
+        // bar2.style.border = "1px solid black";
+        // bar2.style.backgroundColor = "red";
         container.appendChild(bar2);
         console.log("The continer is", container);
 
@@ -512,7 +537,8 @@ function visualise() {
         arrowDiv.setAttribute("id", "downArrow");
         arrowDiv.classList.add("down-arrow");
         continueArrow.appendChild(arrowDiv);
-        continueArrow.appendChild(bar2);
+        const cloneBar2 = bar2.cloneNode(true);      //true means it will do deep clone (includes children)
+        continueArrow.appendChild(cloneBar2);
         // continueArrow.appendChild(leftAlignBar);
 
     }

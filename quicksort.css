@@ -60,7 +60,7 @@ h3{
   overflow-x: auto;       /* Enables horizontal scrolling */
   white-space: nowrap;    /* Prevents bars from wrapping */
   justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .bar {
@@ -76,7 +76,7 @@ h3{
   display: flex;
   justify-content: center; /* x axis alignment */
   align-items: flex-end; /* y axis alignment */
-  border: 1px solid black;
+  /* border: 1px solid black; */
 
 }
 
@@ -333,8 +333,9 @@ body {
   text-align: center;
   font-size: 40px;
   color: #444;
-  margin-top: 5px;
-  border: 1px solid black;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* border: 1px solid black; */
 
 }
 
@@ -344,26 +345,28 @@ body {
   text-align: center;
   font-size: 40px;
   color: #444;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
-.u-turn{
-  content: '→';
+.u-turn::before{
+  content: '→';   
+  /* ↓→ */
   display: block;
   text-align: center;
   font-size: 40px;
   color: #444;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .arrow-container{
-  border: 1px solid black;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: flex-end;   
   white-space: nowrap;    
   justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
