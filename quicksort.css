@@ -55,7 +55,7 @@ h3{
   align-items: flex-end;    /* center = in each container, the bars will be center aligned wrt their height (y axis) */
   /* so we prefer flex-end where each bar will be resting on its bottom. they wont be dangling like center */
   gap: 5px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   /* height: 100px; */
   overflow-x: auto;       /* Enables horizontal scrolling */
   white-space: nowrap;    /* Prevents bars from wrapping */
@@ -327,4 +327,43 @@ body {
   padding: 5px 20px 5px 20px;
 }
 
+.down-arrow::before {
+  content: '↓'; 
+  display: block;
+  text-align: center;
+  font-size: 40px;
+  color: #444;
+  margin-top: 5px;
+  border: 1px solid black;
+
+}
+
+.up-arrow::before {
+  content: '↑';
+  display: block;
+  text-align: center;
+  font-size: 40px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.u-turn{
+  content: '→';
+  display: block;
+  text-align: center;
+  font-size: 40px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.arrow-container{
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;   
+  white-space: nowrap;    
+  justify-content: center;    /* normal justify that we see in word processor... x axis alignment */
+  border: 1px solid black;
+}
 

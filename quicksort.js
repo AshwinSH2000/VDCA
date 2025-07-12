@@ -118,49 +118,7 @@ function deleteNumbers() {
     document.getElementById('array_number').value = '';
 }
 
-// function divide() {
 
-//     let map = new Map();
-//     map.set(3, "ash");
-//     map.set(2, "win");
-
-//     for (let [key, value] of map.entries()) {
-//         console.log(`Key: ${key}, Type: ${typeof key}`);
-//     }
-//     console.log(map);
-//     map.
-//         console.log(map);
-//     //return;
-
-//     if (level == 0) {
-//         //this is the first "divide" operation. 
-//         let pivot = findPivot(arrayList, 0, arrayList.length - 1);
-//         // console.log("IN DIVIDE... PIVOT IS "+pivot);
-//         pivots.push(pivot);
-//         partition(arrayList, 0, arrayList.length - 1, arrayList.indexOf(pivot));
-//         visualise();
-//         level++;
-//     }
-//     else if (level == 1) {
-//         let pivot1 = findPivot(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1);
-//         let pivot2 = findPivot(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1);
-//         pivots.push(pivot1);
-//         pivots.push(pivot2);
-
-//         partition(arrayList, 0, arrayList.indexOf(pivots[level - 1]) - 1, arrayList.indexOf(pivot1));
-//         partition(arrayList, arrayList.indexOf(pivots[level - 1]) + 1, arrayList.length - 1, arrayList.indexOf(pivot2))
-
-//         visualise();
-//         console.log("displayed stuff once");
-//         level++;
-//     }
-//     else if (level == 2) {
-
-//         console.log("going for the third divide");
-//         visualise();
-//         level++;
-//     }
-// }
 function divide2() {
 
     console.log("Level inside divide2 is", level);
@@ -446,19 +404,18 @@ function visualiseOld() {
 }
 
 function visualise() {
-    // Clear all containers
-    // for (let i = 2; i <= 5; i++) {
-    //     document.getElementById(`bar-container${i}`).innerHTML = '';
-    // }
+
     if (level < 0) {
         return;
     }
 
     let container = document.getElementById(`bar-container${level + 2}`);
+    let continueArrow = document.getElementById(`arrow-container${level + 2}`);
 
     if (level === 0 && conquerFlag) {
         {
             container = document.getElementById('bar-container');
+            continueArrow = document.getElementById('arrow-container');
 
             const bar = document.createElement('div');
             bar.setAttribute("id", "bar1space");
@@ -473,6 +430,8 @@ function visualise() {
     else if (conquerFlag) {
         //this is to create some space between the two
         container = document.getElementById(`bar-container${level + 1}`);
+        continueArrow = document.getElementById(`arrow-container${level + 1}`);
+
 
         let leftAlignBar = container.querySelector("#leftAlignBar");
         console.log("container inside visualise is", container);
@@ -489,13 +448,19 @@ function visualise() {
         bar.style.height = "0px";
 
         // container.appendChild(bar);
+        const arrowDiv = document.createElement('div');
+        arrowDiv.setAttribute("id", "upArrow");
+        arrowDiv.classList.add("up-arrow");
+        continueArrow.appendChild(arrowDiv);
     }
-    else
+    else {
         container = document.getElementById(`bar-container${level + 2}`);
+        continueArrow = document.getElementById(`arrow-container${level + 2}`);
+    }
+
 
 
     if (!container) {
-        console.log("afnaioenjfavliejaf\naufhnvaliefhvabih\naiufybaieufybavaufha\nawkunerca");
         container = document.createElement('div');
         container.id = `bar-container${level + 2}`;
         console.log("Current level is", level, container.id);
@@ -531,81 +496,27 @@ function visualise() {
         leftAlignBar.setAttribute("id", "leftAlignBar");
         leftAlignBar.style.width = `${leftAlignBarWidth - 5}px`;
         leftAlignBar.style.height = "0px";
+        leftAlignBar.style.border = "1px solid black";
         container.appendChild(leftAlignBar);
 
         const bar2 = document.createElement('div');
         bar2.setAttribute("id", "bar2space");
         bar2.style.height = "0px";
         bar2.style.width = "60px";
+        bar2.style.border = "1px solid black";
         container.appendChild(bar2);
+        console.log("The continer is", container);
+
+        //here i have to append the text, then both right?
+        const arrowDiv = document.createElement('div');
+        arrowDiv.setAttribute("id", "downArrow");
+        arrowDiv.classList.add("down-arrow");
+        continueArrow.appendChild(arrowDiv);
+        continueArrow.appendChild(bar2);
+        // continueArrow.appendChild(leftAlignBar);
 
     }
-
-    // const container = document.getElementById('bar-container');
-    // container.innerHTML = ''; // Clear previous bars
-
-    // for (let i = 0; i < arrayList.length; i++) {
-    //     const bar = document.createElement('div');
-    //     bar.classList.add('bar');
-
-    //     let barHeight = Number(arrayList[i]);
-    //     bar.style.height = `${barHeight * 5}px`;
-    //     bar.textContent = barHeight;
-
-    //     const isPivot = pivots.some(p => p.position === i && p.pivot === arrayList[i]);
-    //     if (isPivot) {
-    //         bar.classList.add('bg-red-500'); // Pivot style
-    //         bar.style.marginLeft = '12px'; // Separation from left partition
-    //         bar.style.marginRight = '12px'; // Separation from right partition
-    //     } else {
-    //         bar.classList.add('bg-blue-500'); // Normal style
-    //     }
-
-    //     container.appendChild(bar);
-    // }
 }
-
-// function visualise(level) {
-//     let container = document.getElementById(`bar-container-level-${level}`);
-
-//     // If container doesn't exist yet, create it
-//     if (!container) {
-//         container = document.createElement('div');
-//         container.id = `bar-container-level-${level}`;
-//         // container.className = 'flex gap-2 mb-4 flex-wrap';
-//         container.className = 'flex flex-row gap-2 flex-wrap';
-//         document.getElementById('bar-wrapper').appendChild(container); // Wrap all bar-containers in one parent
-//     }
-
-//     // Create the bar group
-//     const barGroup = document.createElement('div');
-//     // barGroup.className = 'flex gap-2';
-//     barGroup.className = 'flex flex-row gap-2';
-
-//     for (let i = 0; i < arrayList.length; i++) {
-//         const bar = document.createElement('div');
-//         bar.classList.add('bar');
-
-//         let barHeight = Number(arrayList[i]);
-//         bar.style.height = `${barHeight * 5}px`;
-//         bar.textContent = barHeight;
-
-//         const isPivot = pivots.some(p => p.position === i && p.pivot === arrayList[i]);
-//         if (isPivot) {
-//             bar.classList.add('bg-red-500');
-//             bar.style.marginLeft = '12px';
-//             bar.style.marginRight = '12px';
-//             bar.style.width = '30px';
-//         } else {
-//             bar.classList.add('bg-blue-500');
-//         }
-
-//         barGroup.appendChild(bar);
-//     }
-
-//     container.appendChild(barGroup); // Append barGroup to this level's container
-// }
-
 
 function resetQuickSort() {
     //this has many debugging statements. clear them
