@@ -20,6 +20,7 @@ let maxLevel = -10;
 let conquerFlag = false;
 let activeTooltips = new Map();
 let tutorialState = false;
+let endTutorial = false;
 resizeRightHalfDiv();
 
 
@@ -45,7 +46,7 @@ function addPreorder() {
   if (w) {
     let singleNum = Number(w);
     if (w.includes(" ") && w.includes(",")) {
-      alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      // alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
       showToast("Separate the numbers with all space or all commas. Do not mix them.", "error");
 
       return;
@@ -65,7 +66,7 @@ function addPreorder() {
       }
     } else {
       //nonsense input
-      alert("Separator must be either comma or space");
+      // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
@@ -74,10 +75,13 @@ function addPreorder() {
     document.getElementById("preorder").value = "";
     if (inorderIp && preorderIp) {
       if (!checkTree(inorder, preorder)) {
-        alert("Tree cannot be constructed from the inputs given.");
+        // alert("Tree cannot be constructed from the inputs given.");
+        showToast("Tree cannot be constructed from the inputs given", "error");
         let container = document.getElementById("treeContainerIP");
         container.innerHTML = "";
-        reset();
+        // reset();
+        preorder = inorder = [];
+        inorderIp = preorderIp = false;
         return;
       }
 
@@ -86,7 +90,8 @@ function addPreorder() {
       document.getElementById("divideButton3").disabled = false;
       document.getElementById("solveButton3").disabled = false;
 
-
+    } else {
+      console.log("preorder and inorder", preorder, inorder);
     }
 
     let container = document.getElementById("preorderContainerIP");
@@ -117,7 +122,7 @@ function addPreorder() {
     }
 
   } else {
-    alert("Enter the preorder traversal");
+    // alert("Enter the preorder traversal");
     showToast("Enter the preorder traversal", "error");
   }
 }
@@ -136,8 +141,8 @@ function deletePreorder() {
         if (preorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present.");
-          showToast("Entered item not present.", "error");
+          // alert("Entered item not present.");
+          showToast("Entered value not present.", "error");
 
           return;
         }
@@ -148,14 +153,14 @@ function deletePreorder() {
         if (preorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present.");
-          showToast("Entered item not present.", "error");
+          // alert("Entered item not present.");
+          showToast("Entered value not present.", "error");
           return;
         }
       }
     } else {
       //nonsense input
-      alert("Separator must be either comma or space");
+      // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
@@ -171,7 +176,7 @@ function deletePreorder() {
     container.innerHTML = "";
 
   } else {
-    alert("Enter a preorder traversal to check and delete");
+    // alert("Enter a preorder traversal to check and delete");
     showToast("Enter a preorder traversal to check and delete", "error");
   }
 }
@@ -185,12 +190,8 @@ function addInorder() {
     let singleNum = Number(w);
     console.log(singleNum);
 
-    // if(singleNum NaN){
-    //     alert("it is nan");
-    //     console.log(singleNum, "is singlenum");
-    // }
     if (w.includes(" ") && w.includes(",")) {
-      alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+      // alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
       showToast("Separate the numbers with all space or all commas. Do not mix them.", "error");
       return;
     }
@@ -211,7 +212,7 @@ function addInorder() {
       //   console.log("temp is (space)", temp);
     } else {
       //nonsense input
-      alert("Separator must be either comma or space");
+      // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
@@ -221,13 +222,15 @@ function addInorder() {
     document.getElementById("inorder").value = "";
     if (inorderIp && preorderIp) {
       if (!checkTree(inorder, preorder)) {
-        alert("Tree cannot be constructed from the inputs given.");
-        showToast("Tree cannot be constructed from the inputs given.", "error");
+        // alert("Tree cannot be constructed from the inputs given.");
+        showToast("Tree cannot be constructed from the inputs given", "error");
         //rather than having this, you can instead put this code in reset and call that...
         //both work well but that would be better. 
         let container = document.getElementById("preorderContainerIP");
         container.innerHTML = "";
-        reset();
+        // reset();
+        preorder = inorder = [];
+        inorderIp = preorderIp = false;
         return;
       }
 
@@ -268,7 +271,7 @@ function addInorder() {
     }
 
   } else {
-    alert("Enter the inorder traversal");
+    // alert("Enter the inorder traversal");
     showToast("Enter the inorder traversal", "error");
   }
 }
@@ -287,8 +290,8 @@ function deleteInorder() {
         if (inorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present.");
-          showToast("Entered item not present.", "error");
+          // alert("Entered item not present.");
+          showToast("Entered value not present.", "error");
           return;
         }
       }
@@ -298,14 +301,14 @@ function deleteInorder() {
         if (inorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
           console.log("Cannot find item to delete");
-          alert("Entered item not present.");
-          showToast("Entered item not present.", "error");
+          // alert("Entered item not present.");
+          showToast("Entered value not present.", "error");
           return;
         }
       }
     } else {
       //nonsense input
-      alert("Separator must be either comma or space");
+      // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
       console.log("The separator must either be comma or space");
       return;
@@ -321,7 +324,7 @@ function deleteInorder() {
     container.innerHTML = "";
 
   } else {
-    alert("Enter an inorder traversal to check and delete");
+    // alert("Enter an inorder traversal to check and delete");
     showToast("Enter a inorder traversal to check and delete", "error");
 
   }
@@ -640,18 +643,21 @@ function mergeTree() {
     console.log("the levelnodes afer updating are:", levelNodes);
     console.log("------end------")
   }
-  if (levelNodes[0].level === maxLevel - 1) {
-    if ([...levelNodes.map(p => p.value)].length === 1)
-      showToast(`${[...levelNodes.map(p => p.value)]} is the leaf node`, "info");
-    else
-      showToast(`${[...levelNodes.map(p => p.value)]} are the leaf nodes`, "info");
-  }
-  else {
-    console.log("GIONEE maxlvel is", maxLevel, "levelnode's level is", levelNodes[0].level);
-    if ([...levelNodes.map(p => p.value)].length === 1)
-      showToast(`${[...levelNodes.map(p => p.value)]} is connected to its child node(s)`, "info");
-    else
-      showToast(`${[...levelNodes.map(p => p.value)]} are connected to their child node(s)`, "info");
+
+  if (level >= 0) {
+    if (levelNodes[0].level === maxLevel - 1) {
+      if ([...levelNodes.map(p => p.value)].length === 1)
+        showToast(`${[...levelNodes.map(p => p.value)]} is the leaf node`, "info");
+      else
+        showToast(`${[...levelNodes.map(p => p.value)]} are the leaf nodes`, "info");
+    }
+    else {
+      console.log("GIONEE maxlvel is", maxLevel, "levelnode's level is", levelNodes[0].level);
+      if ([...levelNodes.map(p => p.value)].length === 1)
+        showToast(`${[...levelNodes.map(p => p.value)]} is connected to its child node(s)`, "info");
+      else
+        showToast(`${[...levelNodes.map(p => p.value)]} are connected to their child node(s)`, "info");
+    }
   }
 
 
@@ -671,6 +677,7 @@ function mergeTree() {
 
     return;
   }
+  console.log("added today..level is", level);
 }
 
 function reset() {
@@ -1358,9 +1365,14 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   tooltip.appendChild(tooltipText);
 
   const closeBtn = document.createElement("span");
-  closeBtn.textContent = "✕";
+  closeBtn.textContent = "next →"; //✕->
   closeBtn.classList.add("close-btn");
   tooltip.appendChild(closeBtn);
+
+  const closeBtn2 = document.createElement("span");
+  closeBtn2.textContent = "close ✕"; //✕->
+  closeBtn2.classList.add("close-btn2");
+  tooltip.appendChild(closeBtn2);
 
   const arrow = document.createElement("div");
   arrow.classList.add("tooltip-arrow");
@@ -1444,6 +1456,13 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     tooltip.remove();
   });
 
+  closeBtn2.addEventListener("click", () => {
+    clearTimeout(timeout);
+    removeToolTip(targetElement);
+    tooltip.remove();
+    endTutorial = true;
+  })
+
   activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
 
 }
@@ -1474,7 +1493,6 @@ bell.addEventListener("click", () => {
 
 // Show a toast and log it
 function showToast(message, type = "info") {
-  console.log("blackberry");
   currentToastType = type;
   currentToastMessage = message;
   toast.textContent = message;
@@ -1528,8 +1546,10 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("addButton4"), "Inputs the traversals entered in respective text boxes", "top-left");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("addButton4"))) {
-      if (!tutorialState) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
         removeToolTip(document.getElementById("addButton4"));
+        endTutorial = false;
         return;
       }
       sleepTimer += 100;
@@ -1544,8 +1564,10 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("deleteButton4"), "Searches and deletes the numbers entered in the respective textboxes", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("deleteButton4"))) {
-      if (!tutorialState) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
         removeToolTip(document.getElementById("deleteButton4"));
+        endTutorial = false;
         return;
       }
       sleepTimer += 100;
@@ -1560,6 +1582,12 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("divideButton3"), "Divide performs level-wise divisions.", "top-left");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("divideButton3"))) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
+        removeToolTip(document.getElementById("divideButton3"));
+        endTutorial = false;
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1572,6 +1600,12 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById('conquerButton3'), "Conquer builds the tree level-wise from the partitions created", "top-right", 5000);
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("conquerButton3"))) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
+        removeToolTip(document.getElementById("conquerButton3"));
+        endTutorial = false;
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1584,6 +1618,12 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("solveButton3"))) {
+      // if (!tutorialState ||
+      if (endTutorial === true) {
+        removeToolTip(document.getElementById("solveButton3"));
+        endTutorial = false;
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1596,6 +1636,12 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve at any other point generates the partial tree from already processed partitions", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("solveButton3"))) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
+        removeToolTip(document.getElementById("solveButton3"));
+        endTutorial = false;
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1608,6 +1654,12 @@ async function showTutorial() {
   showDynamicTooltip(document.getElementById("resetButton3"), "Resets the interface", "top-right", "5000");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("resetButton3"))) {
+      // if (!tutorialState || 
+      if (endTutorial === true) {
+        removeToolTip(document.getElementById("resetButton3"));
+        endTutorial = false;
+        return;
+      }
       sleepTimer += 100;
       await sleep(100);
     }
@@ -1645,6 +1697,7 @@ window.addEventListener('resize', () => {
     updateLines(); // or whatever function you use to draw lines
 });
 document.getElementById("tutorialButton").addEventListener('click', () => {
-  tutorialState = !tutorialState;
+  // tutorialState = !tutorialState;
   showTutorial();
+  endTutorial = false;
 });
