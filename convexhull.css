@@ -4,6 +4,24 @@ body {
 	text-align: center;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+#fixedPart{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 180px;
+	background-color: rgb(200, 180, 110);
+	border-bottom: 1px solid #ccc;
+	/* display: flex; */
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+  }
+  
+  #bottomPart{
+	margin-top: 120px;
+  }
 h1 {
     color: black;
 	padding-bottom: 0;
@@ -186,13 +204,14 @@ button:disabled{
 
 #notificationBell {
 	position: fixed;
-	top: 12px;
+	top: 100px;
 	right: 20px;
 	font-size: 24px;
 	cursor: pointer;
 	z-index: 3001;
 	display: flex;
   	flex-direction: column;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
   }
   
   #notificationBell::after {
