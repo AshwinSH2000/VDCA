@@ -15,7 +15,7 @@ let solveConquerFlag = false;
 let activeTooltips = new Map();
 let inputToolTipFlag = true;
 let solveMode = false;
-let tutorialState = false;
+let endTutorial = false;
 document.getElementById("divideButton2").disabled = true;
 document.getElementById("conquerButton2").disabled = true;
 document.getElementById("solveButton2").disabled = true;
@@ -1536,9 +1536,14 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     tooltip.appendChild(tooltipText);
 
     const closeBtn = document.createElement("span");
-    closeBtn.textContent = "✕";
+    closeBtn.textContent = "next →";
     closeBtn.classList.add("close-btn");
     tooltip.appendChild(closeBtn);
+
+    const closeBtn2 = document.createElement("span");
+    closeBtn2.textContent = "close ✕";
+    closeBtn2.classList.add("close-btn2");
+    tooltip.appendChild(closeBtn2);
 
     const arrow = document.createElement("div");
     arrow.classList.add("tooltip-arrow");
@@ -1612,6 +1617,13 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         tooltip.remove();
     });
 
+    closeBtn2.addEventListener("click", () => {
+        clearTimeout(timeout);
+        removeToolTip(targetElement);
+        tooltip.remove();
+        endTutorial = true;
+    });
+
     activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
     console.log(activeTooltips);
 }
@@ -1638,8 +1650,9 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("chgrid"))) {
-            if (!tutorialState) {
+            if (endTutorial === true) {
                 removeToolTip(document.getElementById("chgrid"));
+                endTutorial = false;
                 return;
             }
             sleepTimer += 100;
@@ -1654,8 +1667,9 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton2"))) {
-            if (!tutorialState) {
+            if (endTutorial === true) {
                 removeToolTip(document.getElementById("divideButton2"));
+                endTutorial = false;
                 return;
             }
             sleepTimer += 100;
@@ -1670,6 +1684,12 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('conquerButton2'), "\'Conquer\' calculates and merges the hulls of adjacent partitions together", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton2"))) {
+
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("conquerButton2"));
+                endTutorial = false;
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1682,6 +1702,12 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' before \'Divide\' displays the final convex hull of all points", "top-right");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton2"))) {
+
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("solveButton2"));
+                endTutorial = false;
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1694,6 +1720,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' at any point later will display the convex hulls of the partition(s) created so far", "top-right");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton2"))) {
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("solveButton2"));
+                endTutorial = false;
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1706,6 +1737,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('resetButton2'), "Resets the interface", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("resetButton2"))) {
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("resetButton2"));
+                endTutorial = false;
+                return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1810,7 +1846,8 @@ document.getElementById("togglePanelBtn").addEventListener("click", () => {
     document.getElementById("sidePanel").classList.toggle("open");
 });
 document.getElementById('tutorialButton').addEventListener('click', () => {
-    tutorialState = !tutorialState;
+    // tutorialState  = !tutorialState;
     showTutorial();
+    endTutorial = false;
 });
 

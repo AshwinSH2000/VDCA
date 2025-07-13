@@ -147,8 +147,8 @@ button:disabled{
 	background: rgba(254, 254, 254, 0.8);
 	border: 1px solid #ccc;
 	border-radius: 6px;
-	padding: 10px;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	padding: 14px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.95);
 	z-index: 1000;
 	max-width: 200px;
 	font-size: 14px;
@@ -164,11 +164,22 @@ button:disabled{
   
   .tooltip .close-btn {
 	position: absolute;
-	top: 2px;
+	bottom: 2px;
 	right: 5px;
 	cursor: pointer;
 	font-size: 14px;
-	color: #666;
+	/* color: #666; */
+	color: green
+  }
+
+  .tooltip .close-btn2{
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	cursor: pointer;
+	font-size: 12px;
+	/* color: #666; */
+	color: #ff0000;
   }
 
   @keyframes fadeIn {
