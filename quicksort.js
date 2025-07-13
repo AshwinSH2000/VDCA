@@ -8,7 +8,8 @@ let solveDivideFlag = false;
 let solveMode = false;
 const activeTooltips = new Map();
 let inputCounter = 0;
-let tutorialState = false;
+let endTutorial = false;
+
 
 document.getElementById("divideButton").disabled = true;
 document.getElementById("solveButton").disabled = true;
@@ -662,9 +663,14 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     tooltip.appendChild(tooltipText);
 
     const closeBtn = document.createElement("span");
-    closeBtn.textContent = "✕";
+    closeBtn.textContent = "next →";
     closeBtn.classList.add("close-btn");
     tooltip.appendChild(closeBtn);
+
+    const closeBtn2 = document.createElement("span");
+    closeBtn2.textContent = "close ✕";
+    closeBtn2.classList.add("close-btn2");
+    tooltip.appendChild(closeBtn2);
 
     const arrow = document.createElement("div");
     arrow.classList.add("tooltip-arrow");
@@ -717,7 +723,7 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         tooltip.style.left = `${rect.left + scrollLeft - 240}px`;
 
         arrow.style.top = "20px";
-        arrow.style.left = "220px";
+        arrow.style.left = "2px";
 
         arrow.style.borderTop = "10px solid transparent";
         arrow.style.borderLeft = "10px solid #fefefe";
@@ -737,6 +743,13 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
         tooltip.remove();
         removeToolTip(targetElement);
     });
+
+    closeBtn2.addEventListener("click", () => {
+        clearTimeout(timeout);
+        removeToolTip(targetElement);
+        tooltip.remove();
+        endTutorial = true;
+    })
     activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
 }
 
@@ -872,8 +885,9 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("array_number"))) {
-            if (!tutorialState) {
+            if (endTutorial === true) {
                 removeToolTip(document.getElementById("array_number"));
+                endTutorial = false;
                 return;
             }
 
@@ -890,8 +904,9 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("addButton"))) {
-            if (!tutorialState) {
+            if (endTutorial === true) {
                 removeToolTip(document.getElementById("addButton"));
+                endTutorial = false;
                 return;
             }
 
@@ -908,8 +923,11 @@ async function showTutorial() {
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("deleteButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("deleteButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -924,8 +942,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById("divideButton"), "\'Divide\' performs level-wise partitions", "top-left", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("divideButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -938,8 +959,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('conquerButton'), "\'Conquer\' performs level-wise merge of the array", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("conquerButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -951,8 +975,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' displays the final sorted array instantly", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("solveButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -965,8 +992,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' reveals solution for partitions processed so far", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("solveButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -979,8 +1009,11 @@ async function showTutorial() {
     showDynamicTooltip(document.getElementById('resetButton'), "Resets the interface", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("resetButton"))) {
-            if (!tutorialState)
+            if (endTutorial === true) {
+                removeToolTip(document.getElementById("resetButton"));
+                endTutorial = false;
                 return;
+            }
             sleepTimer += 100;
             await sleep(100);
         }
@@ -1008,6 +1041,7 @@ document.getElementById('solveButton').addEventListener('click', () => {
     solve1();
 });
 document.getElementById('tutorialButton').addEventListener('click', () => {
-    tutorialState = !tutorialState;
+    // tutorialState = !tutorialState;
     showTutorial();
+    endTutorial = false;
 });
