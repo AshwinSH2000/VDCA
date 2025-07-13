@@ -20,31 +20,31 @@
       <!-- Add more navigation buttons here -->
     </div>
   </div>
+  <div id="fixedPart">
+    <h1>Visualising Divide and Conquer Algorithms </h1>
+    <h3>QuickSort</h3>
+    <form id="form_for_input" action="#">
+      <label for="array_number" id="inputLabel">Enter Numbers: </label>
+      <input type="string" id="array_number" name="array_number" min="0" max="1000">
 
-  <h1>Visualising Divide and Conquer Algorithms </h1>
-  <h3>QuickSort</h3>
+      <button type="button" id="addButton" title="To input the numbers entered in the textbox">Insert</button>
+      <button type="button" id="deleteButton">Delete</button>
+      <br><br>
+      <button type="button" id="divideButton">Divide</button>
+      <button type="button" id="conquerButton">Conquer</button>
+      <!-- <br> -->
+      <button type="button" id="solveButton">Solve</button>
 
-  <form id="form_for_input" action="#">
-    <label for="array_number" id="inputLabel">Enter Numbers: </label>
-    <input type="string" id="array_number" name="array_number" min="0" max="1000">
+      <div class="tooltip-wrapper">
+        <button type="button" id="resetButton">Reset</button>
+        <div class="tooltip-text">This will reset everything</div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <br>
+  <div id="bottomPart">
 
-    <button type="button" id="addButton" title="To input the numbers entered in the textbox">Insert</button>
-    <button type="button" id="deleteButton">Delete</button>
-    <br><br>
-    <button type="button" id="divideButton">Divide</button>
-    <button type="button" id="conquerButton">Conquer</button>
-    <!-- <br> -->
-    <button type="button" id="solveButton">Solve</button>
-
-    <div class="tooltip-wrapper">
-      <button type="button" id="resetButton">Reset</button>
-      <div class="tooltip-text">This will reset everything</div>
-    </div>
-
-    <br>
-    <br>
-
-    <!-- old approach -->
     <div id="bar-container" class="bar-container"></div>
     <div id="arrow-container2" class="arrow-container"></div>
 
@@ -69,10 +69,7 @@
     <div id="bar-container8" class="bar-container"></div>
     <div id="arrow-container9" class="arrow-container"></div>
 
-
-
-
-  </form>
+  </div>
 
   <div id="toast" class="toast hidden"></div>
 
