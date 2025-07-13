@@ -19,6 +19,25 @@ h6 {
 label{
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+#fixedPart{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 270px;
+	background-color: rgb(200, 180, 110);
+	border-bottom: 1px solid #ccc;
+	/* display: flex; */
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+  }
+  
+  #bottomPart{
+	margin-top: 230px;
+  }
+
 button.mainButton{
 	background-color: rgb(112, 219, 143);
 	border:rgb(from color 1 1 1);
