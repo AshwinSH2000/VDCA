@@ -79,9 +79,7 @@ function addPreorder() {
         showToast("Tree cannot be constructed from the inputs given", "error");
         let container = document.getElementById("treeContainerIP");
         container.innerHTML = "";
-        // reset();
-        preorder = inorder = [];
-        inorderIp = preorderIp = false;
+        resetAfterWrongInput();
         return;
       }
 
@@ -125,6 +123,17 @@ function addPreorder() {
     // alert("Enter the preorder traversal");
     showToast("Enter the preorder traversal", "error");
   }
+}
+
+function resetAfterWrongInput() {
+  w = "";
+  singleNum = 0;
+  preorderIp = false;
+  temp = 0;
+  preorder = [];
+  container = [];
+  inorderIp = false;
+  inorder = [];
 }
 
 function deletePreorder() {
@@ -228,9 +237,7 @@ function addInorder() {
         //both work well but that would be better. 
         let container = document.getElementById("preorderContainerIP");
         container.innerHTML = "";
-        // reset();
-        preorder = inorder = [];
-        inorderIp = preorderIp = false;
+        resetAfterWrongInput();
         return;
       }
 
