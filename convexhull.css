@@ -51,9 +51,9 @@ button {
 }
 
 button:hover:enabled {
-	background-color: rgb(195, 183, 209);
+	background-color: rgb(171, 171, 255);
 	border:rgb(from color 1 1 1);
-	color: rgb(57, 57, 116);
+	color: rgb(0, 0, 0);
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;

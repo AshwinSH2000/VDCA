@@ -25,7 +25,7 @@ button {
 }
 
 button:hover:enabled {
-	background-color: rgb(199, 215, 220);
+	background-color: rgb(123, 204, 215);
 	border:rgb(from color 1 1 1);
 	color: rgb(0, 0, 133);
 	/* color: rgb(0, 0, 65); */

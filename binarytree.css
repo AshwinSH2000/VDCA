@@ -71,7 +71,7 @@ button {
 button:hover:enabled {
 	/* background-color: rgb(144, 144, 144); */
 	/* background-color: rgb(0, 62, 0); */
-	background-color: rgb(215, 215, 189);
+	background-color: #9fd566;
 	border:rgb(from color 1 1 1);
 	/* color: rgb(214, 255, 216); */
 	/* color: rgb(184, 236, 184); */
