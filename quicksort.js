@@ -26,7 +26,8 @@ async function inputNumbers() {
 
         let temp = [];
         if (item.includes(" ") && item.includes(",")) {
-            alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+            // alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
+            showToast("Be consistent. Separate the numbers with all space or all commas", "error");
             return;
         }
         else if (item.includes(" ")) {
@@ -41,7 +42,8 @@ async function inputNumbers() {
             // console.log("Came in here", "temp is", temp, "and item is", item);
         }
         else {
-            alert("Not a number!");
+            // alert("Not a number!");
+            showToast("Not a number", "error");
             return;
         }
 
@@ -65,7 +67,8 @@ async function inputNumbers() {
         }
     }
     else {
-        alert("Enter a number!");
+        // alert("Enter a number!");
+        showToast("Enter a number", "error");
         return;
     }
     document.getElementById("divideButton").disabled = false;
@@ -109,11 +112,14 @@ function deleteNumbers() {
         }
         else {
             console.log("number not found to delete");
-            alert("Number not found");
+            // alert("Number not found");
+            showToast("Not a number", "error");
+
         }
     }
     else {
-        alert("Enter a number to delete");
+        // alert("Enter a number to delete");
+        showToast("Enter a number to delete", "error");
     }
     //item.value = '';
     document.getElementById('array_number').value = '';

@@ -34,6 +34,7 @@ function inputCoordinates(inputStr) {
     else {
         console.log("none got exed");
         alert("Enter both x and y coordinates!");
+        showToast("Enter both x and y coordinates", "error");
         //document.getElementById('coordinates2').value='';
         return;
     }
@@ -50,14 +51,17 @@ function inputCoordinates(inputStr) {
             else {
                 console.log("Duplicate entry");
                 alert("Duplicate entry. Discarding it.");
+                showToast("Duplicate entry. Discarding it", "info");
             }
         }
         else {
             alert("Enter a number <= 10");
+            showToast("Enter a number <=10", "error");
         }
     }
     else {
         alert('Enter a number');
+        showToast("Enter a number", "error");
     }
     //document.getElementById('coordinates2').value='';
     // if (inputToolTipFlag) {
