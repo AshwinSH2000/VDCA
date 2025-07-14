@@ -6,6 +6,19 @@ body {
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.disappear {
+	opacity: 0;
+	/* animation: disAppear 2s ease forwards; */
+	transition: opacity 0.3s ease-out;
+  }
+  
+  @keyframes disAppear {
+	to {
+	  opacity: 1;
+	}
+  }
+
+
 @keyframes spawnIn {
 	from { opacity: 0;  transform: scale(1);}
 	to { opacity: 1;  transform: scale(1);}
