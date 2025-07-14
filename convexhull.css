@@ -86,8 +86,8 @@ button:disabled{
 	fill:red;
 }
 .blueline{
-	stroke: rgb(95, 100, 255);
-	fill: rgb(95, 100, 255);
+	stroke: rgb(35, 42, 247);
+	fill: rgb(35, 42, 247);
 }
 .greenline{
 	stroke: green;
@@ -113,8 +113,8 @@ button:disabled{
 	stroke-linecap: round;
 }
 .bluelineDull{
-	stroke: rgba(95, 100, 255, 0.4);
-	fill: rgba(95, 100, 255, 0.4);
+	stroke: rgba(35, 42, 247, 0.4);
+	fill: rgba(35, 42, 247, 0.4);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
 }
@@ -146,7 +146,7 @@ button:disabled{
 /* for dynamic prompts... in main there is static prompts.  */
 .tooltip {
 	position: absolute;
-	background: rgba(254, 254, 254, 0.8);
+	background: rgba(254, 254, 254, 0.95);
 	border: 1px solid #ccc;
 	border-radius: 6px;
 	padding: 14px;
@@ -279,13 +279,15 @@ button:disabled{
 	right: 20px;
 	padding: 12px 18px;
 	border-radius: 8px;
-	font-size: 16px;
+	font-size: 14px;
 	color: white;
 	cursor: pointer;
 	z-index: 3000;
 	transition: opacity 0.3s ease;
 	background-color: gray; /* default fallback */
 	box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	max-width: 250px;
   }
   .toast.hidden {
 	display: none;
@@ -308,6 +310,7 @@ button:disabled{
 	justify-content: center;
 	align-items: center;
 	z-index: 4000;
+	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
   .toast-log-modal.hidden {
 	display: none;

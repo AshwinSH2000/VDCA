@@ -412,7 +412,7 @@ function divideTree() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
-    showToast("Divide phase complete", "info");
+    showToast("Divide phase complete", "success");
 
   }
 
@@ -482,7 +482,7 @@ function divideTree() {
           nodes.push(returnedRoot);
           const newNode = new treeNode(returnedRoot.value, returnedRoot.level);
           treeNodes.push(newNode);
-          rootsForToast.push(returnedRoot.value);
+          rootsForToast.push(` ${returnedRoot.value}`);
         }
         else
           console.log("repetitive root. hence not pushing");
@@ -499,7 +499,18 @@ function divideTree() {
     limits.sort((a, b) => a - b);
     console.log("limits is", limits);
     if (!solveMode) {
-      showToast(`${rootsForToast} are the roots in level ${level}`);
+      if (nodes.length === inorder.length) {
+        if (rootsForToast.length === 1)
+          showToast(`${rootsForToast} is the leaf node`);
+        else
+          showToast(`${rootsForToast} are the leaf nodes`);
+      }
+      else {
+        if (rootsForToast.length === 1)
+          showToast(`${rootsForToast} is the root in level ${level}`);
+        else
+          showToast(`${rootsForToast} are the roots in level ${level}`);
+      }
       vizDivideBT();
     }
 
@@ -518,7 +529,7 @@ function divideTree() {
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
-    showToast("Divide phase complete", "info");
+    showToast("Divide phase complete", "success");
     return;
   }
 }
@@ -1550,7 +1561,7 @@ async function showTutorial() {
   let sleepTimer = 0;
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("addButton4"), "Inputs the traversals entered in respective text boxes", "top-left");
+  showDynamicTooltip(document.getElementById("addButton4"), "Input respective traversal arrays", "top-left");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("addButton4"))) {
       // if (!tutorialState || 
@@ -1568,7 +1579,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("deleteButton4"), "Searches and deletes the numbers entered in the respective textboxes", "top-right");
+  showDynamicTooltip(document.getElementById("deleteButton4"), "Remove entire matching traversal array", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("deleteButton4"))) {
       // if (!tutorialState || 
@@ -1586,7 +1597,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("divideButton3"), "Divide performs level-wise divisions.", "top-left");
+  showDynamicTooltip(document.getElementById("divideButton3"), "Split traversals into level-wise partitions", "top-left");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("divideButton3"))) {
       // if (!tutorialState || 
@@ -1604,7 +1615,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById('conquerButton3'), "Conquer builds the tree level-wise from the partitions created", "top-right", 5000);
+  showDynamicTooltip(document.getElementById('conquerButton3'), "Build tree level-wise from partitions", "top-right", 5000);
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("conquerButton3"))) {
       // if (!tutorialState || 
@@ -1622,7 +1633,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve before Divide gives the final binary tree", "top-right");
+  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' before \'Divide\' instantly shows full binary tree", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("solveButton3"))) {
       // if (!tutorialState ||
@@ -1640,7 +1651,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on Solve at any other point generates the partial tree from already processed partitions", "top-right");
+  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' after \'Divide\' shows partial tree from current partitions", "top-right");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("solveButton3"))) {
       // if (!tutorialState || 
@@ -1658,7 +1669,7 @@ async function showTutorial() {
   }
 
   sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("resetButton3"), "Resets the interface", "top-right", "5000");
+  showDynamicTooltip(document.getElementById("resetButton3"), "Clear inputs and reset interface", "top-right", "5000");
   while (sleepTimer <= 5000) {
     if (activeTooltips.has(document.getElementById("resetButton3"))) {
       // if (!tutorialState || 

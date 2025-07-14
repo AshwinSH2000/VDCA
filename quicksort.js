@@ -205,7 +205,7 @@ function divide2() {
 
             //call partition
             tempPos = partition(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1, tempPos);
-            pivotsForToast.push(tempPivot);
+            pivotsForToast.push(` ${tempPivot}`);
 
             //store the position of the pivot for next rounds
             pivots.push({ position: tempPos, pivot: tempPivot, level: level });
@@ -243,7 +243,7 @@ function divide2() {
             console.log("array after 1 partition is ", arrayList);
             console.log("the pivots list is (only positions): ", pivots);
             console.log("---");
-            pivotsForToast.push(tempPivot);
+            pivotsForToast.push(` ${tempPivot}`);
             console.log("NOKIA pushed", tempPivot);
 
         }
@@ -253,9 +253,9 @@ function divide2() {
     console.log("NOKIA -----------------");
     console.log("The array is ", arrayList);
     if (pivotsForToast.length === 1) {
-        showToast(`${pivotsForToast} is the pivot chosen`);// at level ${level}`);
+        showToast(`Using ${pivotsForToast} as pivot`);// at level ${level}`);
     } else {
-        showToast(`${pivotsForToast} are the pivots chosen`);// at level ${level}`, "info");
+        showToast(`Using ${pivotsForToast} as pivots`);// at level ${level}`, "info");
     }
 
     pivots.sort(((a, b) => a.position - b.position));
@@ -284,7 +284,7 @@ function divide2() {
         //     showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
 
         // document.getElementById("conquerButton").disabled = true;
-        showToast("Divide phase complete", "info");
+        showToast("Divide phase complete", "success");
         let maxLevel = Math.max(...pivots.map(p => p.level));
         console.log("vacusteel", maxLevel);
         let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
@@ -307,7 +307,7 @@ function divide2() {
         // if (solveMode === false)
         //     showDynamicTooltip(document.getElementById('solveButton'), "Solve shows the solution for the last partition created", "top-right", 10000);
         // document.getElementById("conquerButton").disabled = true;
-        showToast("Divide phase complete", "info");
+        showToast("Divide phase complete", "success");
         let maxLevel = Math.max(...pivots.map(p => p.level));
         console.log("vacusteel", maxLevel);
         let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
@@ -588,12 +588,6 @@ async function conquer() {
         console.log("All partitions conquered. They array is sorted. ");
         document.getElementById('conquerButton').disabled = true;
         showToast("Sorted successfully!", "success");
-        // await sleep(1000);
-        // showToast("Please enter numbers!", "error");
-        // await sleep(1000);   //this cased some async issues when testing. it made the normal solve mode go into infinite loop.
-
-        // document.getElementById('solveButton').disabled = true;
-        // return;
     }
     conquerFlag = true;
 
@@ -616,17 +610,20 @@ async function conquer() {
         let maxLevel = Math.max(...pivots.map(p => p.level));
         console.log("maxlevel deleted", maxLevel);
         let flag = true;
+        let conquerForToast = [];
         while (flag) {
             flag = false;
             let delIndex = pivots.findIndex(p => p.level === maxLevel);
             console.log("deIndex is", delIndex);
             if (delIndex >= 0) {
+                conquerForToast.push(` ${pivots[delIndex].pivot}`);
                 pivots.splice(delIndex, 1);
                 console.log("After deleting, pivots is", pivots);
                 flag = true;
             }
         }
-
+        if (level >= 0)
+            showToast(`Partitions across ${conquerForToast} sorted`, "info");
     }
 }
 
@@ -887,7 +884,7 @@ async function showTutorial() {
 
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("array_number"), "Enter comma/space separated numbers here and click \'Insert\'", "left");
+    showDynamicTooltip(document.getElementById("array_number"), "Enter numbers (comma or space separated)", "left");
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("array_number"))) {
@@ -906,7 +903,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("addButton"), "Inputs the numbers entered in above textbox", "right");
+    showDynamicTooltip(document.getElementById("addButton"), "Add numbers to array", "left");
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("addButton"))) {
@@ -925,7 +922,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("deleteButton"), "Searches and deletes the numbers entered in textbox above", "left");
+    showDynamicTooltip(document.getElementById("deleteButton"), "Remove matching numbers from array", "left");
 
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("deleteButton"))) {
@@ -945,7 +942,7 @@ async function showTutorial() {
 
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("divideButton"), "\'Divide\' performs level-wise partitions", "top-left", 5000);
+    showDynamicTooltip(document.getElementById("divideButton"), "Split array into partitions (level-wise)", "top-left", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton"))) {
             if (endTutorial === true) {
@@ -962,7 +959,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('conquerButton'), "\'Conquer\' performs level-wise merge of the array", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('conquerButton'), "Perform level-wise merge of the array", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton"))) {
             if (endTutorial === true) {
@@ -978,7 +975,7 @@ async function showTutorial() {
         }
     }
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' displays the final sorted array instantly", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' instantly shows sorted array", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
             if (endTutorial === true) {
@@ -995,7 +992,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' reveals solution for partitions processed so far", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' shows solution for current partitions", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton"))) {
             if (endTutorial === true) {
@@ -1012,7 +1009,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('resetButton'), "Resets the interface", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('resetButton'), "Clear array and reset interface", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("resetButton"))) {
             if (endTutorial === true) {

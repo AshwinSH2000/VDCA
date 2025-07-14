@@ -283,7 +283,7 @@ button:disabled {
 /* for dynamic prompts... in main there is static prompts.  */
 .tooltip {
 	position: absolute;
-	background: rgba(254, 254, 254, 0.8);
+	background: rgba(254, 254, 254, 0.95);
 	border: 1px solid #ccc;
 	border-radius: 6px;
 	padding: 14px;
@@ -414,7 +414,7 @@ button:disabled {
 
   .toast {
 	position: fixed;
-	top: 75px;
+	top: 210px;
 	right: 20px;
 	padding: 12px 18px;
 	border-radius: 8px;
@@ -424,7 +424,9 @@ button:disabled {
 	z-index: 3000;
 	transition: opacity 0.3s ease;
 	background-color: gray; /* default fallback */
-	box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	max-width: 200px;
   }
   .toast.hidden {
 	display: none;
@@ -447,6 +449,7 @@ button:disabled {
 	justify-content: center;
 	align-items: center;
 	z-index: 4000;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
   .toast-log-modal.hidden {
 	display: none;

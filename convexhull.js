@@ -125,6 +125,7 @@ function divideCoordinates() {
         solveDivideFlag = true;
         console.log("Max level is...", level);
         document.getElementById("conquerButton2").disabled = false;
+        showToast("Divide phase complete", "success");
         return;
     }
     let partitionForToast = [];
@@ -176,7 +177,7 @@ function divideCoordinates() {
                 value: median,
                 level: level,
             });
-            partitionForToast.push(median);
+            partitionForToast.push(` ${median}`);
             renderPartitionLines();
             partitionAdded = true;
             partitions.sort((a, b) => a - b);
@@ -257,7 +258,7 @@ function divideCoordinates() {
                     value: median,
                     level: level,
                 });
-                partitionForToast.push(median);
+                partitionForToast.push(` ${median}`);
                 renderPartitionLines();
                 partitionAdded = true;
                 console.log("New partitions is", partitions);
@@ -278,26 +279,27 @@ function divideCoordinates() {
             console.log("The final terminal CHs are", convexHulls);
             console.log("Partitions for rendering array is", partitionForRendering);
             console.log("Max level is...", level);
+            showToast("Divide phase complete", "success");
             return;
         }
         else {
             document.getElementById("divideButton2").disabled = true;
-            if (partitionForToast.length === 1)
-                showToast(`${partitionForToast} is the highlighted partition`);
-            else {
-                showToast(`${partitionForToast} are the highlighted partitions`);
-                console.log("this is just after toasting", partitionForToast);
-            }
+            // if (partitionForToast.length === 1)
+            showToast(`Using ${partitionForToast} to partition the points at level ${level}`);
+            // else {
+            //     showToast(`Using ${partitionForToast} to partition the points`);
+            //     console.log("this is just after toasting", partitionForToast);
+            // }
             divideCoordinates();
         }
     }
     else {
-        if (partitionForToast.length === 1)
-            showToast(`${partitionForToast} is the highlighted partition`);
-        else {
-            showToast(`${partitionForToast} are the highlighted partitions`);
-            console.log("this is just after toasting", partitionForToast);
-        }
+        // if (partitionForToast.length === 1)
+        showToast(`Using ${partitionForToast} to partition the points  at level ${level}`);
+        // else {
+        //     showToast(`${partitionForToast} are the highlighted partitions`);
+        //     console.log("this is just after toasting", partitionForToast);
+        // }
     }
 
     // if (partitionAdded === false) {
@@ -579,7 +581,7 @@ function conquerCoordinates() {
 
         tempPos = partitionForRendering.findIndex((p) => p.level === maxLevel - 1);
         if (tempPos > -1) {
-            conquerForToast.push(partitionForRendering[tempPos].value);
+            conquerForToast.push(` ${partitionForRendering[tempPos].value}`);
             partitionForRendering.splice(tempPos, 1);
         }
     }
@@ -1651,7 +1653,7 @@ async function showTutorial() {
 
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
+    showDynamicTooltip(document.getElementById("chgrid"), "Click to add/remove points on the grid", "left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("chgrid"))) {
             if (endTutorial === true) {
@@ -1668,7 +1670,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("divideButton2"), "Divide splits the points into smaller partitions", "top-left");
+    showDynamicTooltip(document.getElementById("divideButton2"), "Split points into smaller partitions", "top-left");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("divideButton2"))) {
             if (endTutorial === true) {
@@ -1685,7 +1687,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('conquerButton2'), "\'Conquer\' calculates and merges the hulls of adjacent partitions together", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('conquerButton2'), "Merge convex hulls of adjacent partitions", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("conquerButton2"))) {
 
@@ -1703,7 +1705,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' before \'Divide\' displays the final convex hull of all points", "top-right");
+    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' before \'Divide\' instantly shows final convex hull", "top-right");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton2"))) {
 
@@ -1721,7 +1723,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' at any point later will display the convex hulls of the partition(s) created so far", "top-right");
+    showDynamicTooltip(document.getElementById("solveButton2"), "Clicking on \'Solve\' after \'Divide\' shows convex hulls for current partitions", "top-right");
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("solveButton2"))) {
             if (endTutorial === true) {
@@ -1738,7 +1740,7 @@ async function showTutorial() {
     }
 
     sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('resetButton2'), "Resets the interface", "top-right", 5000);
+    showDynamicTooltip(document.getElementById('resetButton2'), "Clear inputs and reset interface", "top-right", 5000);
     while (sleepTimer <= 5000) {
         if (activeTooltips.has(document.getElementById("resetButton2"))) {
             if (endTutorial === true) {
