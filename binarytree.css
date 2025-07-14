@@ -1,7 +1,7 @@
 /* binarytree.css */
 body{
 	text-align: center;
-    background-color: darkkhaki;
+    background-color: #9fd566;
 	/* background-color: steelblue; */
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -11,7 +11,7 @@ h1 {
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 h3 {
-    color: darkslateblue;
+    color: rgb(0, 74, 0);
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 h6 {
@@ -27,7 +27,7 @@ label{
 	left: 0;
 	width: 100%;
 	height: 270px;
-	background-color: rgb(221, 218, 162);
+	background-color: #c8e2ac;
 	/* rgb(200, 180, 110); */
 	border-bottom: 1px solid #ccc;
 	/* display: flex; */
@@ -68,9 +68,27 @@ button {
   	padding: 5px 10px 5px 10px;
 }
 
+button:hover:enabled {
+	/* background-color: rgb(144, 144, 144); */
+	/* background-color: rgb(0, 62, 0); */
+	background-color: rgb(215, 215, 189);
+	border:rgb(from color 1 1 1);
+	/* color: rgb(214, 255, 216); */
+	/* color: rgb(184, 236, 184); */
+	color: darkgreen;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 13px;
+	margin: 5px 5px;
+	cursor: pointer;
+	border-radius: 15px;
+  	padding: 5px 10px 5px 10px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 button:disabled {
 	background-color: lightyellow;
-	border:rgb(from color 1 1 1);
+	/* border:rgb(from color 1 1 1); */
 	color: darkgreen;
 	text-align: center;
 	text-decoration: none;
@@ -78,7 +96,8 @@ button:disabled {
 	font-size: 12px;
 	margin: 5px 5px;
 	cursor: not-allowed;
-	opacity: 0.5;border-radius: 15px;
+	opacity: 0.4;
+	border-radius: 15px;
 	padding: 5px 10px 5px 10px;
 }
 
@@ -306,7 +325,10 @@ button:disabled {
 	from { opacity: 0; transform: translateY(-15px); }
 	to   { opacity: 1; transform: translateY(0); }
   }
-
+  @keyframes fadeOut {
+	from { opacity: 1; transform: translateY(0); }
+	to   { opacity: 0; transform: translateY(-15px); }
+  }
   #sidePanel {
 	position: fixed;
 	top: 0;
@@ -374,21 +396,21 @@ button:disabled {
 	display: block;
   }
   
-  #logsButton {
-	  background-color: lightyellow;
-	  border:rgb(from color 1 1 1);
-	  color: darkgreen;
-	  padding: 5px 5px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 12px;
+  /* #logsButton {
+	background-color: lightyellow;
+	border:rgb(from color 1 1 1);
+	color: darkgreen;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	  margin: 5px 5px 5px 5px;
-	  cursor: pointer;
+	margin: 5px 5px 5px 5px;
+	cursor: pointer;
 	border-radius: 15px;
 	padding: 5px 20px 5px 20px;
-  }
+  } */
 
   .toast {
 	position: fixed;
@@ -450,18 +472,3 @@ button:disabled {
 	z-index: 1;
   }
 	
-  #logsButton {
-	background-color: lightyellow;
-	border:rgb(from color 1 1 1);
-	color: darkgreen;
-	padding: 5px 5px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 12px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	margin: 5px 5px 5px 5px;
-	cursor: pointer;
-  border-radius: 15px;
-  padding: 5px 20px 5px 20px;
-}

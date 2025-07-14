@@ -1,7 +1,7 @@
 /* convexhull.css */
 body {
     /* background-color: rgba(233, 157, 157, 0.949); */
-	background-color: rgb(172, 172, 230);
+	background-color: rgb(148, 148, 219);
 	text-align: center;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -12,7 +12,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 180px;
-	background-color:rgb(195, 195, 225);
+	background-color:rgb(187, 187, 217);
 	/* rgb(20, 94, 101); */
 	 /* rgb(200, 180, 110); */
 	border-bottom: 1px solid #ccc;
@@ -29,15 +29,16 @@ h1 {
 	padding-bottom: 0;
 }
 h3 {
-    color: darkslateblue
+    /* color: darkslateblue */
+	color: rgb(79, 79, 140);
 }
 h6 {
     color: darksalmon;
 }
 button {
-	background-color: lightyellow;
+	background-color: rgb(240, 240, 246);
 	border:rgb(from color 1 1 1);
-	color: darkgreen;
+	color: rgb(57, 57, 116);
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -50,13 +51,13 @@ button {
 }
 
 button:hover:enabled {
-	background-color: yellow;
+	background-color: rgb(195, 183, 209);
 	border:rgb(from color 1 1 1);
-	color: darkgreen;
+	color: rgb(57, 57, 116);
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 12px;
+	font-size: 13px;
 	margin: 5px 5px;
 	cursor: pointer;
 	border-radius: 15px;
@@ -65,9 +66,9 @@ button:hover:enabled {
 }
 
 button:disabled{
-	background-color: lightyellow;
+	background-color: rgb(240, 240, 246);
 	border:rgb(from color 1 1 1);
-	color: rgba(0, 100, 0, 0.4);
+	color: rgb(57, 57, 116);
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -77,6 +78,7 @@ button:disabled{
 	border-radius: 15px;
   	padding: 5px 10px 5px 10px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	opacity: 0.4;
 }
 
 .redline{
@@ -255,7 +257,7 @@ button:disabled{
 	display: block;
   }
   
-  #logsButton {
+  /* #logsButton {
 	  background-color: lightyellow;
 	  border:rgb(from color 1 1 1);
 	  color: darkgreen;
@@ -269,7 +271,7 @@ button:disabled{
 	  cursor: pointer;
 	border-radius: 15px;
 	padding: 5px 20px 5px 20px;
-  }
+  } */
 
   .toast {
 	position: fixed;
