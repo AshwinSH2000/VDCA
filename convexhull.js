@@ -479,26 +479,6 @@ function conquerCoordinates() {
     console.log("The partitions are:", partitions);
     console.log("The hulls array is", hulls);
 
-    // test code...can be removed
-    // // let left = [[0,1],[1,0],[1,6],[2,1]];
-    // // let right = [[5,3], [6,10], [6,2], [7,1]];
-    // let left=[];
-    // let right = [];
-    // left.push({
-    //     points: [[0,1],[1,0],[1,2],[2,1]],
-    //     level: 0,
-    //     index: 1
-    // });
-    // right.push({
-    //     points: [[5,1], [6,0], [6,2], [7,1]],
-    //     level: 0,
-    //     index: 1
-    // })
-    // console.log("KHLKEHLSERH GALHAILUERFH",left[0].points);
-    // console.log("RIGHT GALHAILUERFH",right[0].points);
-    // mergeConvexHulls(left[0].points, right[0].points);
-    // return;
-
     //begin actual conquer phase
 
     //first get the max level in the hulls array
@@ -1118,7 +1098,7 @@ async function renderPartitionLines() {
     cyanLines.innerHTML = "";
     whiteLines.innerHTML = "";
     for (let i = 0; i < partitionForRendering.length; i++) {
-        await sleep(50);
+        // await sleep(50);
         if (partitionForRendering[i].level === 0) {
             //redLines.innerHTML = ""; //this doesnt give error here but is it required? probably not
             if (partitionForRendering[i].level === maxLevel) {
@@ -1130,7 +1110,7 @@ async function renderPartitionLines() {
                 redLines.classList.add("redlineDull");
             }
 
-            redLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            redLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // <line x1="0" y1="0" x2="0" y2="10" />
         }
         else if (partitionForRendering[i].level === 1) {
@@ -1143,7 +1123,7 @@ async function renderPartitionLines() {
                 blueLines.classList.add("bluelineDull");
             }
 
-            blueLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            blueLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // console.log("Printed blue line.............................");
         }
         else if (partitionForRendering[i].level === 2) {
@@ -1156,7 +1136,7 @@ async function renderPartitionLines() {
                 yellowLines.classList.add("yellowlineDull");
             }
 
-            yellowLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            yellowLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if (partitionForRendering[i].level === 3) {
             if (partitionForRendering[i].level === maxLevel) {
@@ -1170,7 +1150,7 @@ async function renderPartitionLines() {
             }
 
 
-            cyanLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            cyanLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
 
         //not sure if this will get executed as in my set of coordinates, I dont think level 4 will be reached
@@ -1184,43 +1164,20 @@ async function renderPartitionLines() {
                 whiteLines.classList.add("whitelineDull");
             }
 
-            whiteLines.innerHTML += `<line x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            whiteLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
-    }
-}
-
-function renderTerminalHullsWhite() {
-    //use the convexHulls to draw the termial hulls
-    for (let i = 0; i < convexHulls.length; i++) {
-        console.log("Drawing a line between the points", convexHulls[i]);
-        if (convexHulls[i].length === 1) {
-            //just a single point
-            //do nothing I guess....as it is already highlighted
-            console.log("A POINT");
-        }
-        else if (convexHulls[i].length === 2) {
-            //proper two points
-            whiteLines.innerHTML += `<line x1="${convexHulls[i][0][0]}" y1="${10 - convexHulls[i][0][1]}" x2="${convexHulls[i][1][0]}" y2="${10 - convexHulls[i][1][1]}"/>`;
-            console.log("A LINE");
-
-        }
-        else if (convexHulls[i].length > 2) {
-            console.log("collinear points detected. hence selecting the end points");
-            whiteLines.innerHTML += `<line x1="${convexHulls[i][0][0]}" y1="${10 - convexHulls[i][0][1]}" x2="${convexHulls[i][convexHulls[i].length - 1][0]}" y2="${10 - convexHulls[i][convexHulls[i].length - 1][1]}"/>`;
-        }
-
     }
 }
 
 function renderTerminalHulls() {
 
-    redLines.innerHTML = "";
-    blueLines.innerHTML = "";
-    yellowLines.innerHTML = "";
-    cyanLines.innerHTML = "";
+    // redLines.innerHTML = "";
+    // blueLines.innerHTML = "";
+    // yellowLines.innerHTML = "";
+    // cyanLines.innerHTML = "";
 
     renderPartitionLines();
-
+    console.log("CASIO hulls are", hulls);
     //use the hulls to draw the termial hulls
     for (let i = 0; i < hulls.length; i++) {
         console.log("Drawing a line between the points", hulls[i]);
@@ -1234,7 +1191,7 @@ function renderTerminalHulls() {
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                cyanLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
@@ -1247,22 +1204,19 @@ function renderTerminalHulls() {
             else if (hulls[i].points.length > 2) {
                 console.log("collinear points detected. hence selecting the hull points of that polygon");
 
-                //  cyanLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
-                //                                     y1="${10-hulls[i].points[0][1]}" 
-                //                                     x2="${hulls[i].points[hulls[i].points.length-1][0]}" 
-                //                                     y2="${10-hulls[i].points[hulls[i].points.length-1][1]}"
-                //                                 />`;
-
                 //iterate through all the points of the hulls[i]...make a polygon out of it. 
                 //then draw a line joining each part of the polygon
                 //hulls[i].points will have all the points needed
                 let colouredHullPoints = hulls[i].points;
                 colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
                 for (let i = 0, j = colouredHullPoints.length - 1; i < colouredHullPoints.length; j = i++) {
+                    cyanLines.setAttribute("class", "cyanline");
+                    // void line.offsetWidth;  // Trigger reflow
+
                     cyanLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    cyanLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                    cyanLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1283,7 +1237,7 @@ function renderTerminalHulls() {
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                yellowLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                yellowLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
@@ -1308,7 +1262,7 @@ function renderTerminalHulls() {
                     yellowLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    yellowLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                    yellowLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1328,7 +1282,7 @@ function renderTerminalHulls() {
             else if (hulls[i].points.length === 2) {
                 //proper two points
                 greenLines.classList.add("greenline");
-                greenLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                greenLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
@@ -1355,7 +1309,7 @@ function renderTerminalHulls() {
                     greenLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    greenLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                    greenLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1372,7 +1326,7 @@ function renderTerminalHulls() {
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                blueLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                blueLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
@@ -1397,7 +1351,7 @@ function renderTerminalHulls() {
                     blueLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    blueLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                    blueLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1414,7 +1368,7 @@ function renderTerminalHulls() {
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                redLines.innerHTML += `<line x1="${hulls[i].points[0][0]}" 
+                redLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
@@ -1439,7 +1393,7 @@ function renderTerminalHulls() {
                     redLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    redLines.innerHTML += `<line x1="${colouredHullPoints[i][0]}" 
+                    redLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
