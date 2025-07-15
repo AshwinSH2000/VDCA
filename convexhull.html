@@ -147,9 +147,19 @@
     </div>
   </div>
 
+  <!-- for FAQs -->
+  <div id="faqsModal" class="toast-log-modal hidden">
+    <div class="toast-log-content-wide">
+      <h3>Frequently Asked Questions</h3>
+      <ol id="faqsList"></ol>
+      <button onclick="closeFAQs()">Close</button>
+    </div>
+  </div>
+
   <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
   <div id="notificationBell">
-    <button type="button" id="tutorialButton" title="View tutorial" class="logsButton">Tutorial</button>
+    <button type="button" id="FAQs" title="FAQs" class="logsButton">FAQs</button>
+    <button type="button" id="tutorialButton" title="View tutorial" class="logsButton">Guide me!</button>
     <button type="button" id="logsButton" title="View logs" class="logsButton">Logs</button>
   </div>
   <!--🔔-->

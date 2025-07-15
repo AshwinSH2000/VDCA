@@ -799,6 +799,10 @@ let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
 const bell = document.getElementById("logsButton");
+const FAQsModal = document.getElementById("faqsModal");
+const FAQsList = document.getElementById("faqsList");
+const FAQs = document.getElementById("FAQs");
+
 
 
 // Open log when bell is clicked
@@ -1028,6 +1032,56 @@ async function showTutorial() {
 
 }
 
+function showFAQs() {
+    FAQsList.textContent = "";
+
+    const entry = document.createElement("li");
+    entry.innerHTML = `<b>What is quicksort?</b><br>It is an efficient sorting algorithm. It has a best and average time complexity of O(n logn) and in the worst case, it can degrade to O(n^2). `;
+    FAQsList.appendChild(entry);
+
+    const entry2 = document.createElement("li");
+    entry2.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
+    The array of numbers is divided into smaller sub arrays by choosing a pivot element. The subarrays are conquered by placing the pivot in its correct position and rearranging the array such that all elements smaller than the pivot is placed in its left subarray and all elements larger are placed in its right subarray. New pivots are chosen in each of the subarrays and the process is recursively repeated until all the elements are in their correct position. `;
+    FAQsList.appendChild(entry2);
+
+    const entry3 = document.createElement("li");
+    entry3.innerHTML += `<b>How is the pivot chosen? </b><br>
+    The usual methods include choosing the first/last/middle element as the pivots but in this visualisation, it is chosen by “median of 3”. In this method, the median of the first, middle and last elements is chosen as pivot. For example: if we have 6,1,5,2,4,3,7 as the array, the initial pivot element would be 6. How? The first, middle and last elements are 6, 2 and 7 respectively. On sorting them, we obtains 2, 6, 7 whose median is 6. `;
+    FAQsList.appendChild(entry3);
+
+    const entry4 = document.createElement("li");
+    entry4.innerHTML += `<b>Why are some bars coloured?</b><br>
+    The coloured bars represent pivots and are also placed with more gap compared to normal grey bars. The colours signify the level in which these partitions were made. 
+    <ul>
+    <li style="color: red;">Level 0: red</li> 
+    <li style="color: blue;">Level 1: blue</li>
+    <li style="color: green;">Level 2: green </li>
+    <li style="color: orange;">Level 3: orange </li>
+    <li style="color: brown;">Level 4: brown </li>
+    <li style="color: violet;">Level 5: violet </li>
+    <li style="color: rgb(133, 197, 36);">Level 6: greenyellow </li>
+    </ul>`;
+    FAQsList.appendChild(entry4);
+
+    const entry5 = document.createElement("li");
+    entry5.innerHTML += `<b>What are the functions of different buttons?</b><br>
+    Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;
+    FAQsList.appendChild(entry5);
+
+    const entry6 = document.createElement("li");
+    entry6.innerHTML += `<b>How to view old logs?</b><br>
+    Click on the 'Logs' button at any point to view all the logs generated until then. `;
+    FAQsList.appendChild(entry6);
+}
+
+FAQs.addEventListener("click", () => {
+    FAQsModal.classList.remove("hidden");
+    FAQs.classList.remove("new"); // remove red dot
+
+});
+function closeFAQs() {
+    FAQsModal.classList.add("hidden");
+}
 
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
     document.getElementById("sidePanel").classList.toggle("open");
@@ -1047,4 +1101,7 @@ document.getElementById('tutorialButton').addEventListener('click', () => {
     // tutorialState = !tutorialState;
     showTutorial();
     endTutorial = false;
+});
+document.getElementById('FAQs').addEventListener('click', () => {
+    showFAQs();
 });

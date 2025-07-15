@@ -176,6 +176,9 @@ h3{
   width: 40px;
 }
 
+li {
+	margin: 10px;
+  }
 
 
 /* for dynamic prompts... in main there is static prompts.  */
@@ -346,6 +349,15 @@ h3{
   overflow-y: auto;
   text-align: left;
 }
+.toast-log-content-wide {
+	background: white;
+	padding: 20px 30px;
+	border-radius: 12px;
+	max-height: 80%;
+	width: 900px;
+	overflow-y: auto;
+	text-align: left;
+  }
 .toast-log-content ul {
   padding-left: 20px;
 }

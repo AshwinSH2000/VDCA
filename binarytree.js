@@ -1495,6 +1495,9 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 const toast = document.getElementById("toast");
 const toastLogModal = document.getElementById("toastLogModal");
 const toastLogList = document.getElementById("toastLogList");
+const FAQsModal = document.getElementById("faqsModal");
+const FAQsList = document.getElementById("faqsList");
+const FAQs = document.getElementById("FAQs");
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
@@ -1688,6 +1691,57 @@ async function showTutorial() {
 }
 
 
+function showFAQs() {
+  FAQsList.textContent = "";
+
+  const entry = document.createElement("li");
+  entry.innerHTML = `<b>What is binary tree construction?</b><br>A binary tree can be uniquely constructed from its inorder and preorder traversals. The key is to recursively use preorder traversal to identify the root and then use the inorder traversal to split the nodes into left and right subtrees. `;
+  FAQsList.appendChild(entry);
+
+  const entry2 = document.createElement("li");
+  entry2.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
+  The first element of the preorder traversal is the root of the bonary tree. This element is then located in the inorder traversal and all the elements to its left form the left subtree and all the elements to its right form the right subtree. These subtrees are then recursively divided by identifying the root of each subtree from their preorder sequence (the subtree elements will be placed together in the preorder traversal and its first element will be the root of that subtree). The tree will then be recursively constructed in a bottom-up approach during the conquer phase. `;
+  FAQsList.appendChild(entry2);
+
+  const entry3 = document.createElement("li");
+  entry3.innerHTML += `<b>Why are some elements coloured in the inorder and preorder sequences on the left?</b><br>
+  The colored elements at the last level are the leaf nodes and at any other level, they are the root of the subtree originating at that level.`;
+  FAQsList.appendChild(entry3);
+
+  const entry4 = document.createElement("li");
+  entry4.innerHTML += `<b>Why are the tree nodes initially coloured but then turn black?</b><br>
+  The coloured nodes signify the nodes that are currenlty in focus and are just added into the tree. When the tree moves to another level to add new nodes, all older nodes are coloured black to infer they are no longer in focus. `;
+  FAQsList.appendChild(entry4);
+
+  const entry5 = document.createElement("li");
+  entry5.innerHTML += `<b>Why do some elements and nodes appear overlapped or distorted?</b><br>
+  At times, the elements and the circular nodes gets overlapped or distored due the browser viewport size of the device or when the inputs are large. You could try giving a smaller example to see the visualisation. For example, <br>
+  Inorder: 4 2 5 1 6 3 7 and Preorder: 1 2 4 5 3 6 7  or<br>
+  Inorder: 6 5 4 3 2 1 and Preorder: 1 2 3 4 5 6`;
+  FAQsList.appendChild(entry5);
+
+  const entry6 = document.createElement("li");
+  entry6.innerHTML += `<b>What are the functions of different buttons?</b><br>
+  Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;
+  FAQsList.appendChild(entry6);
+
+  const entry7 = document.createElement("li");
+  entry7.innerHTML += `<b>How to view old logs?</b><br>
+  Click on the 'Logs' button at any point to view all the logs generated until then. `;
+  FAQsList.appendChild(entry7);
+}
+
+FAQs.addEventListener("click", () => {
+  FAQsModal.classList.remove("hidden");
+  FAQs.classList.remove("new"); // remove red dot
+
+});
+function closeFAQs() {
+  FAQsModal.classList.add("hidden");
+}
+
+
+
 document.getElementById("togglePanelBtn").addEventListener("click", () => {
   document.getElementById("sidePanel").classList.toggle("open");
 });
@@ -1698,9 +1752,7 @@ document.getElementById("deleteButton3").addEventListener("click", deleteInorder
 document.getElementById("divideButton3").addEventListener("click", divideTree);
 document.getElementById("conquerButton3").addEventListener("click", () => {
   //i need to remove solve's tooltips
-  console.log("NOKIA PRE");
   if (activeTooltips.has(document.getElementById("solveButton3"))) {
-    console.log("NOKIA");
     const old = activeTooltips.get(document.getElementById('solveButton3'));
     clearTimeout(old.timer); // if you store timer too
     old.element.remove();
@@ -1718,4 +1770,7 @@ document.getElementById("tutorialButton").addEventListener('click', () => {
   // tutorialState = !tutorialState;
   showTutorial();
   endTutorial = false;
+});
+document.getElementById('FAQs').addEventListener('click', () => {
+  showFAQs();
 });

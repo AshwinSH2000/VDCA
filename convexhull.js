@@ -1753,17 +1753,27 @@ function removeAllToolTips() {
 
 const toast = document.getElementById("toast");
 const toastLogModal = document.getElementById("toastLogModal");
+const FAQsModal = document.getElementById("faqsModal");
 const toastLogList = document.getElementById("toastLogList");
+const FAQsList = document.getElementById("faqsList");
+
 let toastTimer = null;
 let currentToastType = "info";
 let currentToastMessage = "";
 const bell = document.getElementById("logsButton");
+const FAQs = document.getElementById("FAQs");
 
 
 // Open log when bell is clicked
 bell.addEventListener("click", () => {
     toastLogModal.classList.remove("hidden");
     bell.classList.remove("new"); // remove red dot
+
+});
+
+FAQs.addEventListener("click", () => {
+    FAQsModal.classList.remove("hidden");
+    FAQs.classList.remove("new"); // remove red dot
 
 });
 
@@ -1800,7 +1810,51 @@ function showToast(message, type = "info") {
 
     }, 2000);
 }
+function showFAQs() {
+    FAQsList.textContent = "";
 
+    const entry = document.createElement("li");
+    entry.innerHTML = `<b>What is Convex Hull? </b><br>For any given point(s), its convex hull is the smallest set of points that encloses all the points forming a convex polygon. The image below shows the set of points and its convex hull. The red highlighted point is excluded from the convex hull as it lies on the line segment between the two endpoints and doesn't contribute to the boundary of the shape.`;
+    const image = document.createElement("img");
+    image.src = "./convex_hull.jpg";
+    image.alt = "convex hull example";
+    image.style.width = "500px";
+    image.style.marginTop = "8px";
+    FAQsList.appendChild(entry);
+    FAQsList.appendChild(image);
+
+    const entry2 = document.createElement("li");
+    entry2.innerHTML += `<b>What is a convex polygon?</b><br>
+    A convex polygon is a polygon where all interior angles are less than 180 degrees. This means all vertices point outwards and no interior angle “caves in”.`;
+    FAQsList.appendChild(entry2);
+    const image2 = document.createElement("img");
+    image2.src = "./convex_concave.jpg";
+    image2.alt = "convex and concave polygon example";
+    image2.style.width = "400px";
+    image2.style.marginTop = "8px";
+    FAQsList.appendChild(image2);
+
+    const entry3 = document.createElement("li");
+    entry3.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
+    The set of points are recursively divided into smaller partitions until each partition contains either one or two points (base case). For a single point, its convex hull is the point itself and for two points, it is the line joining the two points. These base cases are recursively merged creating larger convex hulls until the hull of the entire set of points is found out. `;
+    FAQsList.appendChild(entry3);
+
+    const entry6 = document.createElement("li");
+    entry6.innerHTML += `<b>What are solid (& bright) and dotted (& dull) lines during execution?</b><br>
+    Solid lines represent the currently active or in-focus partition line(s) and hull(s) while the dotted lines represent the old or inactive partition line(s) and hull(s).`;
+    FAQsList.appendChild(entry6);
+
+    const entry4 = document.createElement("li");
+    entry4.innerHTML += `<b>What are the functions of different buttons?</b><br>
+    Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;
+    FAQsList.appendChild(entry4);
+
+    const entry5 = document.createElement("li");
+    entry5.innerHTML += `<b>How to view old logs?</b><br>
+    Click on the 'Logs' button at any point to view all the logs generated until then. `;
+    FAQsList.appendChild(entry5);
+
+}
 // Expand log on toast click
 toast.addEventListener("click", () => {
     toast.classList.add("hidden");
@@ -1813,6 +1867,9 @@ function closeToastLog() {
     toastLogModal.classList.add("hidden");
 }
 
+function closeFAQs() {
+    FAQsModal.classList.add("hidden");
+}
 
 // document.getElementById('addButton2').addEventListener('click', inputCoordinates);
 // document.getElementById('deleteButton2').addEventListener('click', deleteCoordinates);
@@ -1831,5 +1888,8 @@ document.getElementById('tutorialButton').addEventListener('click', () => {
     // tutorialState  = !tutorialState;
     showTutorial();
     endTutorial = false;
+});
+document.getElementById('FAQs').addEventListener('click', () => {
+    showFAQs();
 });
 
