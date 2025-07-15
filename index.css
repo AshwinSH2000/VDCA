@@ -2,18 +2,64 @@ button {
 	background-color: lightyellow;
 	border:rgb(from color 1 1 1);
 	color: darkgreen;
-	padding: 10px 15px;
+	padding: 10px 15px 10px 15px;	
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 12px;
+	font-size: 15px;
 	margin: 10px 10px;
 	cursor: pointer;
 	border-radius: 30px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+#qs:hover:enabled {
+	background-color: rgb(123, 204, 215);
+	border:rgb(from color 1 1 1);
+	color: rgb(0, 0, 0);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	margin: 10px 10px;
+	cursor: pointer;
+	border-radius: 30px;
+	padding: 10px 15px 10px 15px;	
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#bt:hover:enabled {
+	background-color: #9fd566;
+	border:rgb(from color 1 1 1);
+	color: rgb(0, 0, 0);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	margin: 10px 10px;
+	cursor: pointer;
+	border-radius: 30px;
+	padding: 10px 15px 10px 15px;	
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#ch:hover:enabled {
+	background-color: rgb(148, 148, 219);
+	border:rgb(from color 1 1 1);
+	color: rgb(0, 0, 0);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	margin: 10px 10px;
+	cursor: pointer;
+	border-radius: 30px;
+	padding: 10px 15px 10px 15px;	
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 body {
-	background-color: powderblue;
+	/* background-color: powderblue; */
+	background-color: palegoldenrod;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	text-align: center;
 }
 p {
 	color: darkblue;

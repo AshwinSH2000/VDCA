@@ -78,23 +78,24 @@ button:hover:enabled {
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 15px;
-	margin: 4px 4px;
+	font-size: 13px;
+	margin: 5px 5px;
 	cursor: pointer;
 	border-radius: 15px;
   	padding: 5px 10px 5px 10px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-/* #FAQs:hover:enabled{
+/* #tutorialButton:hover:enabled, 
+#FAQs:hover:enabled{
 	background-color: rgb(171, 171, 255);
 	border:rgb(from color 1 1 1);
 	color: rgb(0, 0, 0);
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 15px;
-	margin: 4px 4px;
+	font-size: 13px;
+	margin: 5px 5px;
 	cursor: pointer;
 	border-radius: 15px;
   	padding: 5px 10px 5px 10px;

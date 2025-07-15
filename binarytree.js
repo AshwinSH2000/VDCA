@@ -1700,7 +1700,7 @@ function showFAQs() {
 
   const entry2 = document.createElement("li");
   entry2.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
-  The first element of the preorder traversal is the root of the bonary tree. This element is then located in the inorder traversal and all the elements to its left form the left subtree and all the elements to its right form the right subtree. These subtrees are then recursively divided by identifying the root of each subtree from their preorder sequence (the subtree elements will be placed together in the preorder traversal and its first element will be the root of that subtree). The tree will then be recursively constructed in a bottom-up approach during the conquer phase. `;
+  The first element of the preorder traversal is the root of the binary tree. This element is then located in the inorder traversal and all the elements to its left form the left subtree and all the elements to its right form the right subtree. These subtrees are then recursively divided by identifying the root of each subtree from their preorder sequence (the subtree elements will be placed together in the preorder traversal and its first element will be the root of that subtree). The tree will then be recursively constructed in a bottom-up approach during the conquer phase. `;
   FAQsList.appendChild(entry2);
 
   const entry3 = document.createElement("li");
@@ -1710,7 +1710,7 @@ function showFAQs() {
 
   const entry4 = document.createElement("li");
   entry4.innerHTML += `<b>Why are the tree nodes initially coloured but then turn black?</b><br>
-  The coloured nodes signify the nodes that are currenlty in focus and are just added into the tree. When the tree moves to another level to add new nodes, all older nodes are coloured black to infer they are no longer in focus. `;
+  The coloured nodes signify the nodes that are currenlty in focus and are just added into the tree. When the tree moves to another level to add new nodes, all older nodes are coloured black to show they are no longer in focus. `;
   FAQsList.appendChild(entry4);
 
   const entry5 = document.createElement("li");
