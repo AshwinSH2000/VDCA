@@ -18,7 +18,7 @@ body {
 	}
   }
 
-
+/* 
 @keyframes spawnIn {
 	from { opacity: 0;  transform: scale(1);}
 	to { opacity: 1;  transform: scale(1);}
@@ -26,7 +26,7 @@ body {
 
 line.spawnIn, circle.spawnIn {
     animation: spawnIn 0.3s ease-in-out;
-}
+} */
 #fixedPart{
 	position: fixed;
 	top: 0;
@@ -121,37 +121,37 @@ button:disabled{
 .redline{
 	stroke: red;
 	fill:red;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 .blueline{
 	stroke: rgb(35, 42, 247);
 	fill: rgb(35, 42, 247);
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 .greenline{
 	stroke: green;
 	fill: green;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 .yellowline{
 	stroke: yellow;
 	fill: yellow;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 .cyanline{
 	stroke: cyan;
 	fill: cyan;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 .whiteline{
 	stroke: white;
 	fill: white;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 
 }
 
@@ -160,42 +160,42 @@ button:disabled{
 	fill:rgba(255, 0, 0, 0.2);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 .bluelineDull{
 	stroke: rgba(35, 42, 247, 0.4);
 	fill: rgba(35, 42, 247, 0.4);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 .greenlineDull{
 	stroke: rgba(0, 128, 0, 0.2);
 	fill: rgba(0, 128, 0, 0.2);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 .yellowlineDull{
 	stroke: rgba(255, 255, 0, 0.3);
 	fill: rgba(255, 255, 0, 0.3);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 .cyanlineDull{
 	stroke: rgb(0, 255, 255, 0.2);
 	fill: rgb(0, 255, 255, 0.2) ;
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 .whitelineDull{
 	stroke: rgba(255, 255, 255, 0.2);
 	fill: rgba(255, 255, 255, 0.2);
 	stroke-dasharray: 0.01 0.2;
 	stroke-linecap: round;
-	animation: spawnIn 0.3s ease-in-out;
+	/* animation: spawnIn 0.3s ease-in-out; */
 }
 
 /* for dynamic prompts... in main there is static prompts.  */
@@ -239,10 +239,7 @@ button:disabled{
 	color: #ff0000;
   }
 
-  @keyframes fadeIn {
-	from { opacity: 0; transform: translateY(-15px); }
-	to   { opacity: 1; transform: translateY(0); }
-  }
+ 
 
 
   #sidePanel {
@@ -390,4 +387,50 @@ button:disabled{
 	color: #f1f1f1;
 	z-index: 1;
   }
+
+  /* Add these new animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Apply to all animated elements */
+line, circle {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Specific animations for different elements */
+.partition-line {
+    animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.hull-line {
+    animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.hull-point {
+    animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Add this to your existing dull line classes */
+.redlineDull, .bluelineDull, .greenlineDull, 
+.yellowlineDull, .cyanlineDull, .whitelineDull {
+    transition: all 0.4s ease-out;
+}
+
+/* Add hover effect for better interactivity */
+line:hover {
+    stroke-width: 0.12 !important;
+}
 	

@@ -1112,6 +1112,7 @@ async function renderPartitionLines() {
     for (let i = 0; i < partitionForRendering.length; i++) {
         // await sleep(50);
         if (partitionForRendering[i].level === 0) {
+
             //redLines.innerHTML = ""; //this doesnt give error here but is it required? probably not
             if (partitionForRendering[i].level === maxLevel) {
                 // redLines.classList.remove("redlineDull");
@@ -1123,8 +1124,7 @@ async function renderPartitionLines() {
                 // redLines.classList.add("redlineDull");
                 redLines.setAttribute("class", "redlineDull");
             }
-
-            redLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            redLines.innerHTML += `<line class="partition-line" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if (partitionForRendering[i].level === 1) {
             if (partitionForRendering[i].level === maxLevel) {
@@ -1137,8 +1137,7 @@ async function renderPartitionLines() {
                 // blueLines.classList.add("bluelineDull");
                 blueLines.setAttribute("class", "bluelineDull");
             }
-
-            blueLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            blueLines.innerHTML += `<line class="partition-line" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
             // console.log("Printed blue line.............................");
         }
         else if (partitionForRendering[i].level === 2) {
@@ -1152,8 +1151,7 @@ async function renderPartitionLines() {
                 // yellowLines.classList.add("yellowlineDull");
                 yellowLines.setAttribute("class", "yellowlineDull");
             }
-
-            yellowLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            yellowLines.innerHTML += `<line class="partition-line" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
         else if (partitionForRendering[i].level === 3) {
             if (partitionForRendering[i].level === maxLevel) {
@@ -1168,8 +1166,7 @@ async function renderPartitionLines() {
                 cyanLines.setAttribute("class", "cyanlineDull");
             }
 
-
-            cyanLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            cyanLines.innerHTML += `<line class="partition-line" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
 
         //not sure if this will get executed as in my set of coordinates, I dont think level 4 will be reached
@@ -1185,7 +1182,7 @@ async function renderPartitionLines() {
                 whiteLines.setAttribute("class", "whitelineDull");
             }
 
-            whiteLines.innerHTML += `<line class="spawnIn" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
+            whiteLines.innerHTML += `<line class="partition-line" x1="${partitionForRendering[i].value}" y1="-1" x2="${partitionForRendering[i].value}" y2="11"/>`;
         }
     }
 }
@@ -1206,18 +1203,18 @@ function renderTerminalHulls() {
             if (hulls[i].points.length === 1) {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
-                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                cyanLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
                 console.log("A POINT");
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                cyanLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
+                cyanLines.innerHTML += `<line class="hull-line" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
                                             />`;
-                cyanLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
-                cyanLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
+                cyanLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                cyanLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
                 console.log("A LINE");
 
             }
@@ -1233,10 +1230,10 @@ function renderTerminalHulls() {
                     cyanLines.setAttribute("class", "cyanline");
                     // void line.offsetWidth;  // Trigger reflow
 
-                    cyanLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                    cyanLines.innerHTML += `<circle class="hull-point" cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    cyanLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
+                    cyanLines.innerHTML += `<line class="hull-line" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1252,19 +1249,19 @@ function renderTerminalHulls() {
             if (hulls[i].points.length === 1) {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
-                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                yellowLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
                 console.log("A POINT");
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                yellowLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
+                yellowLines.innerHTML += `<line class="hull-line" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
                                             />`;
                 console.log("A LINE");
-                yellowLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
-                yellowLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
+                yellowLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                yellowLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
 
             }
             else if (hulls[i].points.length > 2) {
@@ -1279,10 +1276,10 @@ function renderTerminalHulls() {
                 let colouredHullPoints = hulls[i].points;
                 colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
                 for (let i = 0, j = colouredHullPoints.length - 1; i < colouredHullPoints.length; j = i++) {
-                    yellowLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                    yellowLines.innerHTML += `<circle class="hull-point" cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    yellowLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
+                    yellowLines.innerHTML += `<line class="hull-line" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1297,20 +1294,20 @@ function renderTerminalHulls() {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
                 console.log("A POINT");
-                greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`
+                greenLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
                 // greenLines.classList.add("greenline");
                 greenLines.setAttribute("class", "greenline");
-                greenLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
+                greenLines.innerHTML += `<line class="hull-line" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
                                             />`;
                 console.log("A LINE");
-                greenLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
-                greenLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
+                greenLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                greenLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
 
             }
             else if (hulls[i].points.length > 2) {
@@ -1328,10 +1325,10 @@ function renderTerminalHulls() {
                     console.log("la la la")
                     // greenLines.classList.add("greenline");
                     greenLines.setAttribute("class", "greenline");
-                    greenLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                    greenLines.innerHTML += `<circle class="hull-point" cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    greenLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
+                    greenLines.innerHTML += `<line class="hull-line" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1344,18 +1341,18 @@ function renderTerminalHulls() {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
                 console.log("A POINT");
-                blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                blueLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                blueLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
+                blueLines.innerHTML += `<line class="hull-line" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
                                     />`;
                 console.log("A LINE");
-                blueLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
-                blueLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
+                blueLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                blueLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
 
             }
             else if (hulls[i].points.length > 2) {
@@ -1370,10 +1367,10 @@ function renderTerminalHulls() {
                 let colouredHullPoints = hulls[i].points;
                 colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
                 for (let i = 0, j = colouredHullPoints.length - 1; i < colouredHullPoints.length; j = i++) {
-                    blueLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                    blueLines.innerHTML += `<circle class="hull-point" cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    blueLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
+                    blueLines.innerHTML += `<line class="hull-line" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
@@ -1386,18 +1383,18 @@ function renderTerminalHulls() {
                 //just a single point
                 //do nothing I guess....as it is already highlighted
                 console.log("A POINT");
-                redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                redLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
             }
             else if (hulls[i].points.length === 2) {
                 //proper two points
-                redLines.innerHTML += `<line class="spawnIn" x1="${hulls[i].points[0][0]}" 
+                redLines.innerHTML += `<line class="hull-line" x1="${hulls[i].points[0][0]}" 
                                                 y1="${10 - hulls[i].points[0][1]}" 
                                                 x2="${hulls[i].points[1][0]}" 
                                                 y2="${10 - hulls[i].points[1][1]}"
                                         />`;
                 console.log("A LINE");
-                redLines.innerHTML += `<circle cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
-                redLines.innerHTML += `<circle cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
+                redLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[0][0]}" cy="${10 - hulls[i].points[0][1]}" r="0.08" />`;
+                redLines.innerHTML += `<circle class="hull-point" cx="${hulls[i].points[1][0]}" cy="${10 - hulls[i].points[1][1]}" r="0.08" />`;
 
             }
             else if (hulls[i].points.length > 2) {
@@ -1412,10 +1409,10 @@ function renderTerminalHulls() {
                 let colouredHullPoints = hulls[i].points;
                 colouredHullPoints = reorderPolygonVertices(colouredHullPoints);
                 for (let i = 0, j = colouredHullPoints.length - 1; i < colouredHullPoints.length; j = i++) {
-                    redLines.innerHTML += `<circle cx="${colouredHullPoints[i][0]}" 
+                    redLines.innerHTML += `<circle class="hull-point" cx="${colouredHullPoints[i][0]}" 
                                                     cy="${10 - colouredHullPoints[i][1]}" r="0.08" />`;
 
-                    redLines.innerHTML += `<line class="spawnIn" x1="${colouredHullPoints[i][0]}" 
+                    redLines.innerHTML += `<line class="hull-line" x1="${colouredHullPoints[i][0]}" 
                                                     y1="${10 - colouredHullPoints[i][1]}" 
                                                     x2="${colouredHullPoints[j][0]}" 
                                                     y2="${10 - colouredHullPoints[j][1]}"
