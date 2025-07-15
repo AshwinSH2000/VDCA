@@ -146,30 +146,30 @@ h3{
 
 
 .pivot-level-0 {
-  background-color: #5d4fff;
+  background-color: red;
 }
 
 .pivot-level-1 {
-  background-color: #a64b00;
+  background-color: rgb(35, 42, 247);
 }
 
 .pivot-level-2 {
-  background-color: #ff0000;
+  background-color: green;
 }
 
 .pivot-level-3 {
-  background-color: #007c1d;
+  background-color: orange;
 }
 
 .pivot-level-4 {
-  background-color: #92a200;
+  background-color: brown;
 }
 
 .pivot-level-5 {
-  background-color: #9300b1;
+  background-color: violet
 }
 .pivot-level-6 {
-  background-color: #ff7402;
+  background-color: greenyellow
 }
 
 .gap-div {
