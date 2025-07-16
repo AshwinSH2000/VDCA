@@ -430,7 +430,26 @@ line, circle {
 }
 
 /* Add hover effect for better interactivity */
-line:hover {
+/* line:hover {
     stroke-width: 0.12 !important;
-}
+} */
 	
+/* In your <style> block or CSS file */
+svg {
+    /* Ensure your viewBox correctly maps to your circle coordinates */
+    width: 500px; /* Or whatever display size you want */
+    height: 500px;
+    border: 1px solid #ccc;
+}
+
+circle {
+    fill: blue; /* Default color */
+    stroke: none; /* No stroke by default */
+    /* transition: stroke-width 0.2s ease, stroke 0.2s ease; Smooth transition for visual changes */
+}
+
+circle:hover {
+    stroke: rgb(0, 204, 255); /* Color of the stroke on hover */
+    stroke-width: 0.1; /* Width of the stroke on hover */
+    /* You could also change fill here if you want: fill: lightblue; */
+}

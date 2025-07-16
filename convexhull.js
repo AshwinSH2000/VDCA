@@ -1422,7 +1422,70 @@ function renderTerminalHulls() {
         }
     }
 }
+function drawGridPoints() {
+    const grid = document.getElementById("grid");
+    const SVG_NS = 'http://www.w3.org/2000/svg'; // Define namespace once
 
+    for (let i = 0; i <= 10; i++) {
+        for (let j = 0; j <= 10; j++) {
+            const circle = document.createElementNS(SVG_NS, 'circle');
+            circle.setAttribute('cx', i);
+            circle.setAttribute('cy', j);
+            circle.setAttribute('r', '0.07');
+            circle.setAttribute('fill', 'blue'); // Default fill
+
+            // Add data attributes to store logical coordinates if needed for other logic
+            circle.dataset.x = i;
+            circle.dataset.y = j;
+
+            // Attach individual event listeners for more specific control
+            circle.addEventListener('mouseenter', handleCircleMouseEnter);
+            circle.addEventListener('mouseleave', handleCircleMouseLeave);
+
+            grid.appendChild(circle);
+        }
+    }
+}
+
+
+function handleCircleMouseEnter(e) {
+    if (divideFlag || conquerFlag) {
+        return; // Do nothing if flags are set
+    }
+
+    const hoveredCircle = e.target;
+    // Apply visual changes directly via JavaScript, or add/remove classes
+    // hoveredCircle.style.stroke = 'red';
+    // hoveredCircle.style.strokeWidth = '0.12';
+
+    // Or, better, toggle a class
+    hoveredCircle.classList.add('hovered-circle');
+
+    console.log(`Hovering over logical point: ${hoveredCircle.dataset.x}, ${hoveredCircle.dataset.y}`);
+}
+
+function handleCircleMouseLeave(e) {
+    if (divideFlag || conquerFlag) {
+        return; // Do nothing if flags are set
+    }
+
+    const leftCircle = e.target;
+    // Remove visual changes directly, or remove class
+    // leftCircle.style.stroke = ''; // Reset to default
+    // leftCircle.style.strokeWidth = ''; // Reset to default
+
+    // Or, remove the class
+    leftCircle.classList.remove('hovered-circle');
+}
+
+
+// Call drawGridPoints after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    drawGridPoints();
+    // Example: set flags for testing
+    // divideFlag = true;
+    // conquerFlag = false;
+});
 
 grid.addEventListener("click", (e) => {
 
