@@ -392,11 +392,11 @@ button:disabled{
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(10px) scale(0.95);
+        /* transform: translateY(10px) scale(0.95); */
     }
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        /* transform: translateY(0) scale(1); */
     }
 }
 
@@ -412,15 +412,15 @@ line, circle {
 
 /* Specific animations for different elements */
 .partition-line {
-    animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: fadeInUp 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .hull-line {
-    animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: fadeInUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .hull-point {
-    animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: fadeInUp 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 /* Add this to your existing dull line classes */
