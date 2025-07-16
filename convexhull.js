@@ -1469,6 +1469,9 @@ grid.addEventListener("click", (e) => {
             }
         }
     }
+    if (found === false) {
+        showToast("Click closer to the intersection", "error");
+    }
 });
 //////////////////codeforgraph
 
@@ -1627,7 +1630,7 @@ function drawInvisiblePoints() {
             const circle = document.createElementNS(SVG_NS, 'circle');
             circle.setAttribute('cx', i);
             circle.setAttribute('cy', j);
-            circle.setAttribute('r', '0.01');
+            circle.setAttribute('r', '0.07');
             circle.setAttribute("class", "invisible-circle");
             grid.appendChild(circle);
         }
