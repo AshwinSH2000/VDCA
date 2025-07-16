@@ -125,7 +125,9 @@ function divideCoordinates() {
         solveDivideFlag = true;
         console.log("Max level is...", level);
         document.getElementById("conquerButton2").disabled = false;
-        showToast("Divide phase complete", "success");
+
+        //this was a quickfix. need to find and avoid this dual printing of toast
+        if (solveMode === false) showToast("Divide phase complete", "success");
         return;
     }
     let partitionForToast = [];
