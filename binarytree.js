@@ -1714,8 +1714,8 @@ function showFAQs() {
   FAQsList.appendChild(entry4);
 
   const entry5 = document.createElement("li");
-  entry5.innerHTML += `<b>Why do some elements and nodes appear overlapped or distorted?</b><br>
-  At times, the elements and the circular nodes gets overlapped or distored due the browser viewport size of the device or when the inputs are large. You could try giving a smaller example to see the visualisation. For example, <br>
+  entry5.innerHTML += `<b>Why do some elements and nodes appear overlapped or partly visible?</b><br>
+  At times, the elements and the circular nodes gets overlapped or partly visible due the browser viewport size of the device or when the inputs are large. You could try giving a smaller example to see the visualisation. For example, <br>
   Inorder: 4 2 5 1 6 3 7 and Preorder: 1 2 4 5 3 6 7  or<br>
   Inorder: 6 5 4 3 2 1 and Preorder: 1 2 3 4 5 6`;
   FAQsList.appendChild(entry5);
