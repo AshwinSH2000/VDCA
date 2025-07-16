@@ -1429,6 +1429,7 @@ function renderTerminalHulls() {
 }
 
 
+
 grid.addEventListener("click", (e) => {
 
     if (divideFlag || conquerFlag) {
@@ -1612,10 +1613,26 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     console.log(activeTooltips);
 }
 
-// window.addEventListener("load", () => {
-//     // showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
-//     showTutorial();
-// });
+window.addEventListener("load", () => {
+    // showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
+    // showTutorial();
+    drawInvisiblePoints();
+});
+
+function drawInvisiblePoints() {
+    const grid = document.getElementById("grid");
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    for (let i = 0; i <= 10; i++) {
+        for (let j = 0; j <= 10; j++) {
+            const circle = document.createElementNS(SVG_NS, 'circle');
+            circle.setAttribute('cx', i);
+            circle.setAttribute('cy', j);
+            circle.setAttribute('r', '0.01');
+            circle.setAttribute("class", "invisible-circle");
+            grid.appendChild(circle);
+        }
+    }
+}
 
 function removeToolTip(targetElement) {
     if (activeTooltips.has(targetElement)) {
