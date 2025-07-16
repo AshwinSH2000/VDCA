@@ -1385,17 +1385,17 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   tooltip.appendChild(tooltipText);
 
   const closeBtn = document.createElement("span");
-  closeBtn.textContent = "next →"; //✕->
+  closeBtn.textContent = "→";
   closeBtn.classList.add("close-btn");
   tooltip.appendChild(closeBtn);
 
   const closeBtn2 = document.createElement("span");
-  closeBtn2.textContent = "close ✕"; //✕->
+  closeBtn2.textContent = "✕";
   closeBtn2.classList.add("close-btn2");
   tooltip.appendChild(closeBtn2);
 
   const closeBtn3 = document.createElement("span");
-  closeBtn3.textContent = "<- prev"; //✕->
+  closeBtn3.textContent = "←";
   closeBtn3.classList.add("close-btn3");
   tooltip.appendChild(closeBtn3);
 
@@ -1469,38 +1469,37 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   // More directions can be added here...
 
   // Auto remove
-  const timeout = setTimeout(() => {
-    tooltip.remove();
-    removeToolTip(targetElement);
-  }, duration);
+  // const timeout = setTimeout(() => {
+  //   tooltip.remove();
+  //   removeToolTip(targetElement);
+  // }, duration);
+
+  // activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+  activeTooltips.set(targetElement, { element: tooltip });
 
   // Manual close
   closeBtn.addEventListener("click", () => {
-    clearTimeout(timeout);
-    removeToolTip(targetElement);
+    // clearTimeout(timeout);
     tooltip.remove();
+    removeToolTip(targetElement);
+    showTutorial();
   });
 
   closeBtn2.addEventListener("click", () => {
-    clearTimeout(timeout);
+    // clearTimeout(timeout);
     removeToolTip(targetElement);
     tooltip.remove();
-    endTutorial = true;
-    toBeShown = 1;
+    tutorialToShow = 0;
+    // endTutorial = true;
   })
 
   closeBtn3.addEventListener("click", () => {
-    clearTimeout(timeout);
-    removeToolTip(targetElement);
+    // clearTimeout(timeout);
     tooltip.remove();
-
-    toBeShown--;
-    prevTutorial = true;
-    endTutorial = true;
-
+    removeToolTip(targetElement);
+    tutorialToShow -= 2; //this is because in showTutorial, there is a +1 by default for everything. 
+    showTutorial();
   })
-  activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
-
 }
 
 // window.addEventListener("load", () => {
@@ -1574,222 +1573,60 @@ function closeToastLog() {
   toastLogModal.classList.add("hidden");
 }
 
+let tutorialData = [
+  ["addButton4", "Input respective traversal arrays", "top-left"],
+  ["deleteButton4", "Remove entire matching traversal array", "top-right"],
+  ["divideButton3", "Split traversals into level-wise partitions", "top-left"],
+  ["conquerButton3", "Build tree level-wise from partitions", "top-right"],
+  ["solveButton3", "Clicking on \'Solve\' before \'Divide\' instantly shows full binary tree", "top-right"],
+  ["solveButton3", "Clicking on \'Solve\' after \'Divide\' shows partial tree from current partitions", "top-right"],
+  ["resetButton3", "Clear inputs and reset interface", "top-right"]
+];
 
-async function showTutorial() {
-  let sleepTimer = 0;
-  if (toBeShown <= 0) toBeShown = 1;
-  if (prevTutorial === true) {
-    console.log("pixel inside showTutorial", toBeShown, endTutorial);
-
-  }
-
-  if (toBeShown === 1) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("addButton4"), "Input respective traversal arrays", "top-left");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("addButton4"))) {
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("addButton4"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("addButton4"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
+let tutorialToShow = 0;
+function removeAllToolTips() {
+  for (let i = 0; i < tutorialData.length; i++) {
+    if (activeTooltips.has(document.getElementById(`${tutorialData[i][0]}`))) {
+      const old = activeTooltips.get(document.getElementById(`${tutorialData[i][0]}`));
+      // clearTimeout(old.timer); // if you store timer too
+      old.element.remove();
+      activeTooltips.delete(document.getElementById(`${tutorialData[i][0]}`));
     }
-    toBeShown++;
-  }
-  if (toBeShown === 2) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("deleteButton4"), "Remove entire matching traversal array", "top-right");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("deleteButton4"))) {
-        console.log("+++Prevtutorial ", prevTutorial, "and endtutorial", endTutorial);
-        if (prevTutorial == true && endTutorial == true) {
-          console.log("pixel Clicked on previous for 2nd tips...inside prev&endTut");
-          removeToolTip(document.getElementById("deleteButton4"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial == true) {
-          console.log("pixel Clicked on previous for 2nd tips...inside onlyEnd");
-          removeToolTip(document.getElementById("deleteButton4"));
-          endTutorial = false;
-          return;
-        }
-        console.log("Before sleep");
-        sleepTimer += 100;
-        await sleep(100);
-        console.log("after sleep");
-        console.log("---Prevtutorial ", prevTutorial, "and endtutorial", endTutorial);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
-  }
-  if (toBeShown === 3) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("divideButton3"), "Split traversals into level-wise partitions", "top-left");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("divideButton3"))) {
-        // if (!tutorialState || 
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("divideButton3"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("divideButton3"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
-  }
-  if (toBeShown === 4) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('conquerButton3'), "Build tree level-wise from partitions", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("conquerButton3"))) {
-        // if (!tutorialState || 
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("conquerButton3"));
-          endTutorial = false;
-          prevTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("conquerButton3"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
-  }
-  if (toBeShown === 5) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' before \'Divide\' instantly shows full binary tree", "top-right");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("solveButton3"))) {
-        // if (!tutorialState ||
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("solveButton3"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("solveButton3"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
-  }
-  if (toBeShown === 6) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' after \'Divide\' shows partial tree from current partitions", "top-right");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("solveButton3"))) {
-        // if (!tutorialState || 
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("solveButton3"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("solveButton3"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
-  }
-  if (toBeShown === 7) {
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("resetButton3"), "Clear inputs and reset interface", "top-right", "5000");
-    while (sleepTimer <= 5000) {
-      if (activeTooltips.has(document.getElementById("resetButton3"))) {
-        // if (!tutorialState || 
-        if (prevTutorial === true && endTutorial === true) {
-          removeToolTip(document.getElementById("resetButton3"));
-          prevTutorial = false;
-          endTutorial = false;
-          toBeShown--;
-          showTutorial();
-          return;
-        }
-        if (endTutorial === true) {
-          removeToolTip(document.getElementById("resetButton3"));
-          endTutorial = false;
-          return;
-        }
-
-        sleepTimer += 100;
-        await sleep(100);
-      }
-      else {
-        break;
-      }
-    }
-    toBeShown++;
   }
 }
+async function showTutorial() {
+
+  console.log("pixel 1");
+  removeAllToolTips();
+  console.log("pixel 2");
+  if (tutorialToShow >= 7) {
+    console.log("pixel 3");
+    showToast("All tips shown. Click \'Guide Me!\' again to restart", "info");
+    tutorialToShow = 0;
+    console.log("pixel 4");
+    return;
+  }
+  if (tutorialToShow < 0) {
+    tutorialToShow = 0;
+    return;
+  }
+  console.log("pixel 5");
+  showDynamicTooltip(document.getElementById(`${tutorialData[tutorialToShow][0]}`), `${tutorialData[tutorialToShow][1]}`, `${tutorialData[tutorialToShow][2]}`, 5000);
+  console.log("pixel 6");
+  tutorialToShow++;
+  console.log("pixel 7");
+  if (endTutorial === true) {
+    console.log("pixel 8");
+    // removeAllToolTips();
+    console.log("pixel 9");
+    endTutorial = false;
+    tutorialToShow = 0;
+    console.log("pixel 10");
+    return;
+  }
+  console.log("pixel 11");
+}
+
 
 
 function showFAQs() {
@@ -1801,7 +1638,7 @@ function showFAQs() {
 
   const entry2 = document.createElement("li");
   entry2.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
-  The first element of the preorder traversal is the root of the binary tree. This element is then located in the inorder traversal and all the elements to its left form the left subtree and all the elements to its right form the right subtree. These subtrees are then recursively divided by identifying the root of each subtree from their preorder sequence (the subtree elements will be placed together in the preorder traversal and its first element will be the root of that subtree). The tree will then be recursively constructed in a bottom-up approach during the conquer phase. `;
+  The first element of the preorder traversal is the root of the binary tree. This element is then located in the inorder traversal and all the elements to its left form the left subtree and all the elements to its right form the right subtree. These subtrees are then recursively divided by identifying the root of each subtree from their preorder sequence (the subtree elements appear together in the preorder traversal and its first element will be the root of that subtree). The tree will then be recursively constructed in a bottom-up approach during the conquer phase. `;
   FAQsList.appendChild(entry2);
 
   const entry3 = document.createElement("li");
@@ -1869,14 +1706,12 @@ window.addEventListener('resize', () => {
 });
 document.getElementById("tutorialButton").addEventListener('click', () => {
   // tutorialState = !tutorialState;
-  console.log("pixel Data before", toBeShown, endTutorial);
-  endTutorial = false;
-  toBeShown = 1;
+  console.log("pixel before: tutorialtoshow", tutorialToShow);
+  tutorialToShow = 0;
   showTutorial();
-  console.log("pixel Data mid", toBeShown, endTutorial);
-  // endTutorial = false;
-  // toBeShown = 1;
-  console.log("pixel Data after", toBeShown, endTutorial);
+  // tutorialToShow = 0;
+  console.log("pixel after: tutorialtoshow", tutorialToShow);
+  endTutorial = false;
 });
 document.getElementById('FAQs').addEventListener('click', () => {
   showFAQs();
