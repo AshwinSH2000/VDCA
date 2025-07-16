@@ -200,11 +200,11 @@ button:disabled{
 
 /* for dynamic prompts... in main there is static prompts.  */
 .tooltip {
-	position: absolute;
+	position: fixed;
 	background: rgba(254, 254, 254, 0.95);
 	border: 1px solid #ccc;
 	border-radius: 6px;
-	padding: 14px;
+	padding: 20px;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.95);
 	z-index: 1000;
 	max-width: 200px;
@@ -224,7 +224,7 @@ button:disabled{
 	bottom: 2px;
 	right: 5px;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 20px;
 	/* color: #666; */
 	color: green
   }
@@ -234,9 +234,19 @@ button:disabled{
 	top: 2px;
 	right: 5px;
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 16px;
 	/* color: #666; */
 	color: #ff0000;
+  }
+
+  .tooltip .close-btn3 {
+    position: absolute;
+    bottom: 2px;
+    left: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    /* color: #666; */
+    color: green;
   }
 
   @keyframes fadeIn {

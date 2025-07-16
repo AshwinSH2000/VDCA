@@ -21,6 +21,8 @@ let conquerFlag = false;
 let activeTooltips = new Map();
 let tutorialState = false;
 let endTutorial = false;
+let prevTutorial = false;
+let toBeShown = 1;
 resizeRightHalfDiv();
 
 
@@ -1392,6 +1394,11 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   closeBtn2.classList.add("close-btn2");
   tooltip.appendChild(closeBtn2);
 
+  const closeBtn3 = document.createElement("span");
+  closeBtn3.textContent = "<- prev"; //✕->
+  closeBtn3.classList.add("close-btn3");
+  tooltip.appendChild(closeBtn3);
+
   const arrow = document.createElement("div");
   arrow.classList.add("tooltip-arrow");
   tooltip.appendChild(arrow);
@@ -1479,8 +1486,19 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     removeToolTip(targetElement);
     tooltip.remove();
     endTutorial = true;
+    toBeShown = 1;
   })
 
+  closeBtn3.addEventListener("click", () => {
+    clearTimeout(timeout);
+    removeToolTip(targetElement);
+    tooltip.remove();
+
+    toBeShown--;
+    prevTutorial = true;
+    endTutorial = true;
+
+  })
   activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
 
 }
@@ -1488,9 +1506,6 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 // window.addEventListener("load", () => {
 //   showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
 // });
-
-
-
 
 const toast = document.getElementById("toast");
 const toastLogModal = document.getElementById("toastLogModal");
@@ -1562,131 +1577,217 @@ function closeToastLog() {
 
 async function showTutorial() {
   let sleepTimer = 0;
+  if (toBeShown <= 0) toBeShown = 1;
+  if (prevTutorial === true) {
+    console.log("pixel inside showTutorial", toBeShown, endTutorial);
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("addButton4"), "Input respective traversal arrays", "top-left");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("addButton4"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("addButton4"));
-        endTutorial = false;
-        return;
-      }
-      sleepTimer += 100;
-      await sleep(100);
-    }
-    else {
-      break;
-    }
   }
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("deleteButton4"), "Remove entire matching traversal array", "top-right");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("deleteButton4"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("deleteButton4"));
-        endTutorial = false;
-        return;
-      }
-      sleepTimer += 100;
-      await sleep(100);
-    }
-    else {
-      break;
-    }
-  }
+  if (toBeShown === 1) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("addButton4"), "Input respective traversal arrays", "top-left");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("addButton4"))) {
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("addButton4"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("addButton4"));
+          endTutorial = false;
+          return;
+        }
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("divideButton3"), "Split traversals into level-wise partitions", "top-left");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("divideButton3"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("divideButton3"));
-        endTutorial = false;
-        return;
+        sleepTimer += 100;
+        await sleep(100);
       }
-      sleepTimer += 100;
-      await sleep(100);
+      else {
+        break;
+      }
     }
-    else {
-      break;
-    }
+    toBeShown++;
   }
-
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById('conquerButton3'), "Build tree level-wise from partitions", "top-right", 5000);
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("conquerButton3"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("conquerButton3"));
-        endTutorial = false;
-        return;
+  if (toBeShown === 2) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("deleteButton4"), "Remove entire matching traversal array", "top-right");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("deleteButton4"))) {
+        console.log("+++Prevtutorial ", prevTutorial, "and endtutorial", endTutorial);
+        if (prevTutorial == true && endTutorial == true) {
+          console.log("pixel Clicked on previous for 2nd tips...inside prev&endTut");
+          removeToolTip(document.getElementById("deleteButton4"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial == true) {
+          console.log("pixel Clicked on previous for 2nd tips...inside onlyEnd");
+          removeToolTip(document.getElementById("deleteButton4"));
+          endTutorial = false;
+          return;
+        }
+        console.log("Before sleep");
+        sleepTimer += 100;
+        await sleep(100);
+        console.log("after sleep");
+        console.log("---Prevtutorial ", prevTutorial, "and endtutorial", endTutorial);
       }
-      sleepTimer += 100;
-      await sleep(100);
+      else {
+        break;
+      }
     }
-    else {
-      break;
-    }
+    toBeShown++;
   }
+  if (toBeShown === 3) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("divideButton3"), "Split traversals into level-wise partitions", "top-left");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("divideButton3"))) {
+        // if (!tutorialState || 
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("divideButton3"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("divideButton3"));
+          endTutorial = false;
+          return;
+        }
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' before \'Divide\' instantly shows full binary tree", "top-right");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("solveButton3"))) {
-      // if (!tutorialState ||
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("solveButton3"));
-        endTutorial = false;
-        return;
+        sleepTimer += 100;
+        await sleep(100);
       }
-      sleepTimer += 100;
-      await sleep(100);
+      else {
+        break;
+      }
     }
-    else {
-      break;
-    }
+    toBeShown++;
   }
+  if (toBeShown === 4) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById('conquerButton3'), "Build tree level-wise from partitions", "top-right", 5000);
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("conquerButton3"))) {
+        // if (!tutorialState || 
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("conquerButton3"));
+          endTutorial = false;
+          prevTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("conquerButton3"));
+          endTutorial = false;
+          return;
+        }
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' after \'Divide\' shows partial tree from current partitions", "top-right");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("solveButton3"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("solveButton3"));
-        endTutorial = false;
-        return;
+        sleepTimer += 100;
+        await sleep(100);
       }
-      sleepTimer += 100;
-      await sleep(100);
+      else {
+        break;
+      }
     }
-    else {
-      break;
-    }
+    toBeShown++;
   }
+  if (toBeShown === 5) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' before \'Divide\' instantly shows full binary tree", "top-right");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("solveButton3"))) {
+        // if (!tutorialState ||
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("solveButton3"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("solveButton3"));
+          endTutorial = false;
+          return;
+        }
 
-  sleepTimer = 0;
-  showDynamicTooltip(document.getElementById("resetButton3"), "Clear inputs and reset interface", "top-right", "5000");
-  while (sleepTimer <= 5000) {
-    if (activeTooltips.has(document.getElementById("resetButton3"))) {
-      // if (!tutorialState || 
-      if (endTutorial === true) {
-        removeToolTip(document.getElementById("resetButton3"));
-        endTutorial = false;
-        return;
+        sleepTimer += 100;
+        await sleep(100);
       }
-      sleepTimer += 100;
-      await sleep(100);
+      else {
+        break;
+      }
     }
-    else {
-      break;
+    toBeShown++;
+  }
+  if (toBeShown === 6) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("solveButton3"), "Clicking on \'Solve\' after \'Divide\' shows partial tree from current partitions", "top-right");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("solveButton3"))) {
+        // if (!tutorialState || 
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("solveButton3"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("solveButton3"));
+          endTutorial = false;
+          return;
+        }
+
+        sleepTimer += 100;
+        await sleep(100);
+      }
+      else {
+        break;
+      }
     }
+    toBeShown++;
+  }
+  if (toBeShown === 7) {
+    sleepTimer = 0;
+    showDynamicTooltip(document.getElementById("resetButton3"), "Clear inputs and reset interface", "top-right", "5000");
+    while (sleepTimer <= 5000) {
+      if (activeTooltips.has(document.getElementById("resetButton3"))) {
+        // if (!tutorialState || 
+        if (prevTutorial === true && endTutorial === true) {
+          removeToolTip(document.getElementById("resetButton3"));
+          prevTutorial = false;
+          endTutorial = false;
+          toBeShown--;
+          showTutorial();
+          return;
+        }
+        if (endTutorial === true) {
+          removeToolTip(document.getElementById("resetButton3"));
+          endTutorial = false;
+          return;
+        }
+
+        sleepTimer += 100;
+        await sleep(100);
+      }
+      else {
+        break;
+      }
+    }
+    toBeShown++;
   }
 }
 
@@ -1768,8 +1869,14 @@ window.addEventListener('resize', () => {
 });
 document.getElementById("tutorialButton").addEventListener('click', () => {
   // tutorialState = !tutorialState;
-  showTutorial();
+  console.log("pixel Data before", toBeShown, endTutorial);
   endTutorial = false;
+  toBeShown = 1;
+  showTutorial();
+  console.log("pixel Data mid", toBeShown, endTutorial);
+  // endTutorial = false;
+  // toBeShown = 1;
+  console.log("pixel Data after", toBeShown, endTutorial);
 });
 document.getElementById('FAQs').addEventListener('click', () => {
   showFAQs();

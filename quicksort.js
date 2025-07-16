@@ -113,7 +113,7 @@ function deleteNumbers() {
         else {
             console.log("number not found to delete");
             // alert("Number not found");
-            showToast("Not a number", "error");
+            showToast("Number not found", "error");
 
         }
     }
@@ -643,9 +643,6 @@ function solve1() {
     }
     document.getElementById("solveButton").disabled = true;
     solveMode = false;
-    // if (level >= 0) {
-    //     showDynamicTooltip(document.getElementById('conquerButton'), "Clicking on conquer merges the array together", "top-right", 10000);
-    // }
 
 }
 
@@ -653,7 +650,7 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 
     if (activeTooltips.has(targetElement)) {
         const old = activeTooltips.get(targetElement);
-        clearTimeout(old.timer); // if you store timer too
+        // clearTimeout(old.timer); // if you store timer too
         old.element.remove();
         activeTooltips.delete(targetElement);
     }
@@ -666,14 +663,19 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     tooltip.appendChild(tooltipText);
 
     const closeBtn = document.createElement("span");
-    closeBtn.textContent = "next →";
+    closeBtn.textContent = "→";
     closeBtn.classList.add("close-btn");
     tooltip.appendChild(closeBtn);
 
     const closeBtn2 = document.createElement("span");
-    closeBtn2.textContent = "close ✕";
+    closeBtn2.textContent = "✕";
     closeBtn2.classList.add("close-btn2");
     tooltip.appendChild(closeBtn2);
+
+    const closeBtn3 = document.createElement("span");
+    closeBtn3.textContent = "←";
+    closeBtn3.classList.add("close-btn3");
+    tooltip.appendChild(closeBtn3);
 
     const arrow = document.createElement("div");
     arrow.classList.add("tooltip-arrow");
@@ -735,25 +737,37 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     // More directions can be added here...
 
     // Auto remove
-    const timeout = setTimeout(() => {
-        tooltip.remove();
-        removeToolTip(targetElement);
-    }, duration);
+    // const timeout = setTimeout(() => {
+    //     tooltip.remove();
+    //     removeToolTip(targetElement);
+    // }, duration);
+
+    // activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+    activeTooltips.set(targetElement, { element: tooltip });
 
     // Manual close
     closeBtn.addEventListener("click", () => {
-        clearTimeout(timeout);
+        // clearTimeout(timeout);
         tooltip.remove();
         removeToolTip(targetElement);
+        showTutorial();
     });
 
     closeBtn2.addEventListener("click", () => {
-        clearTimeout(timeout);
+        // clearTimeout(timeout);
         removeToolTip(targetElement);
         tooltip.remove();
-        endTutorial = true;
+        tutorialToShow = 0;
+        // endTutorial = true;
     })
-    activeTooltips.set(targetElement, { element: tooltip, timer: timeout });
+
+    closeBtn3.addEventListener("click", () => {
+        // clearTimeout(timeout);
+        tooltip.remove();
+        removeToolTip(targetElement);
+        tutorialToShow -= 2; //this is because in showTutorial, there is a +1 by default for everything. 
+        showTutorial();
+    })
 }
 
 
@@ -764,31 +778,9 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 function removeToolTip(targetElement) {
     if (activeTooltips.has(targetElement)) {
         const old = activeTooltips.get(targetElement);
-        clearTimeout(old.timer); // if you store timer too
+        //clearTimeout(old.timer); // if you store timer too
         old.element.remove();
         activeTooltips.delete(targetElement);
-    }
-}
-function removeAllToolTips() {
-    if (activeTooltips.has(document.getElementById('solveButton'))) {
-        const old = activeTooltips.get(document.getElementById('solveButton'));
-        clearTimeout(old.timer); // if you store timer too
-        old.element.remove();
-        activeTooltips.delete(document.getElementById('solveButton'));
-    }
-
-    if (activeTooltips.has(document.getElementById('array_number'))) {
-        const old = activeTooltips.get(document.getElementById('array_number'));
-        clearTimeout(old.timer); // if you store timer too
-        old.element.remove();
-        activeTooltips.delete(document.getElementById('array_number'));
-    }
-
-    if (activeTooltips.has(document.getElementById('divideButton'))) {
-        const old = activeTooltips.get(document.getElementById('divideButton'));
-        clearTimeout(old.timer); // if you store timer too
-        old.element.remove();
-        activeTooltips.delete(document.getElementById('divideButton'));
     }
 }
 
@@ -877,159 +869,214 @@ function closeToastLog() {
 }
 
 
+// async function showTutorial2() {
+
+//     /*
+//     logic: 
+//     if activetool tips still has the above thing, then wait for 1 more secind. do it until 5 secinds are over. 
+//     if active tool tips does not have it then end the sleep timer and move forward. 
+//     */
+//     // let sleepTimer = 0;
+
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById("array_number"), "Enter numbers (comma or space separated)", "left");
+
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("array_number"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("array_number"));
+//                 endTutorial = false;
+//                 return;
+//             }
+
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById("addButton"), "Add numbers to array", "left");
+
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("addButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("addButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById("deleteButton"), "Remove matching numbers from array", "left");
+
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("deleteButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("deleteButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById("divideButton"), "Split array into partitions (level-wise)", "top-left", 5000);
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("divideButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("divideButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById('conquerButton'), "Perform level-wise merge of the array", "top-right", 5000);
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("conquerButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("conquerButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' instantly shows sorted array", "top-right", 5000);
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("solveButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("solveButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' shows solution for current partitions", "top-right", 5000);
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("solveButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("solveButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+//     sleepTimer = 0;
+//     showDynamicTooltip(document.getElementById('resetButton'), "Clear array and reset interface", "top-right", 5000);
+//     while (sleepTimer <= 5000) {
+//         if (activeTooltips.has(document.getElementById("resetButton"))) {
+//             if (endTutorial === true) {
+//                 removeToolTip(document.getElementById("resetButton"));
+//                 endTutorial = false;
+//                 return;
+//             }
+//             sleepTimer += 100;
+//             await sleep(100);
+//         }
+//         else {
+//             break;
+//         }
+//     }
+
+
+// }
+let tutorialData = [
+    ["array_number", "Enter numbers (comma or space separated)", "left"],
+    ["addButton", "Add numbers to array", "left"],
+    ["deleteButton", "Remove matching numbers from array", "left"],
+    ["divideButton", "Split array into partitions (level-wise)", "top-left"],
+    ["conquerButton", "Perform level-wise merge of the array", "top-right"],
+    ["solveButton", "Clicking \'Solve\' before \'Divide\' instantly shows sorted array", "top-right"],
+    ["solveButton", "Clicking \'Solve\' after \'Divide\' shows solution for current partitions", "top-right"],
+    ["resetButton", "Clear array and reset interface", "top-right"]
+];
+let tutorialToShow = 0;
+
+function removeAllToolTips() {
+    for (let i = 0; i < tutorialData.length; i++) {
+        if (activeTooltips.has(document.getElementById(`${tutorialData[i][0]}`))) {
+            const old = activeTooltips.get(document.getElementById(`${tutorialData[i][0]}`));
+            // clearTimeout(old.timer); // if you store timer too
+            old.element.remove();
+            activeTooltips.delete(document.getElementById(`${tutorialData[i][0]}`));
+        }
+    }
+}
+
 async function showTutorial() {
 
-    /*
-    logic: 
-    if activetool tips still has the above thing, then wait for 1 more secind. do it until 5 secinds are over. 
-    if active tool tips does not have it then end the sleep timer and move forward. 
-    */
-    let sleepTimer = 0;
-
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("array_number"), "Enter numbers (comma or space separated)", "left");
-
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("array_number"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("array_number"));
-                endTutorial = false;
-                return;
-            }
-
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
+    console.log("pixel 1");
+    removeAllToolTips();
+    console.log("pixel 2");
+    if (tutorialToShow >= 8) {
+        console.log("pixel 3");
+        showToast("All tips shown. Click \'Guide Me!\' again to restart", "info");
+        tutorialToShow = 0;
+        console.log("pixel 4");
+        return;
     }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("addButton"), "Add numbers to array", "left");
-
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("addButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("addButton"));
-                endTutorial = false;
-                return;
-            }
-
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
+    if (tutorialToShow < 0) {
+        tutorialToShow = 0;
+        return;
     }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("deleteButton"), "Remove matching numbers from array", "left");
-
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("deleteButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("deleteButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
+    console.log("pixel 5");
+    showDynamicTooltip(document.getElementById(`${tutorialData[tutorialToShow][0]}`), `${tutorialData[tutorialToShow][1]}`, `${tutorialData[tutorialToShow][2]}`, 5000);
+    console.log("pixel 6");
+    tutorialToShow++;
+    console.log("pixel 7");
+    if (endTutorial === true) {
+        console.log("pixel 8");
+        // removeAllToolTips();
+        console.log("pixel 9");
+        endTutorial = false;
+        tutorialToShow = 0;
+        console.log("pixel 10");
+        return;
     }
-
-
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById("divideButton"), "Split array into partitions (level-wise)", "top-left", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("divideButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("divideButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('conquerButton'), "Perform level-wise merge of the array", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("conquerButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("conquerButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' before \'Divide\' instantly shows sorted array", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("solveButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("solveButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('solveButton'), "Clicking \'Solve\' after \'Divide\' shows solution for current partitions", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("solveButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("solveButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-    sleepTimer = 0;
-    showDynamicTooltip(document.getElementById('resetButton'), "Clear array and reset interface", "top-right", 5000);
-    while (sleepTimer <= 5000) {
-        if (activeTooltips.has(document.getElementById("resetButton"))) {
-            if (endTutorial === true) {
-                removeToolTip(document.getElementById("resetButton"));
-                endTutorial = false;
-                return;
-            }
-            sleepTimer += 100;
-            await sleep(100);
-        }
-        else {
-            break;
-        }
-    }
-
-
+    console.log("pixel 11");
 }
 
 function showFAQs() {
@@ -1099,7 +1146,11 @@ document.getElementById('solveButton').addEventListener('click', () => {
 });
 document.getElementById('tutorialButton').addEventListener('click', () => {
     // tutorialState = !tutorialState;
+    console.log("pixel before: tutorialtoshow", tutorialToShow);
+    tutorialToShow = 0;
     showTutorial();
+    // tutorialToShow = 0;
+    console.log("pixel after: tutorialtoshow", tutorialToShow);
     endTutorial = false;
 });
 document.getElementById('FAQs').addEventListener('click', () => {
