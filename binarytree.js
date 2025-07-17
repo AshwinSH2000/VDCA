@@ -74,6 +74,7 @@ function addPreorder() {
       return;
     }
     console.log("added the array ", preorder);
+    showToast(`Inserted ${preorder} as the preorder traversal`, "info");
     document.getElementById("preorder").value = "";
     if (inorderIp && preorderIp) {
       if (!checkTree(inorder, preorder)) {
@@ -178,6 +179,7 @@ function deletePreorder() {
     }
 
     //if the code reaches this point, then it means the value presnet in the preorder can be deleted.
+    showToast(`Deleted ${preorder} from preorder traversal`, "info");
     preorder = [];
     console.log("deleted the entered preorder traversal", preorder);
     document.getElementById("addButton4").disabled = false;
@@ -230,6 +232,7 @@ function addInorder() {
     }
 
     console.log("added the array ", inorder);
+    showToast(`Inserted ${inorder} as the inorder traversal`, "info");
     document.getElementById("inorder").value = "";
     if (inorderIp && preorderIp) {
       if (!checkTree(inorder, preorder)) {
@@ -324,6 +327,7 @@ function deleteInorder() {
     }
 
     //if the code reaches this point, then it means the value presnet in the inorder can be deleted.
+    showToast(`Deleted ${inorder} from inorder traversal`, "info");
     inorder = [];
     console.log("deleted the entered inorder traversal", inorder);
     document.getElementById("addButton3").disabled = false;
