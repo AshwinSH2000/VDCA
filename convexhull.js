@@ -46,6 +46,7 @@ function inputCoordinates(inputStr) {
         if (coord[0] <= 10 && coord[1] <= 10) {
             if (!coordinates.some(a => a[0] === coord[0] && a[1] === coord[1])) {
                 coordinates.push(coord);
+                showToast(`Point [${coord}] added`, "info");
                 console.log("The input coord is", coordinates);
             }
             else {
@@ -91,6 +92,7 @@ function deleteCoordinates(inputStr) {
             index = coordinates.findIndex(p => (p[0] == coord[0] && p[1] == coord[1]))
             console.log("Found at index", index);
             coordinates.splice(index, 1);
+            showToast(`Point [${coord}] deleted`, "info");
             console.log("This works!", coordinates);
             if (coordinates.length === 0) {
                 document.getElementById("divideButton2").disabled = true;
@@ -1638,6 +1640,7 @@ window.addEventListener("load", () => {
 function drawInvisiblePoints() {
     const grid = document.getElementById("grid");
     const pointsLayer = document.getElementById("points");
+    const points = [];
     for (let i = 0; i <= 10; i++) {
         for (let j = 0; j <= 10; j++) {
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -1646,6 +1649,7 @@ function drawInvisiblePoints() {
             circle.setAttribute('cy', j);
             circle.setAttribute('r', '0.09');
             circle.setAttribute("class", "invisible-circle");
+            points.push({ i, j, circle });
 
             // circle.addEventListener("mouseenter", (e) => {
             //     circle.classList.remove("invisible-circle");
@@ -1655,28 +1659,29 @@ function drawInvisiblePoints() {
             //     circle.classList.remove("white-circle");
             //     circle.classList.add("invisible-circle");
             // })
-            circle.addEventListener("mousemove", (e) => {
-                if (divideFlag || conquerFlag) return;
-                const pt = grid.createSVGPoint();
-                pt.x = e.clientX;
-                pt.y = e.clientY;
-                const svgPoint = pt.matrixTransform(grid.getScreenCTM().inverse());
 
-                const dx = svgPoint.x - i;
-                const dy = svgPoint.y - j;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist <= 0.2) {
-                    circle.classList.remove("invisible-circle");
-                    circle.classList.add("white-circle");
-                } else {
-                    circle.classList.remove("white-circle");
-                    circle.classList.add("invisible-circle");
-                }
-            });
             grid.appendChild(circle);
         }
     }
+    grid.addEventListener("mousemove", (e) => {
+        if (divideFlag || conquerFlag) return;
+
+        const pt = grid.createSVGPoint();
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+        const svgPoint = pt.matrixTransform(grid.getScreenCTM().inverse());
+
+        for (const p of points) {
+            const dist = Math.hypot(p.i - svgPoint.x, p.j - svgPoint.y);
+            if (dist <= 0.2) {
+                p.circle.classList.remove("invisible-circle");
+                p.circle.classList.add("white-circle");
+            } else {
+                p.circle.classList.remove("white-circle");
+                p.circle.classList.add("invisible-circle");
+            }
+        }
+    });
 }
 
 function removeToolTip(targetElement) {
