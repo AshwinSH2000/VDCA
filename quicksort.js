@@ -65,6 +65,7 @@ async function inputNumbers() {
             bar.accessKey = barheight;
             document.getElementById('bar-container').append(bar);
         }
+        showToast(`Inserted ${temp} into the array`, "info");
     }
     else {
         // alert("Enter a number!");
@@ -109,6 +110,7 @@ function deleteNumbers() {
                 document.getElementById("solveButton").disabled = true;
                 document.getElementById("divideButton").disabled = true;
             }
+            showToast(`Deleted ${item} from the array`, "info");
         }
         else {
             console.log("number not found to delete");
