@@ -33,7 +33,7 @@ function inputCoordinates(inputStr) {
     }
     else {
         console.log("none got exed");
-        alert("Enter both x and y coordinates!");
+        // alert("Enter both x and y coordinates!");
         showToast("Enter both x and y coordinates", "error");
         //document.getElementById('coordinates2').value='';
         return;
@@ -50,17 +50,17 @@ function inputCoordinates(inputStr) {
             }
             else {
                 console.log("Duplicate entry");
-                alert("Duplicate entry. Discarding it.");
+                // alert("Duplicate entry. Discarding it.");
                 showToast("Duplicate entry. Discarding it", "info");
             }
         }
         else {
-            alert("Enter a number <= 10");
+            // alert("Enter a number <= 10");
             showToast("Enter a number <=10", "error");
         }
     }
     else {
-        alert('Enter a number');
+        // alert('Enter a number');
         showToast("Enter a number", "error");
     }
     //document.getElementById('coordinates2').value='';
@@ -572,7 +572,7 @@ function conquerCoordinates() {
 
     // If only one hull left at level 0, done!
     if (hulls.length === 1 && hulls[0].level === 0) {
-        //alert("✅ Final convex hull computed!");
+        //alert("final convex hull computed!");
         console.log("The merging is complete...FINAL CH:", hulls[0].points);
 
         // document.getElementById('finalans').textContent='The final convex hull is:';
@@ -1656,6 +1656,7 @@ function drawInvisiblePoints() {
             //     circle.classList.add("invisible-circle");
             // })
             circle.addEventListener("mousemove", (e) => {
+                if (divideFlag || conquerFlag) return;
                 const pt = grid.createSVGPoint();
                 pt.x = e.clientX;
                 pt.y = e.clientY;
@@ -1801,7 +1802,7 @@ function showToast(message, type = "info") {
         toast.classList.add("hidden");
         bell.classList.add("new");
 
-    }, 2000);
+    }, 8000);
 }
 function showFAQs() {
     FAQsList.textContent = "";

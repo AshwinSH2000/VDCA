@@ -1556,7 +1556,7 @@ function showToast(message, type = "info") {
     toast.classList.add("hidden");
     bell.classList.add("new");
 
-  }, 2000);
+  }, 8000);
 }
 
 // Expand log on toast click

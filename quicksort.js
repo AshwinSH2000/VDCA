@@ -835,7 +835,7 @@ function showToast(message, type = "info") {
         toast.classList.add("hidden");
         bell.classList.add("new");
 
-    }, 2000);
+    }, 8000);
 }
 
 // Expand log on toast click
@@ -1109,6 +1109,11 @@ function showFAQs() {
     <li style="color: rgb(133, 197, 36);">Level 6: greenyellow </li>
     </ul>`;
     FAQsList.appendChild(entry4);
+
+    const entry7 = document.createElement("li");
+    entry7.innerHTML += `<b>As the levels increase, why do some bars disappear?</b><br>
+    When dealing with larger inputs, the display area might not be sufficient to show every bar. However, all bars are present and can be viewed by scrolling each individual row. You may try giving a smaller input to view the complete sorting procedure. <br> For example, 16 12 8 4 3 2 1 or 12 5 4 9 6 15 7`;
+    FAQsList.appendChild(entry7);
 
     const entry5 = document.createElement("li");
     entry5.innerHTML += `<b>What are the functions of different buttons?</b><br>
