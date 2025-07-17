@@ -93,6 +93,7 @@ function addPreorder() {
 
     } else {
       console.log("preorder and inorder", preorder, inorder);
+      document.getElementById("addButton4").disabled = true;
     }
 
     let container = document.getElementById("preorderContainerIP");
@@ -137,6 +138,10 @@ function resetAfterWrongInput() {
   container = [];
   inorderIp = false;
   inorder = [];
+  document.getElementById("addButton3").disabled = false;
+  document.getElementById("addButton4").disabled = false;
+  document.getElementById("divideButton3").disabled = true;
+  document.getElementById("solveButton3").disabled = true;
 }
 
 function deletePreorder() {
@@ -253,7 +258,9 @@ function addInorder() {
 
 
     }
-
+    else {
+      document.getElementById("addButton3").disabled = true;
+    }
 
     let container = document.getElementById("treeContainerIP");
     container.innerHTML = "InOrder:  ";
