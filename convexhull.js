@@ -1454,7 +1454,7 @@ grid.addEventListener("click", (e) => {
     const logicalX = clickX;
     const logicalY = clickY;
     let found = false;
-    const radius = 0.35;
+    const radius = 0.2;
     //this poiont clicking is my logic of an invisible activation circle
     //rather than clicking inside the box, it expects users to normally click on the point.
     for (let x = 0; x <= 10 && !found; x++) {
@@ -1467,6 +1467,9 @@ grid.addEventListener("click", (e) => {
                 found = true;
             }
         }
+    }
+    if (found === false) {
+        showToast("Point not registered. Click closer to the intersection", "error");
     }
 });
 //////////////////codeforgraph
@@ -1627,10 +1630,53 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
     })
 }
 
-// window.addEventListener("load", () => {
-//     // showDynamicTooltip(document.getElementById("chgrid"), "Click on any point(s) on the grid to insert them. Click again to deselect them. ", "left");
-//     showTutorial();
-// });
+window.addEventListener("load", () => {
+    // showTutorial();
+    drawInvisiblePoints();
+});
+
+function drawInvisiblePoints() {
+    const grid = document.getElementById("grid");
+    const pointsLayer = document.getElementById("points");
+    for (let i = 0; i <= 10; i++) {
+        for (let j = 0; j <= 10; j++) {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+
+            circle.setAttribute('cx', i);
+            circle.setAttribute('cy', j);
+            circle.setAttribute('r', '0.09');
+            circle.setAttribute("class", "invisible-circle");
+
+            // circle.addEventListener("mouseenter", (e) => {
+            //     circle.classList.remove("invisible-circle");
+            //     circle.classList.add("white-circle");
+            // });
+            // circle.addEventListener("mouseleave", (e) => {
+            //     circle.classList.remove("white-circle");
+            //     circle.classList.add("invisible-circle");
+            // })
+            circle.addEventListener("mousemove", (e) => {
+                const pt = grid.createSVGPoint();
+                pt.x = e.clientX;
+                pt.y = e.clientY;
+                const svgPoint = pt.matrixTransform(grid.getScreenCTM().inverse());
+
+                const dx = svgPoint.x - i;
+                const dy = svgPoint.y - j;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist <= 0.2) {
+                    circle.classList.remove("invisible-circle");
+                    circle.classList.add("white-circle");
+                } else {
+                    circle.classList.remove("white-circle");
+                    circle.classList.add("invisible-circle");
+                }
+            });
+            grid.appendChild(circle);
+        }
+    }
+}
 
 function removeToolTip(targetElement) {
     if (activeTooltips.has(targetElement)) {

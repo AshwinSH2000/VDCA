@@ -429,18 +429,24 @@ button:disabled{
   }
 	
   .invisible-circle {
-	fill: none;   /* No fill color */
-	stroke: none; /* No stroke color */
-	pointer-events: all; /* Ensure they receive mouse events */
+	fill: none;   
+	stroke: none; 
+	pointer-events: all; /* this is essential to make sure the points are activated by hover despite being invisible */
+	transition: stroke-width 0.2s ease, stroke 0.2s ease, fill 0.2s ease;
+}
+
+.white-circle{
+	fill: white;   
+	stroke: none; 
+	pointer-events: all; 
 	transition: stroke-width 0.2s ease, stroke 0.2s ease, fill 0.2s ease;
 }
 
 /* Hover effect: make them visible */
-.invisible-circle:hover {
-	/* fill: rgba(0, 0, 255, 0.2); A light blue transparent fill on hover */
+/* .invisible-circle:hover {
 	fill: white;
-	/* stroke: white; */
-	/* stroke-width: 0.07; */
-	cursor: pointer; /* Indicate it's clickable */
+	stroke: white;
+	stroke-width: 0.07;
+	cursor: pointer;
 	r: 0.07;
-}
+} */
