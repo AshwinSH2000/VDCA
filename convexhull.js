@@ -1843,6 +1843,18 @@ function showFAQs() {
     Solid lines represent the currently active or in-focus partition line(s) and hull(s) while the dotted lines represent the old or inactive partition line(s) and hull(s).`;
     FAQsList.appendChild(entry6);
 
+    const entry7 = document.createElement("li");
+    entry7.innerHTML += `<b>What do different coloured lines mean?</b><br>
+    The partition lines and the hulls are drawn with different colours to signify the levels in which these partitions were created.  
+    <ul>
+    <li style="color: red;">Level 0: red</li> 
+    <li style="color: blue;">Level 1: blue</li>
+    <li style="color: rgb(225, 225, 0);">Level 2: yellow </li>
+    <li style="color: rgb(0,225,225);">Level 3: cyan </li>
+    <li style="color: rgb(0,120,0);">Final solution: darkgreen </li>
+    </ul>`;
+    FAQsList.appendChild(entry7);
+
     const entry4 = document.createElement("li");
     entry4.innerHTML += `<b>What are the functions of different buttons?</b><br>
     Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;
