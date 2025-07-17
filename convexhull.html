@@ -26,10 +26,27 @@
     <h3>Convex Hull</h3>
     <form id="form_for_input2" action="#">
       <label for="finalans" id="finalans"></label>
-      <button type="button" id="divideButton2">Divide</button>
-      <button type="button" id="conquerButton2">Conquer</button>
-      <button type="button" id="solveButton2">Solve</button>
-      <button type="button" id="resetButton2">Reset</button>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="divideButton2">Divide</button>
+        <div class="tooltip-text">Split points into smaller partitions</div>
+      </div>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="conquerButton2">Conquer</button>
+        <div class="tooltip-text">Merge convex hulls of adjacent partitions</div>
+      </div>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="solveButton2">Solve</button>
+        <div class="tooltip-text">Display solution to already generated partitions</div>
+      </div>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="resetButton2">Reset</button>
+        <div class="tooltip-text">Clear inputs and reset interface</div>
+      </div>
+
     </form>
   </div>
 
@@ -158,8 +175,8 @@
 
   <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
   <div id="notificationBell">
-    <button type="button" id="FAQs" title="FAQs" class="logsButton">FAQs</button>
-    <button type="button" id="tutorialButton" title="View tutorial" class="logsButton">Guide me!</button>
+    <button type="button" id="FAQs" title="View FAQs" class="logsButton">FAQs</button>
+    <button type="button" id="tutorialButton" title="View buttons' info" class="logsButton">Guide me!</button>
     <button type="button" id="logsButton" title="View logs" class="logsButton">Logs</button>
   </div>
   <!--🔔-->

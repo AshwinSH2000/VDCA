@@ -29,24 +29,54 @@
             <label for="inorder" id="inorderLabel">Inorder :</label>
             <input type="string" id="inorder" min="-1000" max="1000">
             <!-- <br> -->
-            <button type="button" id="addButton3">Insert</button>
-            <button type="button" id="deleteButton3">Delete</button>
+
+            <div class="tooltip-wrapper">
+                <button type="button" id="addButton3">Insert</button>
+                <div class="tooltip-text">Input inorder traversal array</div>
+            </div>
+
+            <div class="tooltip-wrapper">
+                <button type="button" id="deleteButton3">Delete</button>
+                <div class="tooltip-text">Remove entire matching inorder traversal array</div>
+            </div>
             <br>
-            <!-- <br> -->
+
             <label for="preorder" id="preorderLabel">Preorder :</label>
             <input type="string" id="preorder" min="-1000" max="1000">
             <!-- <br> -->
-            <button type="button" id="addButton4">Insert</button>
-            <button type="button" id="deleteButton4">Delete</button>
+            <div class="tooltip-wrapper">
+                <button type="button" id="addButton4">Insert</button>
+                <div class="tooltip-text">Input preorder traversal arrays</div>
+            </div>
+
+            <div class="tooltip-wrapper">
+                <button type="button" id="deleteButton4">Delete</button>
+                <div class="tooltip-text">Remove entire matching preorder traversal array</div>
+            </div>
             <br>
             <label id="binTreeRes"></label>
             <!-- not going to help for this usecase -->
             <br>
-            <button type="button" id="divideButton3">Divide</button>
-            <button type="button" id="conquerButton3">Conquer</button>
+
+            <div class="tooltip-wrapper">
+                <button type="button" id="divideButton3">Divide</button>
+                <div class="tooltip-text">Split traversals into level-wise partitions</div>
+            </div>
+            <div class="tooltip-wrapper">
+                <button type="button" id="conquerButton3">Conquer</button>
+                <div class="tooltip-text">Build tree level-wise from partitions</div>
+            </div>
+
             <!-- <br><br> -->
-            <button type="button" id="solveButton3">Solve</button>
-            <button type="button" id="resetButton3">Reset</button>
+            <div class="tooltip-wrapper">
+                <button type="button" id="solveButton3">Solve</button>
+                <div class="tooltip-text">Display solution to already generated partitions</div>
+            </div>
+
+            <div class="tooltip-wrapper">
+                <button type="button" id="resetButton3">Reset</button>
+                <div class="tooltip-text">Clear input and reset interface</div>
+            </div>
 
         </form>
     </div>
@@ -130,8 +160,8 @@
 
     <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
     <div id="notificationBell" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-        <button type="button" id="FAQs" title="FAQs" class="logsButton">FAQs</button>
-        <button type="button" id="tutorialButton" title="View tutorial" class="logsButton">Guide me!</button>
+        <button type="button" id="FAQs" title="View FAQs" class="logsButton">FAQs</button>
+        <button type="button" id="tutorialButton" title="View buttons' info" class="logsButton">Guide me!</button>
         <button type="button" id="logsButton" title="View logs" class="logsButton">Logs</button>
     </div>
     <!--🔔-->

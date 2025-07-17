@@ -27,17 +27,36 @@
       <label for="array_number" id="inputLabel">Enter Numbers: </label>
       <input type="string" id="array_number" name="array_number" min="0" max="1000">
 
-      <button type="button" id="addButton" title="To input the numbers entered in the textbox">Insert</button>
-      <button type="button" id="deleteButton">Delete</button>
+      <div class="tooltip-wrapper">
+        <button type="button" id="addButton">Insert</button>
+        <div class="tooltip-text">Add numbers to array</div>
+      </div>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="deleteButton">Delete</button>
+        <div class="tooltip-text">Remove matching numbers from array</div>
+      </div>
+
       <br><br>
-      <button type="button" id="divideButton">Divide</button>
-      <button type="button" id="conquerButton">Conquer</button>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="divideButton">Divide</button>
+        <div class="tooltip-text">Split input into smaller partitions</div>
+      </div>
+
+      <div class="tooltip-wrapper">
+        <button type="button" id="conquerButton">Conquer</button>
+        <div class="tooltip-text">Merge the partitions</div>
+      </div>
       <!-- <br> -->
-      <button type="button" id="solveButton">Solve</button>
+      <div class="tooltip-wrapper">
+        <button type="button" id="solveButton">Solve</button>
+        <div class="tooltip-text">Display solution to already generated partitions</div>
+      </div>
 
       <div class="tooltip-wrapper">
         <button type="button" id="resetButton">Reset</button>
-        <div class="tooltip-text">This will reset everything</div>
+        <div class="tooltip-text">Clear input and reset interface</div>
       </div>
     </form>
   </div>
@@ -94,8 +113,10 @@
   <!-- bell icon to alternatively open the notif/toast logs, making it easier for users to look at logs.  -->
   <div id="notificationBell"
     style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; top: 120px; right: 20px;">
-    <button type="button" id="FAQs" title="FAQs" class="logsButton">FAQs</button>
-    <button type="button" id="tutorialButton" title="View tutorial" class="logsButton">Guide me!</button>
+
+
+    <button type="button" id="FAQs" title="View FAQs" class="logsButton">FAQs</button>
+    <button type="button" id="tutorialButton" title="View buttons' info" class="logsButton">Guide me!</button>
     <button type="button" id="logsButton" title="View logs" class="logsButton">Logs</button>
   </div>
   <!--🔔-->
