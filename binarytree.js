@@ -1666,8 +1666,22 @@ function showFAQs() {
   entry5.innerHTML += `<b>Why do some elements and nodes appear overlapped or partly visible?</b><br>
   At times, the elements and the circular nodes gets overlapped or partly visible due the browser viewport size of the device or when the inputs are large. You could try giving a smaller example to see the visualisation. For example, <br>
   Inorder: 4 2 5 1 6 3 7 and Preorder: 1 2 4 5 3 6 7  or<br>
-  Inorder: 6 5 4 3 2 1 and Preorder: 1 2 3 4 5 6`;
+  Inorder: 2 4 1 5 3 and Preorder: 1 2 4 3 5`;
   FAQsList.appendChild(entry5);
+
+  const entry8 = document.createElement("li");
+  entry8.innerHTML += `<b>Are there any other sample input that I can use to visualise?</b><br>
+  Please use the below inputs to construct binary trees. However, some nodes of the trees can get overlapped when visualised in smaller screens. <br>
+  <ol>
+    <li>Inorder: 6 5 4 3 2 1 <br> Preorder: 1 2 3 4 5 6</li>
+    <li> Inorder: 2 6 10 12 8 4 1 5 9 13 11 7 3 <br> Preorder: 1 2 4 6 8 10 12 3 5 7 9 11 13</li>
+    <li>Inorder: 8 4 9 2 10 5 11 1 12 6 13 3 14 7 15 <br> Preorder: 1 2 4 8 9 5 10 11 3 6 12 13 7 14 15</li>
+    <li>Inorder: 14 12 10 8 6 4 2 1 3 5 7 9 11 13 15 <br> Preorder: 1 2 4 6 8 10 12 14 3 5 7 9 11 13 15</li>
+    <li>Inorder: 12 8 13 6 4 20 2 22 1 23 3 21 5 7 18 9 19 <br> Preorder: 1 2 4 6 8 12 13 20 22 3 23 5 21 7 9 18 19</li>
+    <li>Inorder: 12 8 13 6 14 10 15 4 20 2 22 1 23 3 21 5 16 11 17 7 18 9 19 <br> Preorder: 1 2 4 6 8 12 13 10 14 15 20 22 3 23 5 21 7 11 16 17 9 18 19</li>
+    </ol>
+  `;
+  FAQsList.appendChild(entry8);
 
   const entry6 = document.createElement("li");
   entry6.innerHTML += `<b>What are the functions of different buttons?</b><br>
