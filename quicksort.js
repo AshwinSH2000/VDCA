@@ -133,6 +133,7 @@ function divide2() {
     console.log("Level inside divide2 is", level);
     document.getElementById("addButton").disabled = true;
     document.getElementById("deleteButton").disabled = true;
+    document.getElementById("array_number").disabled = true;
 
     console.log("----------------------------------------------");
 
@@ -156,14 +157,10 @@ function divide2() {
     let counter = 0;
 
     let pivotsForToast = [];
-    while (counter < Math.min(noOfPivots, arrayList.length + 1)) {       //is +1 necessary?
+    while (counter < Math.min(noOfPivots, arrayList.length + 1)) {
 
         if (level == 0) {
 
-            /*
-            temporary code begins...replace this with two separate divs
-            one for the divide phase and one for hte conquer phase. 
-            */
 
             //adding gap to the first 
             let container = document.getElementById('bar-container');
@@ -182,11 +179,6 @@ function divide2() {
             bar2.style.width = "60px";
             container.appendChild(bar2);
 
-            /*
-            temporary code ends...replace this with two separate divs
-            one for the divide phase and one for hte conquer phase. 
-            */
-
 
             document.getElementById('addButton').disabled = true;
             document.getElementById('deleteButton').disabled = true;
@@ -196,11 +188,6 @@ function divide2() {
             console.log("I AM HERE!!!");
             console.log(pivots);
 
-            //test code
-            // console.log(pivots.some(p => p.position===-1 && p.pivot===-1));
-            // console.log(pivots.some(p => p.position===-1 && p.pivot===-2));
-            // console.log(pivots.some(p => p.position===-2 && p.pivot===-1));
-            // return;
 
             //findPivot retuens the actual pivot for that part of the array
             let [tempPos, tempPivot] = findPivot(arrayList, pivots[counter].position + 1, pivots[counter + 1].position - 1);
@@ -278,6 +265,28 @@ function divide2() {
 
     //the below code is to check if divide needs to be called again or not. 
     //I still have the code at the top... Now I dont think that is necessary anymore. Will remove after some testing. 
+    console.log("Possible ending here? ", checkForEnding());
+    if (checkForEnding() === true) {
+        console.log("Array has only 1 element partition..hence stopping partitioning");
+        document.getElementById('divideButton').disabled = true;
+        solveDivideFlag = true;
+        showToast("Divide phase complete", "success");
+        let maxLevel = Math.max(...pivots.map(p => p.level));
+        let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
+
+        const bar2 = document.createElement('div');
+        bar2.setAttribute("id", "uturnspace");
+        bar2.classList.add("u-turn");
+        bar2.style.height = "0px";
+        bar2.style.width = "30px";
+        bar2.style.backgroundColor = "red";
+
+        uTurnArrow.appendChild(bar2);
+
+        uTurnArrow.appendChild(bar2);
+        return;
+
+    }
     if (level === arrayList.length - 1) {
         console.log("reached max levels...terminating");
         document.getElementById('divideButton').disabled = true;
@@ -288,7 +297,6 @@ function divide2() {
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "success");
         let maxLevel = Math.max(...pivots.map(p => p.level));
-        console.log("vacusteel", maxLevel);
         let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
 
         const bar2 = document.createElement('div');
@@ -311,7 +319,6 @@ function divide2() {
         // document.getElementById("conquerButton").disabled = true;
         showToast("Divide phase complete", "success");
         let maxLevel = Math.max(...pivots.map(p => p.level));
-        console.log("vacusteel", maxLevel);
         let uTurnArrow = document.getElementById(`arrow-container${maxLevel + 3}`);
         const bar2 = document.createElement('div');
         bar2.setAttribute("id", "uturnspace");
@@ -411,9 +418,20 @@ function findPivot(arr, low, high) {
         pos = high;
     }
     console.log("Pivot=" + pivot);
+    showToast(`The pivot element among ${first}, ${mid} and ${last} is ${pivot}`);
     return [pos, pivot];
 }
 
+function checkForEnding() {
+    for (let i = 0; i < pivots.length - 1; i++) {
+        if (pivots[i].position + 1 === pivots[i + 1].position)
+            continue;
+        if (pivots[i].position + 1 !== pivots[i + 1].position - 1) {
+            return false;
+        }
+    }
+    return true;
+}
 
 function visualiseOld() {
     for (let i = 0; i < arrayList.length; i++) {
