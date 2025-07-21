@@ -1135,6 +1135,11 @@ function showFAQs() {
     When dealing with larger inputs, the display area might not be sufficient to show every bar. However, all bars are present and can be viewed by scrolling each individual row. You may try giving a smaller input to view the complete sorting procedure. <br> For example, 16 12 8 4 3 2 1 or 12 5 4 9 6 15 7`;
     FAQsList.appendChild(entry7);
 
+    const entry8 = document.createElement("li");
+    entry8.innerHTML += `<b>Why are some buttons disabled at times?</b><br>
+    At certain point of time, the usage of some buttons are not permitted. Hence to prevent the user from clicking on it inadvertently, it will be disabled. Depending upon the situation, it can get enabled again.`;
+    FAQsList.appendChild(entry8);
+
     const entry5 = document.createElement("li");
     entry5.innerHTML += `<b>What are the functions of different buttons?</b><br>
     Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;

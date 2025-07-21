@@ -1855,6 +1855,11 @@ function showFAQs() {
     </ul>`;
     FAQsList.appendChild(entry7);
 
+    const entry8 = document.createElement("li");
+    entry8.innerHTML += `<b>Why are some buttons disabled at times?</b><br>
+    At certain point of time, the usage of some buttons are not permitted. Hence to prevent the user from clicking on it inadvertently, it will be disabled. Depending upon the situation, it can get enabled again.`;
+    FAQsList.appendChild(entry8);
+
     const entry4 = document.createElement("li");
     entry4.innerHTML += `<b>What are the functions of different buttons?</b><br>
     Each button has a very specific purpose. Click on 'Guide me!' button to navigate and understand what each button does.`;

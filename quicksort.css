@@ -67,9 +67,7 @@ button:disabled {
   width: 100%;
   height: 240px;
   background-color:powderblue;
-   /* rgb(200, 180, 110); */
   border-bottom: 1px solid #ccc;
-  /* display: flex; */
   align-items: center;
   justify-content: center;
   z-index: 1000;
