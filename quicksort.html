@@ -122,6 +122,29 @@
   <!--🔔-->
 
   <script src="quicksort.js"></script>
+  <script>
+    // Simple Safari detection (excludes Chrome and other WebKit-based browsers)
+    function isSafari() {
+      return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    }
+
+    if (isSafari()) {
+      // Show a banner, modal, or alert
+      const warning = document.createElement('div');
+      warning.innerText = "This website does not work properly in Safari. Please use Chrome, Firefox, or Brave.";
+      warning.style.position = 'fixed';
+      warning.style.top = '0';
+      warning.style.left = '0';
+      warning.style.right = '0';
+      warning.style.backgroundColor = '#ffcc00';
+      warning.style.color = '#000';
+      warning.style.padding = '15px';
+      warning.style.textAlign = 'center';
+      warning.style.zIndex = '9999';
+      warning.style.fontSize = '26px';
+      document.body.appendChild(warning);
+    }
+  </script>
 </body>
 
 </html>
