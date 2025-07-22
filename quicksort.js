@@ -1186,3 +1186,11 @@ document.getElementById('tutorialButton').addEventListener('click', () => {
 document.getElementById('FAQs').addEventListener('click', () => {
     showFAQs();
 });
+
+var textBox = document.getElementById("array_number");
+textBox.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("addButton").click();
+    }
+});

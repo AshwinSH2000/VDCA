@@ -1746,3 +1746,20 @@ document.getElementById("tutorialButton").addEventListener('click', () => {
 document.getElementById('FAQs').addEventListener('click', () => {
   showFAQs();
 });
+
+var textBox = document.getElementById("inorder");
+textBox.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("addButton3").click();
+  }
+});
+
+var textBox = document.getElementById("preorder");
+textBox.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("addButton4").click();
+  }
+});
+
