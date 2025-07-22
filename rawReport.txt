@@ -1,0 +1,9 @@
+Section x - Methodology / Implemented work
+
+1. Quicksort
+
+How is it implemented?
+i. Accepting input
+ii. Repeated clicking on divide and conquer along with/or once click on solve until final result is achieved. 
+
+The user is given the liberty to input the numbers. They can input as many numbers as needed and click 'Insert' button. The numbers can either be either comma separated, space separated or just a single number. On entering the numbers, a 
