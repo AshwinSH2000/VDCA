@@ -169,6 +169,18 @@ h3{
 .pivot-level-6 {
   background-color: greenyellow
 }
+.pivot-level-7 {
+  background-color: black;
+}
+.pivot-level-8 {
+  background-color: white;
+}
+.pivot-level-9 {
+  background-color: gold;
+}
+.pivot-level-10 {
+  background-color: powderblue;
+}
 
 .gap-div {
   width: 40px;
