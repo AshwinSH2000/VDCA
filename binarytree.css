@@ -5,6 +5,10 @@ body{
 	/* background-color: steelblue; */
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.rounded{
+    border-radius: 15px;
+    height: 20px;
+  }
 h1 {
     color: black;
 	text-align: center;
