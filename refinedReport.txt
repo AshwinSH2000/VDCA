@@ -24,6 +24,8 @@ Additionally, a 'Guide Me!' button is available to assist users interactively. C
 
 ---
 
+Convex hull:
+
 For any given point or set of points, the convex hull is the smallest set of points such that drawing a boundary around them encloses all the points, forming a convex polygon. A convex polygon is one where all interior angles are less than 180 degrees, meaning that all vertices point outward and no angle “caves in.” While humans can easily identify the convex hull visually, it is not straightforward for a computer to do the same. To determine the convex hull computationally, the algorithm applies the divide and conquer technique recursively.
 
 The overall idea is to divide the set of points into smaller partitions using perfect vertical lines until each partition contains only one or two points. In the special case of exactly vertical collinear points, the partitions may contain more than two points, as dividing them further using vertical lines is not possible. The base cases for convex hulls are either a single point or a line segment connecting two points. In the special collinear case, the base case consists of the line joining all the vertical collinear points.
@@ -49,3 +51,48 @@ The "Solve" button allows users to reach the solution quickly. If used before an
 Similar to the quicksort visualizer, this tool includes a logging feature. Every time a user clicks on a point, a message is logged to indicate that the point was added to the array. Clicking on the same point again removes it and logs a delete message. If a user clicks somewhere not aligned with the grid, an error message is displayed, asking the user to click closer to the intersection of the grid lines. During the divide phase, logs indicate the x-coordinates where partitioning occurred, and during the conquer phase, the x-coordinates of the merged partitions. Success messages are also shown when the divide or conquer phases are completed.
 
 The visualizer also includes an FAQ page to help users understand what convex hulls are and how the divide and conquer algorithm is implemented in this tool. Additionally, there is a "Guide Me!" button that activates tooltips explaining the functionality of each button in the interface. Users can navigate through these tips using left and right arrows or close them using the "x" button. Tooltips also close automatically upon reaching the final tip. These guides can be accessed at any point during execution to assist users in understanding the interface. Lastly, a "Reset" button is provided to reset the entire interface. Buttons within the visualizer are dynamically enabled or disabled based on the current state of the algorithm.
+
+---
+
+Binary Tree Construction
+
+Inorder traversal is defined as a way to represent all the nodes of a tree in the order: left child → root → right child. If any child has its own children, the same traversal pattern is applied recursively. For example, the binary tree shown in figure x has the inorder traversal: 4 2 5 1 6 3 7
+
+On the other hand, preorder traversal is another way to represent all the nodes in a slightly different order: root → left child → right child. Again, this pattern is recursively applied to each subtree. For the same tree in figure x, the preorder traversal is: 1 2 4 5 3 6 7
+
+When inorder and preorder traversals of any tree is given, the binary tree can be uniquely reconstructed. The core idea is to use the preorder traversal to recursively identify the root of the tree and then use the inorder traversal to divide the nodes into left and right subtrees.
+
+The users can enter these traversals in its respective text boxes as comma or space separated values and click 'Insert'. This action prints the inorder and preorder traversals in the left-hand side of the screen. The algorithm starts by validating the user input to ensure that a valid tree can actually be constructed from the given traversals. If not, it immediately displays a toast message indicating the issue and clears the inputs. If the input is valid, the algorithm proceedes and waits for the user to click on 'Divide' or 'Solve'. Clicking 'Solve' at this point directly displays the final tree without showing any intermediate steps of dividing the inputs or building the tree step by step.
+
+If the user clicks 'Divide' the algorithm initially extracts the first element in the preorder traversal which is always the root of the binary tree. Let's call this element `x`. It then locates `x` in the inorder traversal. All elements to the left of `x` form the left subtree, and all elements to the right form the right subtree. This is represented by printing the inorder and preorder traversals below the original inputs with the root element highlighted with a unique colour. These two parts become sub-inorder traversals. These sub-inorder traversals are actually a subtree of the main binary tree that is being constructed.
+
+The elements in each sub-inorder appear together in the preorder traversal although not in the same order. This is shown in figure y. The first element from each of these partitions in the preorder traversal is the root of the corresponding subtree. This process is repeated recursively: at each step, we find the root from the preorder list and use it to partition the current inorder segment. This process is terminated when only one element remains in a partition and this element is a leaf node. At this point, the divide phase is completed and only 'Solve' button remains enabled. Clicking on that will display the leaf nodes on the right hand side of the screen. After this, the user can only click on 'Conquer' button. With each click of 'Conquer' button, the tree gets built in reverse: from the leaves back up to the root, connecting nodes level by level.
+
+The visualiser keeps a global 'level' variable and it is incremented each time the user clicks on 'Divide'. During the conquer phase, it gets decremented with each click of 'Conquer' button. The conquer function draws the nodes that were identified in each level and then call another function to draw the lines between the parent and child nodes. This function's working is explained further below. Conquer function starts from the maximum value of level reached during divide and decrements with each "Conquer" click.
+
+A custom class (called Node) is defined to represent each node of the binary tree. It has three fields: value, left and right. 'Value' stores the integer at that node. 'left' stores the left child node (default = null). 'right' stores the right child node (default null)
+During the divide phase, whenever a new root is identified, a class object is created with its `value`, and the `left` and `right` fields are initially null. This node is then attached to its parent, either on the left or right, based on its position in the inorder traversal. Hence when the divide phase is complete, technically, the tree would have been fully constructed in memory. This means the nodes at each level would have been attached to its parent and/or child nodes. The function to draw the lines between nodes refers to this class to gather information about the child and parent nodes.
+
+To aid in the visualization, each traversal element has a 'displayed' flag indicating whether it has been identified as a root, and a 'level' variable indicating the level.
+At each level(global), The algorithm scans all nodes and draws the ones found at the current level. These nodes are rendered in the order of the inorder traversal.
+These 'displayed' and 'level(local)' fields are monitored as shown below to control how traversal numbers are displayed:
+
+1. If `flag` is `false`: the number hasn’t been used as a root yet, so it’s shown in black colour.
+2. If `flag` is `true` and the current level matches its recorded level: show it with a distinct color.
+3. If `flag` is `true` but from a different level: replace it with a blank space to visually indicate a split.
+
+For example, if the inorder traversal is **4 2 5 1 6 3 7**, and the leaf nodes are **4, 5, 6, and 7**, then the first conquer step will draw these four nodes in this order. Other nodes (like 1, 2, 3) are not drawn at this point since their `level` does not match the current one.
+
+Similar to the other two examples, the element(s) that is identified as the root are displayed using different colours. These colours are red, blue, green, yellow, cyan, white, pink, purple, brown and grey for levels starting from 0 all the way to 9.
+
+After nodes are drawn, a function checks if arrows (edges) need to be added. For this, it consults the class Node as mentioned above. It scans through the nodes that were just rendered on screen and checks if these nodes have any child nodes. If they do not have any such nodes, it simply returns. Else, it draws the required lines as follows. But before that let me briefly explain where these nodes and lines will be drawn.
+
+The entire drawing area is a large HTML `div` container. Circular nodes are placed on smaller overlaid `div`s corresponding to their level. So to visualise this, there is a large div covering the entire right hand side of the viewport and above that there are dynamically created smaller divs in which the circular nodes are printed.
+To draw lines between parent and child nodes, the algorithm retrieves the bottom-center coordinates of the parent and top-center coordinates of child node(s). Since the parent and child nodes are present in different divs, their coordinates will be local to that div. The function then translates these into coordinates relative to the larger div container. Then it proceedes to draws the connecting lines on the larger div which gives the viewer an impression that the smaller overlapping divs are connected.
+An update function is also triggered at the end of this function to re-draw arrows if node positions shift due to new elements being added.
+
+When the user clicks on 'Conquer' repeatedly, the algorithm builds the tree step by step from the bottom. The top most node will have the same colour its corresponding divide step. Once a new node is attached to the top, all older nodes are coloured black to signify that these nodes are not in focus anymore. Once the final tree is constructed, all the nodes are shown in black colour.
+
+Just like the previous two examples, this visualisation also has the FAQs page that informs the users about the concepts of binary tree construction, how is divide and conquer algorithm applied here and such similaar questions. They also have the same feature provided by the 'Guide Me!' button which helps them navigate the interface using tips. These tips stay in place until the user interacts with them using one of the next, previous and close buttons.
+
+Just like the other two examples, there is also the toast message functionality. This informs the users about the results of the actions they performed and also informs them about any success/error messages using the same three colour coded messages. These toast messages stay for 10 secones and beyond that they will be safely stored under the logs button. The users can access the logs functionality at any point in the execution to stay informed about the current state of the visualisation.
