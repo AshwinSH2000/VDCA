@@ -26,9 +26,11 @@ async function inputNumbers() {
 
         let temp = [];
         if (item.includes(" ") && item.includes(",")) {
-            // alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
-            showToast("Be consistent. Separate the numbers with all space or all commas", "error");
-            return;
+            temp = item.split(",").map(Number);
+            if (temp.includes(NaN)) {
+                showToast("Please separate the numbers with all space or all commas. ", "error");
+                return;
+            }
         }
         else if (item.includes(" ")) {
             temp = item.split(/\s+/).map(Number);
