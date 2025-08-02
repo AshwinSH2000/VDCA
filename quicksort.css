@@ -349,6 +349,7 @@ li {
 .toast.info { background-color: gray; }
 .toast.success { background-color: green; }
 .toast.error { background-color: red; }
+.toast.first { background-color: orange;}
 
 .toast-log-modal {
   position: fixed;
