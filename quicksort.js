@@ -17,7 +17,7 @@ document.getElementById("conquerButton").disabled = true;
 
 
 async function inputNumbers() {
-
+    let negativeNumberFlag = false;
     const item = document.getElementById('array_number').value.trim();
     //console.log(typeof item);
     //const value = parseInt(item.value);
@@ -48,6 +48,13 @@ async function inputNumbers() {
         }
 
         for (let i = 0; i < temp.length; i++) {
+            negativeNumberFlag = false;
+            let barheight = Number(temp[i]);
+            if (barheight < 0) {
+                showToast(`Negative number not allowed. Discarding entry`, "error");
+                negativeNumberFlag = true;
+                break;
+            }
             console.log("Length of temp is", temp.length);
             arrayList.push(Number(temp[i]));
             console.log("Added:", temp[i], "Array:", arrayList);
@@ -58,14 +65,14 @@ async function inputNumbers() {
             //old aprch
             bar.classList.add('bar');
 
-            let barheight = Number(temp[i]);
             //bar.style.height = `${Number(item)}px`;
             bar.style.height = `${barheight * 5}px`;
             bar.textContent = barheight;
             bar.accessKey = barheight;
             document.getElementById('bar-container').append(bar);
         }
-        showToast(`Inserted ${temp} into the array`, "info");
+        if (!negativeNumberFlag)
+            showToast(`Inserted ${temp} into the array`, "info");
     }
     else {
         // alert("Enter a number!");
