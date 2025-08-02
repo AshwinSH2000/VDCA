@@ -1513,9 +1513,10 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
   })
 }
 
-// window.addEventListener("load", () => {
-//   showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
-// });
+window.addEventListener("load", () => {
+  // showDynamicTooltip(document.getElementById("preorderLabel"), "Enter comma or space separated traversals in respective textboxes and click Insert.", "left");
+  showToast("Click on FAQs button to know more about Binary Tree Construction and also to find sample inputs", "first");
+});
 
 const toast = document.getElementById("toast");
 const toastLogModal = document.getElementById("toastLogModal");
@@ -1556,10 +1557,12 @@ function showToast(message, type = "info") {
     toast.appendChild(peek);
   }
 
-  // Add to log
-  const entry = document.createElement("li");
-  entry.textContent = `[${type.toUpperCase()}] ${message}`;
-  toastLogList.prepend(entry);
+  if (type !== "first") {
+    // Add to log
+    const entry = document.createElement("li");
+    entry.textContent = `[${type.toUpperCase()}] ${message}`;
+    toastLogList.prepend(entry);
+  }
 
   // Auto-dismiss after 10s
   clearTimeout(toastTimer);
