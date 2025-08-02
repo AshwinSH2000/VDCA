@@ -1634,6 +1634,7 @@ function showDynamicTooltip(targetElement, message, arrowDirection = "left", dur
 
 window.addEventListener("load", () => {
     // showTutorial();
+    showToast("Click on FAQs button to know more about convex hulls. ", "first");
     drawInvisiblePoints();
 });
 
@@ -1795,12 +1796,12 @@ function showToast(message, type = "info") {
         peek.textContent = peeks[i].textContent;
         toast.appendChild(peek);
     }
-
-    // Add to log
-    const entry = document.createElement("li");
-    entry.textContent = `[${type.toUpperCase()}] ${message}`;
-    toastLogList.prepend(entry);
-
+    if (type !== "first") {
+        // Add to log
+        const entry = document.createElement("li");
+        entry.textContent = `[${type.toUpperCase()}] ${message}`;
+        toastLogList.prepend(entry);
+    }
     // Auto-dismiss after 10s
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
@@ -1832,6 +1833,11 @@ function showFAQs() {
     image2.style.width = "400px";
     image2.style.marginTop = "8px";
     FAQsList.appendChild(image2);
+
+    const entry9 = document.createElement("li");
+    entry9.innerHTML += `<b>How do I enter and delete points into the grid?</b><br>
+    Simply click on the intersection of any horizontal and vertical lines to insert that point. Click on that intersection again to delete that point. As soon as you click, a notification appears on the right mentioning the coordinates of the point that was added or deleted. `;
+    FAQsList.appendChild(entry9);
 
     const entry3 = document.createElement("li");
     entry3.innerHTML += `<b>How is divide and conquer algorithm applied here?</b><br>
