@@ -1198,6 +1198,14 @@ document.getElementById('FAQs').addEventListener('click', () => {
     showFAQs();
 });
 
+// Add event listener to close the FAQ modal when clicking outside its content
+FAQsModal.addEventListener('click', function (event) {
+    // Check if the click target is exactly the modal backdrop itself
+    // (i.e., not a child element within the modal's content)
+    if (event.target === FAQsModal) {
+        closeFAQs();
+    }
+});
 var textBox = document.getElementById("array_number");
 textBox.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
