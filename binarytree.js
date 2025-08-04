@@ -1588,6 +1588,7 @@ function closeToastLog() {
 }
 
 let tutorialData = [
+  ["preorder", "Type complete traversal (comma or space separated) in respective text-boxes", "top-left"],
   ["addButton4", "Input respective traversal arrays", "top-left"],
   ["deleteButton4", "Remove entire matching traversal array", "top-right"],
   ["divideButton3", "Split traversals into level-wise partitions", "top-left"],
