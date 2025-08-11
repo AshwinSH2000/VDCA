@@ -18,6 +18,7 @@ document.getElementById("conquerButton").disabled = true;
 
 async function inputNumbers() {
     let negativeNumberFlag = false;
+    let maxNumbersFlag = false;
     const item = document.getElementById('array_number').value.trim();
     //console.log(typeof item);
     //const value = parseInt(item.value);
@@ -48,33 +49,44 @@ async function inputNumbers() {
             showToast("Not a number", "error");
             return;
         }
-
+        let tempToast = temp.slice();
         for (let i = 0; i < temp.length; i++) {
             negativeNumberFlag = false;
             let barheight = Number(temp[i]);
             if (barheight < 0) {
                 showToast(`Negative number not allowed. Discarding entry`, "error");
                 negativeNumberFlag = true;
-                break;
+                // break;
+                tempToast.splice(tempToast.indexOf(temp[i]), 1);
             }
-            console.log("Length of temp is", temp.length);
-            arrayList.push(Number(temp[i]));
-            console.log("Added:", temp[i], "Array:", arrayList);
+            else {
+                if (arrayList.length === 25) {
+                    console.log("reached max array size. ignoring all further inputs");
+                    showToast("Maximum array size reached. Cannot input anymore numbers.", "info");
+                    document.getElementById("addButton").disabled = true;
+                    maxNumbersFlag = true;
+                    break;
+                }
+                console.log("Length of temp is", temp.length);
+                arrayList.push(Number(temp[i]));
+                console.log("Added:", temp[i], "Array:", arrayList);
 
-            const bar = document.createElement('div');
-            //bar.classList.add(`level-${level}`);
+                const bar = document.createElement('div');
+                //bar.classList.add(`level-${level}`);
 
-            //old aprch
-            bar.classList.add('bar');
+                //old aprch
+                bar.classList.add('bar');
 
-            //bar.style.height = `${Number(item)}px`;
-            bar.style.height = `${barheight * 5}px`;
-            bar.textContent = barheight;
-            bar.accessKey = barheight;
-            document.getElementById('bar-container').append(bar);
+                //bar.style.height = `${Number(item)}px`;
+                bar.style.height = `${barheight * 5}px`;
+                bar.textContent = barheight;
+                bar.accessKey = barheight;
+                document.getElementById('bar-container').append(bar);
+            }
+
         }
-        if (!negativeNumberFlag)
-            showToast(`Inserted ${temp} into the array`, "info");
+        if (!negativeNumberFlag && !maxNumbersFlag)
+            showToast(`Inserted ${tempToast} into the array`, "info");
     }
     else {
         // alert("Enter a number!");
@@ -85,15 +97,6 @@ async function inputNumbers() {
     document.getElementById("solveButton").disabled = false;
     document.getElementById('array_number').value = '';
 
-    // if (inputCounter === 0) {
-    //     showDynamicTooltip(document.getElementById("array_number"), "You can enter more numbers or click on Divide or Solve", "left", 10000);
-    //     await sleep(1000);
-    // }
-    // if (inputCounter <= 2) {
-    //     showDynamicTooltip(document.getElementById("divideButton"), "Divide performs level-wise partitions", "top-left", 10000);
-    //     await sleep(1000);
-    //     showDynamicTooltip(document.getElementById('solveButton'), "Clicking Solve before Divide displays the final sorted array", "top-right", 10000);
-    // }
     inputCounter++;
 
 }
@@ -120,6 +123,10 @@ function deleteNumbers() {
                 document.getElementById("divideButton").disabled = true;
             }
             showToast(`Deleted ${item} from the array`, "info");
+
+            if (arrayList.length <= 25) {
+                document.getElementById("addButton").disabled = false;
+            }
         }
         else {
             console.log("number not found to delete");
