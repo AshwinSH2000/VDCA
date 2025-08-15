@@ -119,10 +119,9 @@ If you want, I can suggest a structured template for integrating those 15 direct
 Modified Lit Review with different subtitles
 
 Background
+There are certain types problems in the field of computer science that is too big to be solved directly. In such cases, it is more logical and easy to break them down into smaller chunks and solve them independently. The solutions of these smaller chunks can then be merged to obtain the solution of the main large problem. This approach of solving problems is called Divide-and-Conquer (D\&C) Algorithms. The core concept behind D\&C algorithms is recursion - the problems are broken down recursively until they are small enough to be solved directly which is known as base case. The algorithm then uses the base case solution(s) to solve larger chunks and merges them recursively until the main problem is solved. The diagram of algorithm execution is as shown in Figure x.
 
-Divide and Conquer algorithm is a recursive technique that is used to solve problems by repeatedly dividing the main problem into multiple sub-problems until the base case is reached, then solving these sub-problems and merging them back repeatedly until the original problem is solved.
-|--------Add a few more advantages of using divide and conquer algorithms-------|
-Since it efficiently makes use of memory caches, the solutions are processed swiftly.
+D\&C algirithm has various advantages mainly in terms of speed of execution. By breaking down the problems into more manageable chunks, it can reduce the overall time complexity of the solution compared to brute force method of solving problems. At times, it is designed to work efficiently in place requiring minimal additional memory apart from the input data. After the solutions are generated, it efficiently makes use of memory caches due to which solutions are processed swiftly. Moreover, the subproblems generated are independent of each other which means they can be solved concurrently on different cores or processors, leading to substantial speedup in execution. D\&C algorithms naturally transforms a complex problem into smaller, more manageable instances of the same problem. This reductionist approach is intellectually satisfying and leverages the solution to the fundamental subproblem repeatedly.
 
 Literature Review
 
@@ -162,3 +161,9 @@ Carson et al. [xc] proposed Algorithm Explorer which visualises algorithms with 
 The research by Karavirta et al. [xd] provides a very intersting model to build live visualisations for a wide range of algorithms including divide and conquer. This enables dynamic visualisations during lectures by parsing pseudocode annotations to generate real time animations. Moreover, this system integrates with presentation tools allowing lecturers to embed AVs without switching applications. While it is meant to address the time-consuming aspect of animation creation, it requires users to provide sufficient and accurate annotations to map the algorithm logic to its visualisation. The evaluation study performed by the authors suggested that there was a bit of learning curve for the educators to correctly add annotations but they reported improved student engagement during explanations due to live visualisations capabilities. This approach bridges the gap between pedagogical needs and practical constraints in lecture settings.
 
 Vrachnos et al. [xe] proposed DAVE - Dynamic Algorithm Visualization Environment for Novice Learners - which is a dynamic algorithm visualiser that can animate not just the sample algorithms but also users' custom algotithms. The major improvement over all previous works is that it does not need users to learn any new scripting language or annotate their code with specific animation related codes. They created a custom java compiler with the help of ANother Tool for Language Recognition(ANTLR)[x] tool which maps the data objects identified in the users' code to their necessary visial counterpaarts in the visualisation. This is a great breakthrough in animation visualisation as users can create real time animation with nothing but the code of their algorithm. However, it works only with 2D animations of array algorithms such as searching and sorting. The authors have also mentioned the plans to add graph visualisation capabilities in the future.
+
+take decisions and make them right.
+
+be a bit assertive bro. enough is enough. learn some tips
+
+think for longer good. do not prevent any. just make it inaccessible.
