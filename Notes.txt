@@ -16,3 +16,8 @@ Got it. it is to add the dull lines when the partitionlines and its partitions a
 
 3. One div can only be appendChild() to one other div. 
 If you need to add it to different divs, you need to clone it. REMEMBERRRRRR
+
+4. What can be put into the common details section?
+
+    i.  The visualiser output screen is basically divided into two. partitioned by a colour difference. Maybe add image to this. 
+    ii. 
