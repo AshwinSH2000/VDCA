@@ -70,10 +70,10 @@ function addPreorder() {
       //nonsense input
       // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
-      console.log("The separator must either be comma or space");
+      // console.log("The separator must either be comma or space");
       return;
     }
-    console.log("added the array ", preorder);
+    // console.log("added the array ", preorder);
     showToast(`Inserted ${preorder} as the preorder traversal`, "info");
     document.getElementById("preorder").value = "";
     if (inorderIp && preorderIp) {
@@ -92,7 +92,7 @@ function addPreorder() {
       document.getElementById("solveButton3").disabled = false;
 
     } else {
-      console.log("preorder and inorder", preorder, inorder);
+      // console.log("preorder and inorder", preorder, inorder);
       document.getElementById("addButton4").disabled = true;
     }
 
@@ -120,7 +120,7 @@ function addPreorder() {
       text.setAttribute("class", 'textPartitionBlack');
       SVG.appendChild(text);
       container.append(SVG);
-      console.log("appended text and scg");
+      // console.log("appended text and scg");
     }
 
   } else {
@@ -157,7 +157,7 @@ function deletePreorder() {
       for (let i = 0; i < temp.length; i++) {
         if (preorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
-          console.log("Cannot find item to delete");
+          // console.log("Cannot find item to delete");
           // alert("Entered item not present.");
           showToast("Entered value not present.", "error");
 
@@ -169,7 +169,7 @@ function deletePreorder() {
       for (let i = 0; i < temp.length; i++) {
         if (preorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
-          console.log("Cannot find item to delete");
+          // console.log("Cannot find item to delete");
           // alert("Entered item not present.");
           showToast("Entered value not present.", "error");
           return;
@@ -179,14 +179,14 @@ function deletePreorder() {
       //nonsense input
       // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
-      console.log("The separator must either be comma or space");
+      // console.log("The separator must either be comma or space");
       return;
     }
 
     //if the code reaches this point, then it means the value presnet in the preorder can be deleted.
     showToast(`Deleted ${preorder} from preorder traversal`, "info");
     preorder = [];
-    console.log("deleted the entered preorder traversal", preorder);
+    // console.log("deleted the entered preorder traversal", preorder);
     document.getElementById("addButton4").disabled = false;
     document.getElementById("preorder").value = "";
 
@@ -206,7 +206,7 @@ function addInorder() {
 
   if (w) {
     let singleNum = Number(w);
-    console.log(singleNum);
+    // console.log(singleNum);
 
     if (w.includes(" ") && w.includes(",")) {
       // alert("Be consistent. Separate the numbers with all space or all commas. Do not mix them.");
@@ -219,7 +219,7 @@ function addInorder() {
       for (let i = 0; i < temp.length; i++) {
         inorder.push(temp[i]);
       }
-      console.log("temp is (,)", temp);
+      // console.log("temp is (,)", temp);
       inorderIp = true;
     } else if (w.includes(" ") || !isNaN(singleNum)) {
       let temp = w.split(/\s+/).map(Number);
@@ -232,11 +232,11 @@ function addInorder() {
       //nonsense input
       // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
-      console.log("The separator must either be comma or space");
+      // console.log("The separator must either be comma or space");
       return;
     }
 
-    console.log("added the array ", inorder);
+    // console.log("added the array ", inorder);
     showToast(`Inserted ${inorder} as the inorder traversal`, "info");
     document.getElementById("inorder").value = "";
     if (inorderIp && preorderIp) {
@@ -286,7 +286,7 @@ function addInorder() {
       text.setAttribute("class", 'textPartitionBlack');
       SVG.appendChild(text);
       container.append(SVG);
-      console.log("appended text and scg");
+      // console.log("appended text and scg");
     }
 
   } else {
@@ -308,7 +308,7 @@ function deleteInorder() {
       for (let i = 0; i < temp.length; i++) {
         if (inorder[i] !== temp[i]) {
           //there is a mismatch. hence abort delete
-          console.log("Cannot find item to delete");
+          // console.log("Cannot find item to delete");
           // alert("Entered item not present.");
           showToast("Entered value not present.", "error");
           return;
@@ -319,7 +319,7 @@ function deleteInorder() {
       for (let i = 0; i < temp.length; i++) {
         if (inorder[i] !== temp[i]) {
           //there is a misamtch. hence abort delete
-          console.log("Cannot find item to delete");
+          // console.log("Cannot find item to delete");
           // alert("Entered item not present.");
           showToast("Entered value not present.", "error");
           return;
@@ -329,14 +329,14 @@ function deleteInorder() {
       //nonsense input
       // alert("Separator must be either comma or space");
       showToast("Separator must be either comma or space", "error");
-      console.log("The separator must either be comma or space");
+      // console.log("The separator must either be comma or space");
       return;
     }
 
     //if the code reaches this point, then it means the value presnet in the inorder can be deleted.
     showToast(`Deleted ${inorder} from inorder traversal`, "info");
     inorder = [];
-    console.log("deleted the entered inorder traversal", inorder);
+    // console.log("deleted the entered inorder traversal", inorder);
     document.getElementById("addButton3").disabled = false;
     document.getElementById("inorder").value = "";
 
@@ -375,11 +375,11 @@ function checkTree(inorder, preorder) {
       if (i === j) continue;
       else {
         if (inorder[i] === inorder[j]) {
-          console.log("Duplicates found INORDER");
+          // console.log("Duplicates found INORDER");
           return false;
         }
         if (preorder[i] === preorder[j]) {
-          console.log("Duplicates dound PREORDER");
+          // console.log("Duplicates dound PREORDER");
           return false;
         }
       }
@@ -418,10 +418,10 @@ function divideTree() {
   document.getElementById("deleteButton4").disabled = true;
 
   if (nodes.length === inorder.length) {
-    console.log("All nodes have been created. Cannot divide further. ");
-    console.log("The max level is", level);
+    // console.log("All nodes have been created. Cannot divide further. ");
+    // console.log("The max level is", level);
     maxLevel = level;
-    console.log("Vizlevel is", vizLevel);
+    // console.log("Vizlevel is", vizLevel);
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
@@ -445,8 +445,8 @@ function divideTree() {
     limits.push(inorder.indexOf(preorder[0]));
     limits.sort((a, b) => a - b);
 
-    console.log("At the end of level 0:", nodes);
-    console.log("limits is", limits);
+    // console.log("At the end of level 0:", nodes);
+    // console.log("limits is", limits);
     if (!solveMode) {
       showToast(`${preorder[0]} is the root of the tree`, "info");
       vizDivideBT();
@@ -463,8 +463,8 @@ function divideTree() {
     for (let i = 0; i < limitsLength - 1; i++) {
       let newinorder = inorder.slice(limits[i] + 1, limits[i + 1]);
       let newpreorder = preorder.slice(startpoint, startpoint + newinorder.length);
-      console.log("inorder...", newinorder);
-      console.log("preorder...", newpreorder);
+      // console.log("inorder...", newinorder);
+      // console.log("preorder...", newpreorder);
       if (newpreorder.length !== 0) {
         preOrderEntries.push({
           level: level,
@@ -486,10 +486,10 @@ function divideTree() {
 
 
       let returnedRoot = doVirtualLevel0(newinorder, newpreorder, level);
-      console.log("returned root is", returnedRoot);
+      // console.log("returned root is", returnedRoot);
       if (returnedRoot !== null) {
         if (!nodes.some((p) => p.value === returnedRoot.value)) {
-          console.log("pushing root");
+          // console.log("pushing root");
           limits.push(inorder.indexOf(returnedRoot.value));
           findRoot(returnedRoot, level);
           nodes.push(returnedRoot);
@@ -497,20 +497,20 @@ function divideTree() {
           treeNodes.push(newNode);
           rootsForToast.push(` ${returnedRoot.value}`);
         }
-        else
-          console.log("repetitive root. hence not pushing");
+        // else
+        // console.log("repetitive root. hence not pushing");
       }
       else {
-        console.log("got back null");
+        // console.log("got back null");
       }
 
       //send a portion of that inorder thing to identify the node in it.
       //basically do a level 0 thing on that.
     }
-    console.log("At the end of level " + level + " nodes is", nodes);
-    console.log("The class object is", treeNodes);
+    // console.log("At the end of level " + level + " nodes is", nodes);
+    // console.log("The class object is", treeNodes);
     limits.sort((a, b) => a - b);
-    console.log("limits is", limits);
+    // console.log("limits is", limits);
     if (!solveMode) {
       if (nodes.length === inorder.length) {
         if (rootsForToast.length === 1)
@@ -530,15 +530,15 @@ function divideTree() {
     level++;
   }
 
-  console.log("Divide finally over...the preorder entries include", preOrderEntries);
+  // console.log("Divide finally over...the preorder entries include", preOrderEntries);
 
   //this below code is to check if further rounds are needed or not. 
   // it is also present in the top but since this is there, I dont think the top code will ever get executed. 
   if (nodes.length === inorder.length) {
-    console.log("All nodes have been created. Cannot divide further. ");
-    console.log("The max level is", level);
+    // console.log("All nodes have been created. Cannot divide further. ");
+    // console.log("The max level is", level);
     maxLevel = level;
-    console.log("Vizlevel is", vizLevel);
+    // console.log("Vizlevel is", vizLevel);
     document.getElementById('divideButton3').disabled = true;
     solveDivideFlag = true;
     document.getElementById("conquerButton3").disabled = true;
@@ -553,7 +553,7 @@ function findRoot(node, curLevel) {
   //first search and filter the roots with value (curLevel-1)
   //if only one, then thats the root. if more, select the closest one (in distance/index)
   let possibleRoots = nodes.filter(p => p.level === curLevel - 1);
-  console.log("The possible roots are", possibleRoots);
+  // console.log("The possible roots are", possibleRoots);
 
   //now find the closest one...
   if (possibleRoots.length === 1) {
@@ -561,13 +561,13 @@ function findRoot(node, curLevel) {
     //better to make changes i think,,,but which side to attach?
     if (inorder.indexOf(node.value) < inorder.indexOf(possibleRoots[0].value)) {
       //leftside
-      console.log("This needs to be attached to the left side");
+      // console.log("This needs to be attached to the left side");
       let indexToEdit = nodes.findIndex(p => p.value === possibleRoots[0].value);
       nodes[indexToEdit].left = node.value;
       treeNodes[indexToEdit].left = node.value;
 
     } else {
-      console.log("This node needs to be attached to the right side");
+      // console.log("This node needs to be attached to the right side");
       let indexToEdit = nodes.findIndex(p => p.value === possibleRoots[0].value);
       nodes[indexToEdit].right = node.value;
       treeNodes[indexToEdit].right = node.value;
@@ -578,23 +578,23 @@ function findRoot(node, curLevel) {
     let closest = Infinity;
     let pointer = 0;
     for (let i = 0; i < possibleRoots.length; i++) {
-      console.log("with root", possibleRoots[i].value, "the distance is", Math.abs(inorder.indexOf(node.value) - inorder.indexOf(possibleRoots[i].value)));
+      // console.log("with root", possibleRoots[i].value, "the distance is", Math.abs(inorder.indexOf(node.value) - inorder.indexOf(possibleRoots[i].value)));
       if (Math.abs(inorder.indexOf(node.value) - inorder.indexOf(possibleRoots[i].value)) < closest) {
         closest = Math.abs(inorder.indexOf(node.value) - inorder.indexOf(possibleRoots[i].value));
         pointer = i;
       }
     }
-    console.log("Root wil be", possibleRoots[pointer])
+    // console.log("Root wil be", possibleRoots[pointer])
     //i will have the root. but which direction?
     if (inorder.indexOf(node.value) < inorder.indexOf(possibleRoots[pointer].value)) {
       //leftside
-      console.log("This needs to be attached to the left side");
+      // console.log("This needs to be attached to the left side");
       let indexToEdit = nodes.findIndex(p => p.value === possibleRoots[pointer].value);
       nodes[indexToEdit].left = node.value;
       treeNodes[indexToEdit].left = node.value;
 
     } else {
-      console.log("This node needs to be attached to the right side");
+      // console.log("This node needs to be attached to the right side");
       let indexToEdit = nodes.findIndex(p => p.value === possibleRoots[pointer].value);
       nodes[indexToEdit].right = node.value;
       treeNodes[indexToEdit].right = node.value;
@@ -638,8 +638,8 @@ function mergeTree() {
   //iterate through each of the node and check if anything needs to be attached.
 
   if (level < 0) {
-    console.log("no more conquer possible...returning");
-    console.log("final binary tree:", treeNodes[0]);
+    // console.log("no more conquer possible...returning");
+    // console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
     document.getElementById("solveButton3").disabled = true;
     showToast("Final tree constructed", "success");
@@ -653,8 +653,8 @@ function mergeTree() {
   let levelNodes = treeNodes.filter(p => p.level === level);//.map(p => p.value);;
   let nodesForToast = [];
   for (let i = 0; i < levelNodes.length; i++) {
-    console.log("------begin------")
-    console.log("The nodes in this level are", levelNodes);
+    // console.log("------begin------")
+    // console.log("The nodes in this level are", levelNodes);
     // nodesForToast.push()
 
     //find the corresponding treeNodes[i];
@@ -671,8 +671,8 @@ function mergeTree() {
       treeNodes[nodePos].right = treeNodes.filter(p => p.value === levelNodes[i].right);
 
     }
-    console.log("the levelnodes afer updating are:", levelNodes);
-    console.log("------end------")
+    // console.log("the levelnodes afer updating are:", levelNodes);
+    // console.log("------end------")
   }
 
   if (level >= 0) {
@@ -683,7 +683,7 @@ function mergeTree() {
         showToast(`${[...levelNodes.map(p => p.value)]} are the leaf nodes`, "info");
     }
     else {
-      console.log("GIONEE maxlvel is", maxLevel, "levelnode's level is", levelNodes[0].level);
+      // console.log("GIONEE maxlvel is", maxLevel, "levelnode's level is", levelNodes[0].level);
       if ([...levelNodes.map(p => p.value)].length === 1)
         showToast(`${[...levelNodes.map(p => p.value)]} is connected to its child node(s)`, "info");
       else
@@ -694,9 +694,9 @@ function mergeTree() {
 
   vizConquerBT();
   if (level < 0) {
-    console.log("The level value is", level);
-    console.log("no more conquer possible...returning");
-    console.log("final binary tree:", treeNodes[0]);
+    // console.log("The level value is", level);
+    // console.log("no more conquer possible...returning");
+    // console.log("final binary tree:", treeNodes[0]);
     document.getElementById('conquerButton3').disabled = true;
     document.getElementById("solveButton3").disabled = true;
     showToast("Final tree constructed", "success");
@@ -708,7 +708,7 @@ function mergeTree() {
 
     return;
   }
-  console.log("added today..level is", level);
+  // console.log("added today..level is", level);
 }
 
 function reset() {
@@ -726,7 +726,7 @@ function reset() {
   nodes = [];
   limits = [];
   console.clear();
-  console.log("cleared the console. starting fresh");
+  // console.log("cleared the console. starting fresh");
   location.reload();
 }
 let gapPrintedViz = 0;
@@ -744,13 +744,13 @@ async function vizConquerBT() {
   document.getElementById("solveButton3").disabled = true;
 
   let container = document.getElementById(`RtreeContainer`);
-  console.log("Inside the conquer visualiser fn");
+  // console.log("Inside the conquer visualiser fn");
   if (level === 0) {
     container = document.getElementById(`RtreeContainer`);
     container.innerHTML = '';
   }
   else {
-    console.log("Level + 1 is", level + 1);
+    // console.log("Level + 1 is", level + 1);
     container = document.getElementById(`RtreeContainer${level + 1}`);
 
     container.innerHTML = '';
@@ -760,15 +760,15 @@ async function vizConquerBT() {
 
 
   for (let i = 0; i < inorder.length; i++) {
-    console.log("Inside the conquer forloop");
+    // console.log("Inside the conquer forloop");
 
     let indexOfText = nodes.findIndex((p) => p.value === inorder[i]);
-    console.log("indexOfText is in vizConquerBT", indexOfText);
-    console.log("The values inside conqurtBT is1", nodes[indexOfText]);
+    // console.log("indexOfText is in vizConquerBT", indexOfText);
+    // console.log("The values inside conqurtBT is1", nodes[indexOfText]);
     const SVG = document.createElementNS(SVGLink, "svg");
 
     if (nodes[indexOfText].level === level) {
-      console.log("The values inside conqurtBT is2", nodes[indexOfText]);
+      // console.log("The values inside conqurtBT is2", nodes[indexOfText]);
       //svg for the node
       SVG.setAttribute("width", "50");   //used when there was circle around node
       // SVG.setAttribute("width", "30"); //used whrn there is no circle around node
@@ -805,7 +805,7 @@ async function vizConquerBT() {
       text.setAttribute("class", `textPartitionLevel${nodes[indexOfText].level}`);
       SVG.setAttribute("id", `Node${inorder[i]}`);
       SVG.appendChild(text);
-      console.log("The values inside conqurtBT is3", nodes[indexOfText]);
+      // console.log("The values inside conqurtBT is3", nodes[indexOfText]);
       gapPrintedViz = 0;
     }
     else {
@@ -845,22 +845,22 @@ async function vizConquerBT() {
     }
 
     container.appendChild(SVG);
-    console.log("appended sth");
-    console.log("The values inside conqurtBT is4", nodes[indexOfText]);
+    // console.log("appended sth");
+    // console.log("The values inside conqurtBT is4", nodes[indexOfText]);
     if (nodes[indexOfText].level === level) {
-      console.log("The values inside conqurtBT is5", nodes[indexOfText]);
+      // console.log("The values inside conqurtBT is5", nodes[indexOfText]);
       drawLines(SVG, nodes[indexOfText]);
     }
     updateLines();
     // await sleep(50);
   }
-  console.log("Loop done");
+  // console.log("Loop done");
   // updateLines();
 }
 
 async function vizConquerBTFinalSoln() {
   document.getElementById("solveButton3").disabled = true;
-  console.log("Inside conquer final soln (updating to black)");
+  // console.log("Inside conquer final soln (updating to black)");
 
   // Determine the container for the current level
   let container = (level === 0)
@@ -891,11 +891,11 @@ async function vizConquerBTFinalSoln() {
 }
 
 function drawLines(topSVG, focusNode) {
-  console.log("Focus node is", focusNode);
+  // console.log("Focus node is", focusNode);
   let outerSVG = document.getElementById("linkLayer");
   //need to draw the lines...
   if (focusNode.left !== null) {
-    console.log("Printing the left path now");
+    // // console.log("Printing the left path now");
 
     //created the line..ok
     const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -909,13 +909,13 @@ function drawLines(topSVG, focusNode) {
       bottomContainer = document.getElementById(`RtreeContainer${level + 2}`);
     }
     let botSVG = bottomContainer.querySelector(`#Node${focusNode.left}`);
-    console.log("Bottom container is", bottomContainer);
-    console.log("Bottom svg is", botSVG);
-    console.log("`Node${focusNode.left}` is", `#Node${focusNode.left}`)
+    // console.log("Bottom container is", bottomContainer);
+    // console.log("Bottom svg is", botSVG);
+    // console.log("`Node${focusNode.left}` is", `#Node${focusNode.left}`)
 
     let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
-    console.log("LEFT: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
+    console.log("LEFT: for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
 
 
     line1.setAttribute("x1", RootPtr.x);
@@ -934,10 +934,10 @@ function drawLines(topSVG, focusNode) {
 
   }
   else {
-    console.log("Null needs to be attached to left child of", focusNode);
+    // console.log("Null needs to be attached to left child of", focusNode);
   }
   if (focusNode.right !== null) {
-    console.log("Printing the right path now");
+    // console.log("Printing the right path now");
     //no need to create an svg, this marking will come in linkLayer
     //but need to find the x and y coords... how
     const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -953,7 +953,7 @@ function drawLines(topSVG, focusNode) {
     let RootPtr = getPointInOuterSVG(topSVG, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(botSVG, 25, 0, outerSVG);
 
-    console.log("RIGHT: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
+    console.log("RIGHT: for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
     line2.setAttribute("x1", RootPtr.x);
     line2.setAttribute("y1", RootPtr.y);
     line2.setAttribute("x2", ChildPtr.x);
@@ -968,7 +968,7 @@ function drawLines(topSVG, focusNode) {
     // updateLines();
   }
   else {
-    console.log("Null needs to be attached to right child of", focusNode);
+    // console.log("Null needs to be attached to right child of", focusNode);
   }
   //THIS IS MOstly not required as i am calling updateLines inside both the if cases. 
   // updateLines();
@@ -977,7 +977,7 @@ function drawLines(topSVG, focusNode) {
 async function vizDivideBT() {
 
   let container = document.getElementById(`treeContainer`);
-  console.log("Inside the visualise fn");
+  // console.log("Inside the visualise fn");
   if (level === 0) {
     container = document.getElementById(`treeContainer`);
     container.innerHTML = 'Inorder:  ';
@@ -994,7 +994,7 @@ async function vizDivideBT() {
     //idu yaake andre, in level 0, there will be only the root in the nodes class. 
     //so if an element is found, you put a partition around it and display it.
     //if it is not present, you put it in a blank svg and display it
-    console.log("indexOfText is (IN vizDivideBT)", indexOfText);
+    // console.log("indexOfText is (IN vizDivideBT)", indexOfText);
 
     // if(indexOfText===-1){
     //   //output the number only
@@ -1140,7 +1140,7 @@ async function vizDivideBT() {
         text2.setAttribute("text-anchor", "middle"); // center horizontally
         // text2.setAttribute("font-size", "20");
         text2.setAttribute("class", 'textPartitionLevelBlack');
-        console.log("PRINTED BLACK NUMBER");
+        // console.log("PRINTED BLACK NUMBER");
         SVG2.setAttribute("class", 'partitionLevelBlack');
         SVG2.appendChild(text2);
       } else {
@@ -1150,7 +1150,7 @@ async function vizDivideBT() {
         text2.setAttribute("text-anchor", "middle"); // center horizontally
         // text2.setAttribute("font-size", "20");
         text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
-        console.log("PRINTED COLOURED NUMBER");
+        // console.log("PRINTED COLOURED NUMBER");
         SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
         SVG2.appendChild(text2);
       }
@@ -1160,7 +1160,7 @@ async function vizDivideBT() {
   }
   else {
     // i terate over the entries of that level . display each and then put a gap
-    console.log("POIUY");
+    // console.log("POIUY");
     POContainer = document.getElementById(`preorderContainer${level + 1}`);
     POContainer.innerHTML = 'PreOrder: ';
     let arr = preOrderEntries.filter((p) => p.level === level);
@@ -1188,7 +1188,7 @@ async function vizDivideBT() {
           text2.setAttribute("text-anchor", "middle"); // center horizontally
           // text2.setAttribute("font-size", "20");
           text2.setAttribute("class", 'textPartitionLevelBlack');
-          console.log("PRINTED BLACK NUMBER");
+          // console.log("PRINTED BLACK NUMBER");
           SVG2.setAttribute("class", 'partitionLevelBlack');
           SVG2.appendChild(text2);
         } else {
@@ -1198,7 +1198,7 @@ async function vizDivideBT() {
           text2.setAttribute("text-anchor", "middle"); // center horizontally
           // text2.setAttribute("font-size", "20");
           text2.setAttribute("class", `textPartitionLevel${nodes[indexOfTextPO].level}`);
-          console.log("PRINTED COLOURED NUMBER");
+          // console.log("PRINTED COLOURED NUMBER");
           SVG2.setAttribute("class", `partitionLevel${nodes[indexOfTextPO].level}`);
           SVG2.appendChild(text2);
         }
@@ -1221,7 +1221,7 @@ async function vizDivideBT() {
 
 
 function getPointInOuterSVG(innerSVG, x, y, outerSVG) {
-  console.log(innerSVG, outerSVG);
+  // console.log(innerSVG, outerSVG);
   if (!innerSVG || !outerSVG) {
     throw new Error("Invalid SVG elements provided.");
   }
@@ -1292,7 +1292,7 @@ function createOverlaySVG() {
 
   // Match the size and position of .rightHalfDiv
   const rect = rightHalfDiv.getBoundingClientRect();
-  console.log("The bounding client rect of right half div is...", rect);
+  // console.log("The bounding client rect of right half div is...", rect);
   svg.style.width = rect.width + "px";
   svg.style.height = rect.height + 250 + "px";
   svg.style.transform = `translate(${rect.left}px, ${rect.top}px)`;
@@ -1307,7 +1307,7 @@ function createOverlaySVG() {
 
 async function updateLines() {
   resizeRightHalfDiv();
-  console.log("Im in updateLines");
+  // console.log("Im in updateLines");
   let outerSVG = document.getElementById("linkLayer");
   outerSVG.innerHTML = "";
   for (let i = 0; i < updateDict.length; i++) {
@@ -1316,10 +1316,10 @@ async function updateLines() {
     let RootPtr = getPointInOuterSVG(updateDict[i].top, 25, 50, outerSVG);
     let ChildPtr = getPointInOuterSVG(updateDict[i].bot, 25, 0, outerSVG);
     if (RootPtr.x < 0 || RootPtr.y < 0 || ChildPtr.x < 0 || ChildPtr.y < 0) {
-      console.log("Gotcha")
+      // console.log("Gotcha")
     }
-    console.log("level is", level, "and updatedicts are", updateDict[i].top, updateDict[i].bot);
-    console.log("UPDATELINES: BOINK for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
+    // console.log("level is", level, "and updatedicts are", updateDict[i].top, updateDict[i].bot);
+    console.log("UPDATELINES: for ", level, "the pointers are", RootPtr.x, RootPtr.y, ChildPtr.x, ChildPtr.y);
     line1.setAttribute("x1", RootPtr.x);
     line1.setAttribute("y1", RootPtr.y);
     line1.setAttribute("x2", ChildPtr.x);
@@ -1346,13 +1346,13 @@ function solve() {
   let calledLevel = level;
   while (!solveDivideFlag) {
     divideTree();
-    console.log("Called divideTree in solve");
+    // console.log("Called divideTree in solve");
   }
   while (level >= calledLevel) {
     mergeTree();
     if (level < 0)
       break;
-    console.log("Called mergetree in solve");
+    // console.log("Called mergetree in solve");
   }
   document.getElementById("solveButton3").disabled = true;
   if (level >= 0) {
@@ -1611,35 +1611,35 @@ function removeAllToolTips() {
 }
 async function showTutorial() {
 
-  console.log("pixel 1");
+  // console.log("pixel 1");
   removeAllToolTips();
-  console.log("pixel 2");
+  // console.log("pixel 2");
   if (tutorialToShow >= 7) {
-    console.log("pixel 3");
+    // console.log("pixel 3");
     showToast("All tips shown. Click \'Guide Me!\' again to restart", "info");
     tutorialToShow = 0;
-    console.log("pixel 4");
+    // console.log("pixel 4");
     return;
   }
   if (tutorialToShow < 0) {
     tutorialToShow = 0;
     return;
   }
-  console.log("pixel 5");
+  // console.log("pixel 5");
   showDynamicTooltip(document.getElementById(`${tutorialData[tutorialToShow][0]}`), `${tutorialData[tutorialToShow][1]}`, `${tutorialData[tutorialToShow][2]}`, 5000);
-  console.log("pixel 6");
+  // console.log("pixel 6");
   tutorialToShow++;
-  console.log("pixel 7");
+  // console.log("pixel 7");
   if (endTutorial === true) {
-    console.log("pixel 8");
+    // console.log("pixel 8");
     // removeAllToolTips();
-    console.log("pixel 9");
+    // console.log("pixel 9");
     endTutorial = false;
     tutorialToShow = 0;
-    console.log("pixel 10");
+    // console.log("pixel 10");
     return;
   }
-  console.log("pixel 11");
+  // console.log("pixel 11");
 }
 
 
@@ -1740,11 +1740,11 @@ window.addEventListener('resize', () => {
 });
 document.getElementById("tutorialButton").addEventListener('click', () => {
   // tutorialState = !tutorialState;
-  console.log("pixel before: tutorialtoshow", tutorialToShow);
+  // console.log("pixel before: tutorialtoshow", tutorialToShow);
   tutorialToShow = 0;
   showTutorial();
   // tutorialToShow = 0;
-  console.log("pixel after: tutorialtoshow", tutorialToShow);
+  // console.log("pixel after: tutorialtoshow", tutorialToShow);
   endTutorial = false;
 });
 document.getElementById('FAQs').addEventListener('click', () => {
